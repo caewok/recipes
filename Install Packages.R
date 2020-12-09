@@ -1,0 +1,8 @@
+# install.packages("renv")
+library(renv)
+renv::install("gower")
+renv::install("ipred")
+renv::install("timeDate")
+renv::install("dplyr")
+renv::install("lubridate")
+renv::install("withr")
