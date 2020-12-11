@@ -103,14 +103,16 @@ step_scale_new <-
 #' @export
 prep.step_scale <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   if (x$factor != 1 & x$factor != 2) {
     rlang::warn("Scaling `factor` should take either a value of 1 or 2")
   }
 
-  sds <-
-    vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  sds <- training %>%
+    dplyr::select(!!!col_names) %>%
+    dplyr::summarize_all(~ sd(., na.rm = x$na_rm)) %>%
+    unlist
 
   sds <- sds * x$factor
 
@@ -128,11 +130,15 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
-  res <-
-    sweep(as.matrix(new_data[, names(object$sds)]), 2, object$sds, "/")
-  res <- tibble::as_tibble(res)
-  new_data[, names(object$sds)] <- res
-  as_tibble(new_data)
+
+  lazy_mutate <- parse_quos(sprintf('%s / object$sds["%s"]',
+                                    names(object$sds),
+                                    names(object$sds)),
+                            env = environment()) %>% setNames(names(object$sds))
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate)
+
+  confirm_table_format(new_data)
 }
 
 print.step_scale <-

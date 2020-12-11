@@ -15,7 +15,7 @@ recipe <- function(x, ...)
 #' @rdname recipe
 #' @export
 recipe.default <- function(x, ...)
-  rlang::abort("`x` should be a data frame, matrix, or tibble")
+  rlang::abort("`x` should be a data frame, matrix, dtplyr step, or tibble")
 
 #' @rdname recipe
 #' @param vars A character string of column names corresponding to variables
@@ -243,6 +243,12 @@ recipe.formula <- function(formula, data, ...) {
 #' @export
 recipe.matrix <- function(x, ...) {
   x <- as.data.frame(x)
+  recipe.data.frame(x, ...)
+}
+
+#' @rdname recipe
+#' @export
+recipe.dtplyr_step <- function(x, ...) {
   recipe.data.frame(x, ...)
 }
 

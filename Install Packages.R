@@ -16,3 +16,18 @@ renv::install("kernlab")
 # packages for vignettes
 renv::install("rsample")
 renv::install("modeldata")
+renv::install("rmarkdown")
+renv::install("knitr")
+
+# for using the optional dtplyr
+renv::install("dtplyr")
+
+# for testing
+renv::install("testthat")
+renv::install("RcppRoll")
+renv::install("RSpectra")
+renv::install("igraph")
+
+
+renv::snapshot()
+renv::install("RANN")

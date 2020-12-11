@@ -104,10 +104,13 @@ step_center_new <-
 #' @export
 prep.step_center <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  means <-
-    vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
+  means <- training %>%
+    dplyr::select(!!!col_names) %>%
+    dplyr::summarize_all(~ mean(., na.rm = x$na_rm)) %>%
+    unlist()
+
   step_center_new(
     terms = x$terms,
     role = x$role,
@@ -121,11 +124,15 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_center <- function(object, new_data, ...) {
-  res <-
-    sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
-  res <- tibble::as_tibble(res)
-  new_data[, names(object$means)] <- res
-  as_tibble(new_data)
+
+  lazy_mutate <- parse_quos(sprintf('%s - object$means["%s"]',
+                                    names(object$means),
+                                    names(object$means)),
+                            env = environment()) %>% setNames(names(object$means))
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate)
+
+  confirm_table_format(new_data)
 }
 
 print.step_center <-

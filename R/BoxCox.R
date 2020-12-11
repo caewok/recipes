@@ -108,15 +108,13 @@ step_BoxCox_new <-
 prep.step_BoxCox <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  values <- vapply(
-    training[, col_names],
-    estimate_bc,
-    c(lambda = 0),
-    limits = x$limits,
-    num_unique = x$num_unique
-  )
+  values <- training %>%
+    dplyr::select(!!!col_names) %>%
+    dplyr::summarize_all(~ estimate_bc(., limits = x$limits, num_unique = x$num_unique)) %>%
+    unlist()
+
   values <- values[!is.na(values)]
   step_BoxCox_new(
     terms = x$terms,
@@ -133,12 +131,16 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_BoxCox <- function(object, new_data, ...) {
   if (length(object$lambdas) == 0)
-    return(as_tibble(new_data))
-  param <- names(object$lambdas)
-  for (i in seq_along(object$lambdas))
-    new_data[, param[i]] <-
-    bc_trans(getElement(new_data, param[i]), lambda = object$lambdas[i])
-  as_tibble(new_data)
+    return(confirm_table_format(new_data))
+
+  lazy_mutate <- parse_quos(sprintf("recipes:::bc_trans(%s, lambda = object$lambdas[%d])",
+                                    names(object$lambdas),
+                                    seq_along(object$lambdas)),
+                            env = environment()) %>% setNames(names(object$lambdas))
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate)
+
+  confirm_table_format(new_data)
 }
 
 print.step_BoxCox <-

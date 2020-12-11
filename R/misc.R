@@ -417,13 +417,25 @@ is_qual <- function(x)
 #' @export
 #' @keywords internal
 check_type <- function(dat, quant = TRUE) {
-  if (quant) {
-    all_good <- vapply(dat, is.numeric, logical(1))
-    label <- "numeric"
+
+  if(is_dtplyr_table(dat)) {
+    if(quant) {
+      all_good <- dat %>% summarize_all(~ . %>% is.numeric()) %>% as_tibble() %>% as.logical()
+
+    } else {
+      all_good <- dat %>% summarize_all(~ . %>% is_qual()) %>% as_tibble() %>% as.logical()
+    }
+
   } else {
-    all_good <- vapply(dat, is_qual, logical(1))
-    label <- "factor or character"
+    if (quant) {
+      all_good <- vapply(dat, is.numeric, logical(1))
+    } else {
+      all_good <- vapply(dat, is_qual, logical(1))
+    }
   }
+
+  label <- if_else(quant, "numeric", "factor or character")
+
   if (!all(all_good))
     rlang::abort(
       paste0(
