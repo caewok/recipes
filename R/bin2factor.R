@@ -113,14 +113,15 @@ prep.step_bin2factor <- function(x, training, info = NULL, ...) {
 
 bake.step_bin2factor <- function(object, new_data, ...) {
   levs <- if (object$ref_first) object$levels else rev(object$levels)
-  for (i in seq_along(object$columns))
-    new_data[, object$columns[i]] <-
-      factor(ifelse(
-        getElement(new_data, object$columns[i]) == 1,
-        object$levels[1],
-        object$levels[2]
-      ),
-      levels = levs)
+
+  lazy_mutate <- parse_quos(sprintf('factor(if_else(%s == 1, "%s", "%s"), levels = levs)',
+                                    object$columns,
+                                    object$levels[1],
+                                    object$levels[2]),
+                            env = environment()) %>% setNames(object$columns)
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate)
+
   new_data
 }
 
