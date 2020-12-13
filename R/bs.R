@@ -117,12 +117,15 @@ bs_wrapper <- function(x, args) {
 
 #' @export
 prep.step_bs <- function(x, training, info = NULL, ...) {
+  if(is_dtplyr_table(training)) stop("Prep bs.R: Dtplyr not yet implemented.")
+
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   opt <- x$options
   opt$df <- x$deg_free
   opt$degree <- x$degree
+
   obj <- lapply(training[, col_names], bs_wrapper, opt)
   for (i in seq(along.with = col_names))
     attr(obj[[i]], "var") <- col_names[i]
@@ -141,6 +144,7 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_bs <- function(object, new_data, ...) {
+  if(is_dtplyr_table(new_data)) stop("Bake bs.R: Dtplyr not yet implemented.")
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
   bs_values <-

@@ -6,6 +6,7 @@
 \alias{recipe.formula}
 \alias{recipe.data.frame}
 \alias{recipe.matrix}
+\alias{recipe.dtplyr_step}
 \title{Create a Recipe for Preprocessing Data}
 \usage{
 recipe(x, ...)
@@ -17,6 +18,8 @@ recipe(x, ...)
 \method{recipe}{formula}(formula, data, ...)
 
 \method{recipe}{matrix}(x, ...)
+
+\method{recipe}{dtplyr_step}(x, ...)
 }
 \arguments{
 \item{x, data}{A data frame or tibble of the \emph{template} data set

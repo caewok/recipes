@@ -130,7 +130,8 @@ poly_wrapper <- function(x, args) {
 
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes:::eval_select_recipes(x$terms, training, info)
+  # eval_select_recipes_original(x$terms, training, info)
 
   check_type(training[, col_names])
 
@@ -162,7 +163,7 @@ bake.step_poly <- function(object, new_data, ...) {
     purrr::map(as_tibble) %>%
     purrr::map2_dfc(new_names, ~ setNames(.x, .y))
   new_data <- dplyr::bind_cols(new_data, poly_values)
-  new_data <- dplyr::select(new_data, -col_names)
+  new_data <- dplyr::select(new_data, -one_of(col_names))
   new_data
 }
 

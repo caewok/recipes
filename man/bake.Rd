@@ -18,12 +18,12 @@ returned by the function. See \code{\link[=selections]{selections()}} for more d
 If no selectors are given, the default is to use
 \code{\link[=everything]{everything()}}.}
 
-\item{new_data}{A data frame or tibble for whom the preprocessing will be
+\item{new_data}{A data frame or tibble or dtplyr table for whom the preprocessing will be
 applied. If \code{NULL} is given to \code{new_data}, the pre-processed \emph{training
 data} will be returned (assuming that \code{prep(retain = TRUE)} was used).}
 
-\item{composition}{Either "tibble", "matrix", "data.frame", or
-"dgCMatrix" for the format of the processed data set. Note that
+\item{composition}{Either "tibble", "matrix", "data.frame",
+"dgCMatrix", or "dtplyr" for the format of the processed data set. Note that
 all computations during the baking process are done in a
 non-sparse format. Also, note that this argument should be
 called \strong{after} any selectors and the selectors should only

@@ -1,6 +1,7 @@
 #' Add a dimnames function so that colnames works properly for dtplyr objects.
 #' @param x a dtplyr_step object
 #' @return list with NULL for rownames, colnames of the dtplyr object.
+#' @export
 dimnames.dtplyr_step <- function(x) { list(NULL, x$vars) }
 
 #' Is this a dtplyr table?
@@ -35,4 +36,32 @@ confirm_table_format <- function(x) {
   if(is_dtplyr_table(x)) return(x %>% compute())
   if (!is_tibble(x)) x <- as_tibble(x)
   return(x)
+}
+
+
+#' Take a named vector with subnames indicated by "." and convert
+#' to a list with sublists for each "."
+#' for example, mpg.values = 1, mpg.ordered = 2, cyl.values = 3, cyl.ordered = 4
+#' becomes list(mpg = list(values = 1, ordered = 2), cyl = list(values = 3, ordered = 4))
+#' Used to replace things like lapply(data, get_levels)
+convert_named_vector_to_hierarchical_list <- function(vec, sep = ".") {
+  top_lvls <- lapply(strsplit(names(vec), split = sep, fixed = TRUE), first) %>% unlist
+
+  lst <- vector("list", length = length(unique(top_lvls))) %>% setNames(unique(top_lvls))
+  for(lvl in unique(top_lvls)) {
+    idx <- which(top_lvls == lvl)
+    if(length(idx) < 1) {
+      next;
+    } else if(length(idx) == 1) {
+      lst[[lvl]] <- vec[[idx]]
+
+    } else {
+      subvec <- vec[idx]
+      names(subvec) <- lapply(strsplit(names(subvec), split = sep, fixed = TRUE), nth, n = 2) %>% unlist
+      lst[[lvl]] <- convert_named_vector_to_hierarchical_list(vec = subvec, sep = sep)
+    }
+  }
+
+  return(lst)
+
 }

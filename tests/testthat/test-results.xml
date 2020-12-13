@@ -1,0 +1,1790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="dplyr arrange steps" timestamp="2020-12-12T23:33:20Z" hostname="cd4266ef51dd" tests="6" skipped="0" failures="0" errors="0" time="0.345">
+    <testcase time="0.139" classname="dplyr_arrange_steps" name="basic_usage"/>
+    <testcase time="0.0449999999999999" classname="dplyr_arrange_steps" name="basic_usage"/>
+    <testcase time="0.0630000000000002" classname="dplyr_arrange_steps" name="quasiquotation"/>
+    <testcase time="0.0499999999999998" classname="dplyr_arrange_steps" name="no_input"/>
+    <testcase time="0.00600000000000023" classname="dplyr_arrange_steps" name="printing"/>
+    <testcase time="0.0419999999999998" classname="dplyr_arrange_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="bagged imputation" timestamp="2020-12-12T23:33:20Z" hostname="cd4266ef51dd" tests="21" skipped="0" failures="0" errors="0" time="0.534">
+    <testcase time="0.15" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.004" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00300000000000011" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.004" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.004" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00499999999999989" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00600000000000023" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00499999999999989" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00499999999999989" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00499999999999989" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00500000000000034" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00499999999999989" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00199999999999978" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.0910000000000002" classname="bagged_imputation" name="imputation_models"/>
+    <testcase time="0.00499999999999989" classname="bagged_imputation" name="printing"/>
+    <testcase time="0.124" classname="bagged_imputation" name="printing"/>
+    <testcase time="0.0150000000000001" classname="bagged_imputation" name="tunable"/>
+    <testcase time="0.00800000000000001" classname="bagged_imputation" name="tunable"/>
+    <testcase time="0.085" classname="bagged_imputation" name="tunable"/>
+    <testcase time="0.00199999999999978" classname="bagged_imputation" name="tunable"/>
+    <testcase time="0.00099999999999989" classname="bagged_imputation" name="tunable"/>
+  </testsuite>
+  <testsuite name="bake" timestamp="2020-12-12T23:33:21Z" hostname="cd4266ef51dd" tests="3" skipped="0" failures="0" errors="0" time="0.44">
+    <testcase time="0.342" classname="bake" name="order_of_columns_after_juice_and_bake"/>
+    <testcase time="0.097" classname="bake" name="can_use_tidyselect_ops_in_bake_and_juice_column_selection"/>
+    <testcase time="0.00100000000000033" classname="bake" name="can_use_tidyselect_ops_in_bake_and_juice_column_selection"/>
+  </testsuite>
+  <testsuite name="Testing basic functionalities" timestamp="2020-12-12T23:33:21Z" hostname="cd4266ef51dd" tests="40" skipped="0" failures="0" errors="0" time="0.9">
+    <testcase time="0.0339999999999998" classname="Testing_basic_functionalities" name="Recipe_correctly_identifies_output_variable"/>
+    <testcase time="0.00499999999999989" classname="Testing_basic_functionalities" name="Recipe_correctly_identifies_output_variable"/>
+    <testcase time="0.00200000000000022" classname="Testing_basic_functionalities" name="Recipe_correctly_identifies_output_variable"/>
+    <testcase time="0.00800000000000001" classname="Testing_basic_functionalities" name="Recipe_fails_on_in_line_functions"/>
+    <testcase time="0.00499999999999989" classname="Testing_basic_functionalities" name="Recipe_fails_on_in_line_functions"/>
+    <testcase time="0.00499999999999989" classname="Testing_basic_functionalities" name="Recipe_fails_on_in_line_functions"/>
+    <testcase time="0.00499999999999989" classname="Testing_basic_functionalities" name="Recipe_fails_on_in_line_functions"/>
+    <testcase time="0.0990000000000002" classname="Testing_basic_functionalities" name="return_character_or_factor_values"/>
+    <testcase time="0.0920000000000001" classname="Testing_basic_functionalities" name="return_character_or_factor_values"/>
+    <testcase time="0.00199999999999978" classname="Testing_basic_functionalities" name="return_character_or_factor_values"/>
+    <testcase time="0.00600000000000023" classname="Testing_basic_functionalities" name="Using_prepare"/>
+    <testcase time="0.0150000000000001" classname="Testing_basic_functionalities" name="Multiple_variables_on_lhs_of_formula"/>
+    <testcase time="0.00199999999999978" classname="Testing_basic_functionalities" name="Multiple_variables_on_lhs_of_formula"/>
+    <testcase time="0.00099999999999989" classname="Testing_basic_functionalities" name="Multiple_variables_on_lhs_of_formula"/>
+    <testcase time="0.0140000000000002" classname="Testing_basic_functionalities" name="Multiple_variables_on_lhs_of_formula"/>
+    <testcase time="0.00199999999999978" classname="Testing_basic_functionalities" name="Multiple_variables_on_lhs_of_formula"/>
+    <testcase time="0.00100000000000033" classname="Testing_basic_functionalities" name="Multiple_variables_on_lhs_of_formula"/>
+    <testcase time="0.13" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.00499999999999989" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.00300000000000011" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.00299999999999967" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.00300000000000011" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.004" classname="Testing_basic_functionalities" name="detect_step_function_works"/>
+    <testcase time="0.02" classname="Testing_basic_functionalities" name="bake_without_prep"/>
+    <testcase time="0.00499999999999989" classname="Testing_basic_functionalities" name="bake_without_prep"/>
+    <testcase time="0.111" classname="Testing_basic_functionalities" name="bake_without_newdata"/>
+    <testcase time="0.0409999999999999" classname="Testing_basic_functionalities" name="_juice_returns_a_0_column_N_row_tibble_when_a_selection_returns_no_columns"/>
+    <testcase time="0.0499999999999998" classname="Testing_basic_functionalities" name="_bake_returns_a_0_column_N_row_tibble_when_a_selection_returns_no_columns"/>
+    <testcase time="0.0260000000000002" classname="Testing_basic_functionalities" name="tunable_arguments_at_prep_time"/>
+    <testcase time="0.0529999999999999" classname="Testing_basic_functionalities" name="logging"/>
+    <testcase time="0.0920000000000001" classname="Testing_basic_functionalities" name="_bake_new_data_NULL_same_as_juice_"/>
+    <testcase time="0.024" classname="Testing_basic_functionalities" name="_bake_new_data_NULL_same_as_juice_"/>
+  </testsuite>
+  <testsuite name="binary to factor conversion" timestamp="2020-12-12T23:33:22Z" hostname="cd4266ef51dd" tests="10" skipped="0" failures="0" errors="0" time="0.518">
+    <testcase time="0.121" classname="binary_to_factor_conversion" name="default_options"/>
+    <testcase time="0.118" classname="binary_to_factor_conversion" name="nondefault_options"/>
+    <testcase time="0.0659999999999998" classname="binary_to_factor_conversion" name="bad_options"/>
+    <testcase time="0.00499999999999989" classname="binary_to_factor_conversion" name="bad_options"/>
+    <testcase time="0.00499999999999989" classname="binary_to_factor_conversion" name="bad_options"/>
+    <testcase time="0.00600000000000023" classname="binary_to_factor_conversion" name="printing"/>
+    <testcase time="0.0890000000000004" classname="binary_to_factor_conversion" name="printing"/>
+    <testcase time="0.101999999999999" classname="binary_to_factor_conversion" name="choose_reference_level"/>
+    <testcase time="0.00200000000000067" classname="binary_to_factor_conversion" name="choose_reference_level"/>
+    <testcase time="0.00399999999999956" classname="binary_to_factor_conversion" name="choose_reference_level"/>
+  </testsuite>
+  <testsuite name="Box-Cox trans" timestamp="2020-12-12T23:33:23Z" hostname="cd4266ef51dd" tests="6" skipped="0" failures="0" errors="0" time="0.159">
+    <testcase time="0.0280000000000005" classname="Box_Cox_trans" name="simple_Box_Cox"/>
+    <testcase time="0.0609999999999999" classname="Box_Cox_trans" name="simple_Box_Cox"/>
+    <testcase time="0.000999999999999446" classname="Box_Cox_trans" name="simple_Box_Cox"/>
+    <testcase time="0.00200000000000067" classname="Box_Cox_trans" name="simple_Box_Cox"/>
+    <testcase time="0.0199999999999996" classname="Box_Cox_trans" name="printing"/>
+    <testcase time="0.0469999999999997" classname="Box_Cox_trans" name="printing"/>
+  </testsuite>
+  <testsuite name="B-splines" timestamp="2020-12-12T23:33:23Z" hostname="cd4266ef51dd" tests="11" skipped="0" failures="0" errors="0" time="0.183">
+    <testcase time="0.104" classname="B_splines" name="correct_basis_functions"/>
+    <testcase time="0.00100000000000033" classname="B_splines" name="correct_basis_functions"/>
+    <testcase time="0.00100000000000033" classname="B_splines" name="correct_basis_functions"/>
+    <testcase time="0.000999999999999446" classname="B_splines" name="correct_basis_functions"/>
+    <testcase time="0.00499999999999989" classname="B_splines" name="printing"/>
+    <testcase time="0.0440000000000005" classname="B_splines" name="printing"/>
+    <testcase time="0.016" classname="B_splines" name="tunable"/>
+    <testcase time="0.00300000000000011" classname="B_splines" name="tunable"/>
+    <testcase time="0.00499999999999989" classname="B_splines" name="tunable"/>
+    <testcase time="0.00199999999999978" classname="B_splines" name="tunable"/>
+    <testcase time="0.00100000000000033" classname="B_splines" name="tunable"/>
+  </testsuite>
+  <testsuite name="dtplyr: Testing center and scale" timestamp="2020-12-12T23:33:23Z" hostname="cd4266ef51dd" tests="16" skipped="0" failures="0" errors="0" time="1.119">
+    <testcase time="0.129" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00300000000000011" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.123" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00199999999999978" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00100000000000033" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00199999999999978" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.0739999999999998" classname="dtplyr_Testing_center_and_scale" name="scale_by_factor_of_1_or_2"/>
+    <testcase time="0.00100000000000033" classname="dtplyr_Testing_center_and_scale" name="scale_by_factor_of_1_or_2"/>
+    <testcase time="0.0640000000000001" classname="dtplyr_Testing_center_and_scale" name="scale_by_factor_of_1_or_2"/>
+    <testcase time="0.38" classname="dtplyr_Testing_center_and_scale" name="training_in_stages"/>
+    <testcase time="0.0110000000000001" classname="dtplyr_Testing_center_and_scale" name="training_in_stages"/>
+    <testcase time="0.132" classname="dtplyr_Testing_center_and_scale" name="single_predictor"/>
+    <testcase time="0.00600000000000023" classname="dtplyr_Testing_center_and_scale" name="printing"/>
+    <testcase time="0.0989999999999993" classname="dtplyr_Testing_center_and_scale" name="printing"/>
+    <testcase time="0.00500000000000078" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs_for_step_norm"/>
+    <testcase time="0.0869999999999997" classname="dtplyr_Testing_center_and_scale" name="correct_means_and_std_devs_for_step_norm"/>
+  </testsuite>
+  <testsuite name="Testing center and scale" timestamp="2020-12-12T23:33:24Z" hostname="cd4266ef51dd" tests="16" skipped="0" failures="0" errors="0" time="0.794">
+    <testcase time="0.0229999999999997" classname="Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00300000000000011" classname="Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.0840000000000005" classname="Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00299999999999923" classname="Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00100000000000033" classname="Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.00100000000000033" classname="Testing_center_and_scale" name="correct_means_and_std_devs"/>
+    <testcase time="0.0539999999999994" classname="Testing_center_and_scale" name="scale_by_factor_of_1_or_2"/>
+    <testcase time="0.00200000000000067" classname="Testing_center_and_scale" name="scale_by_factor_of_1_or_2"/>
+    <testcase time="0.0409999999999995" classname="Testing_center_and_scale" name="scale_by_factor_of_1_or_2"/>
+    <testcase time="0.264" classname="Testing_center_and_scale" name="training_in_stages"/>
+    <testcase time="0.0119999999999996" classname="Testing_center_and_scale" name="training_in_stages"/>
+    <testcase time="0.125" classname="Testing_center_and_scale" name="single_predictor"/>
+    <testcase time="0.00700000000000056" classname="Testing_center_and_scale" name="printing"/>
+    <testcase time="0.0979999999999999" classname="Testing_center_and_scale" name="printing"/>
+    <testcase time="0.00600000000000023" classname="Testing_center_and_scale" name="correct_means_and_std_devs_for_step_norm"/>
+    <testcase time="0.0699999999999994" classname="Testing_center_and_scale" name="correct_means_and_std_devs_for_step_norm"/>
+  </testsuite>
+  <testsuite name="class" timestamp="2020-12-12T23:33:25Z" hostname="cd4266ef51dd" tests="23" skipped="0" failures="0" errors="0" time="0.918">
+    <testcase time="0.212000000000001" classname="class" name="bake_check_class_helper_function_gives_expected_output"/>
+    <testcase time="0.000999999999999446" classname="class" name="bake_check_class_helper_function_gives_expected_output"/>
+    <testcase time="0.00499999999999989" classname="class" name="bake_check_class_helper_function_gives_expected_output"/>
+    <testcase time="0.00600000000000023" classname="class" name="bake_check_class_helper_function_gives_expected_output"/>
+    <testcase time="0.00100000000000033" classname="class" name="bake_check_class_helper_function_gives_expected_output"/>
+    <testcase time="0.00599999999999934" classname="class" name="bake_check_class_helper_function_gives_expected_output"/>
+    <testcase time="0.0650000000000004" classname="class" name="check_class_works_when_class_is_learned"/>
+    <testcase time="0.0169999999999995" classname="class" name="check_class_works_when_class_is_learned"/>
+    <testcase time="0.00900000000000034" classname="class" name="check_class_works_when_class_is_learned"/>
+    <testcase time="0.00900000000000034" classname="class" name="check_class_works_when_class_is_learned"/>
+    <testcase time="0.0609999999999999" classname="class" name="check_class_works_when_class_is_provided"/>
+    <testcase time="0.0179999999999998" classname="class" name="check_class_works_when_class_is_provided"/>
+    <testcase time="0.00899999999999945" classname="class" name="check_class_works_when_class_is_provided"/>
+    <testcase time="0.0660000000000007" classname="class" name="check_class_works_when_class_is_provided"/>
+    <testcase time="0.0179999999999998" classname="class" name="check_class_works_when_class_is_provided"/>
+    <testcase time="0.00899999999999945" classname="class" name="check_class_works_when_class_is_provided"/>
+    <testcase time="0.0610000000000008" classname="class" name="check_class_works_when_class_is_provided"/>
+    <testcase time="0.0759999999999996" classname="class" name="characters_are_handled_correctly"/>
+    <testcase time="0.069" classname="class" name="characters_are_handled_correctly"/>
+    <testcase time="0.0700000000000003" classname="class" name="characters_are_handled_correctly"/>
+    <testcase time="0.0710000000000006" classname="class" name="characters_are_handled_correctly"/>
+    <testcase time="0.0249999999999995" classname="class" name="printing"/>
+    <testcase time="0.0339999999999998" classname="class" name="printing"/>
+  </testsuite>
+  <testsuite name="class distances" timestamp="2020-12-12T23:33:26Z" hostname="cd4266ef51dd" tests="12" skipped="0" failures="0" errors="0" time="0.329">
+    <testcase time="0.0820000000000007" classname="class_distances" name="defaults"/>
+    <testcase time="0.000999999999999446" classname="class_distances" name="defaults"/>
+    <testcase time="0.00100000000000033" classname="class_distances" name="defaults"/>
+    <testcase time="0.00399999999999956" classname="class_distances" name="defaults"/>
+    <testcase time="0.00600000000000023" classname="class_distances" name="defaults"/>
+    <testcase time="0.0840000000000005" classname="class_distances" name="alt_args"/>
+    <testcase time="0.00199999999999978" classname="class_distances" name="alt_args"/>
+    <testcase time="0.000999999999999446" classname="class_distances" name="alt_args"/>
+    <testcase time="0.0180000000000007" classname="class_distances" name="printing"/>
+    <testcase time="0.0469999999999997" classname="class_distances" name="printing"/>
+    <testcase time="0.0809999999999995" classname="class_distances" name="prefix"/>
+    <testcase time="0.00200000000000067" classname="class_distances" name="prefix"/>
+  </testsuite>
+  <testsuite name="column checking" timestamp="2020-12-12T23:33:26Z" hostname="cd4266ef51dd" tests="10" skipped="0" failures="0" errors="0" time="0.42">
+    <testcase time="0.0679999999999996" classname="column_checking" name="check_col_works_in_the_prep_stage"/>
+    <testcase time="0.0299999999999994" classname="column_checking" name="check_col_works_in_the_prep_stage"/>
+    <testcase time="0.0289999999999999" classname="column_checking" name="check_col_works_in_the_prep_stage"/>
+    <testcase time="0.0290000000000017" classname="column_checking" name="check_col_works_in_the_prep_stage"/>
+    <testcase time="0.0489999999999995" classname="column_checking" name="check_col_works_in_the_bake_stage"/>
+    <testcase time="0.0499999999999989" classname="column_checking" name="check_col_works_in_the_bake_stage"/>
+    <testcase time="0.043000000000001" classname="column_checking" name="check_col_works_in_the_bake_stage"/>
+    <testcase time="0.0429999999999993" classname="column_checking" name="check_col_works_in_the_bake_stage"/>
+    <testcase time="0.0389999999999997" classname="column_checking" name="check_col_works_in_the_bake_stage"/>
+    <testcase time="0.0400000000000009" classname="column_checking" name="check_col_works_in_the_bake_stage"/>
+  </testsuite>
+  <testsuite name="Column ordering" timestamp="2020-12-12T23:33:27Z" hostname="cd4266ef51dd" tests="16" skipped="0" failures="0" errors="0" time="0.626">
+    <testcase time="0.0999999999999996" classname="Column_ordering" name="basic_steps"/>
+    <testcase time="0.0190000000000001" classname="Column_ordering" name="basic_steps"/>
+    <testcase time="0.00900000000000034" classname="Column_ordering" name="basic_steps"/>
+    <testcase time="0.0190000000000001" classname="Column_ordering" name="basic_steps"/>
+    <testcase time="0.0939999999999994" classname="Column_ordering" name="skipped_steps"/>
+    <testcase time="0.0229999999999997" classname="Column_ordering" name="skipped_steps"/>
+    <testcase time="0.00900000000000034" classname="Column_ordering" name="skipped_steps"/>
+    <testcase time="0.0199999999999996" classname="Column_ordering" name="skipped_steps"/>
+    <testcase time="0.116000000000001" classname="Column_ordering" name="remove_and_add_a_column"/>
+    <testcase time="0.0189999999999984" classname="Column_ordering" name="remove_and_add_a_column"/>
+    <testcase time="0.0080000000000009" classname="Column_ordering" name="remove_and_add_a_column"/>
+    <testcase time="0.0199999999999996" classname="Column_ordering" name="remove_and_add_a_column"/>
+    <testcase time="0.123000000000001" classname="Column_ordering" name="extra_roles"/>
+    <testcase time="0.0189999999999984" classname="Column_ordering" name="extra_roles"/>
+    <testcase time="0.00900000000000034" classname="Column_ordering" name="extra_roles"/>
+    <testcase time="0.0190000000000001" classname="Column_ordering" name="extra_roles"/>
+  </testsuite>
+  <testsuite name="correlation filter" timestamp="2020-12-12T23:33:27Z" hostname="cd4266ef51dd" tests="13" skipped="0" failures="0" errors="0" time="0.286">
+    <testcase time="0.0540000000000003" classname="correlation_filter" name="high_filter"/>
+    <testcase time="0.0470000000000006" classname="correlation_filter" name="low_filter"/>
+    <testcase time="0.0559999999999992" classname="correlation_filter" name="many_missing_values"/>
+    <testcase time="0.00100000000000122" classname="correlation_filter" name="many_missing_values"/>
+    <testcase time="0.0469999999999988" classname="correlation_filter" name="occasional_missing_values"/>
+    <testcase time="0.00200000000000067" classname="correlation_filter" name="occasional_missing_values"/>
+    <testcase time="0.0179999999999989" classname="correlation_filter" name="printing"/>
+    <testcase time="0.0370000000000008" classname="correlation_filter" name="printing"/>
+    <testcase time="0.0150000000000006" classname="correlation_filter" name="tunable"/>
+    <testcase time="0.00199999999999889" classname="correlation_filter" name="tunable"/>
+    <testcase time="0.00500000000000078" classname="correlation_filter" name="tunable"/>
+    <testcase time="0.000999999999999446" classname="correlation_filter" name="tunable"/>
+    <testcase time="0.000999999999999446" classname="correlation_filter" name="tunable"/>
+  </testsuite>
+  <testsuite name="pattern counting" timestamp="2020-12-12T23:33:28Z" hostname="cd4266ef51dd" tests="9" skipped="0" failures="0" errors="0" time="0.29">
+    <testcase time="0.116000000000001" classname="pattern_counting" name="default_options"/>
+    <testcase time="0.000999999999999446" classname="pattern_counting" name="default_options"/>
+    <testcase time="0.000999999999999446" classname="pattern_counting" name="default_options"/>
+    <testcase time="0.0620000000000012" classname="pattern_counting" name="nondefault_options"/>
+    <testcase time="0.00499999999999901" classname="pattern_counting" name="bad_selector_s_"/>
+    <testcase time="0.0250000000000004" classname="pattern_counting" name="bad_selector_s_"/>
+    <testcase time="0.0259999999999998" classname="pattern_counting" name="bad_selector_s_"/>
+    <testcase time="0.00399999999999956" classname="pattern_counting" name="printing"/>
+    <testcase time="0.0500000000000007" classname="pattern_counting" name="printing"/>
+  </testsuite>
+  <testsuite name="step_cut function" timestamp="2020-12-12T23:33:28Z" hostname="cd4266ef51dd" tests="26" skipped="0" failures="0" errors="0" time="0.429">
+    <testcase time="0.0489999999999995" classname="step_cut_function" name="step_cut_throws_error_on_non_numerics"/>
+    <testcase time="0.0259999999999998" classname="step_cut_function" name="step_cut_throws_error_on_non_numerics"/>
+    <testcase time="0.027000000000001" classname="step_cut_function" name="step_cut_throws_error_on_non_numerics"/>
+    <testcase time="0.00300000000000011" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.000999999999999446" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.000999999999999446" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.00200000000000067" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.000999999999999446" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.00100000000000122" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.00199999999999889" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.00100000000000122" classname="step_cut_function" name="create_full_breaks_helper_function"/>
+    <testcase time="0.00499999999999901" classname="step_cut_function" name="full_breaks_check_will_give_warnings"/>
+    <testcase time="0.00200000000000067" classname="step_cut_function" name="full_breaks_check_will_give_warnings"/>
+    <testcase time="0.000999999999999446" classname="step_cut_function" name="full_breaks_check_will_give_warnings"/>
+    <testcase time="0.000999999999999446" classname="step_cut_function" name="full_breaks_check_will_give_warnings"/>
+    <testcase time="0.00300000000000011" classname="step_cut_function" name="cut_var_gives_correct_output"/>
+    <testcase time="0.00200000000000067" classname="step_cut_function" name="cut_var_gives_correct_output"/>
+    <testcase time="0.000999999999999446" classname="step_cut_function" name="cut_var_gives_correct_output"/>
+    <testcase time="0.00300000000000011" classname="step_cut_function" name="adjust_levels_min_max_gives_correct_output"/>
+    <testcase time="0.00200000000000067" classname="step_cut_function" name="adjust_levels_min_max_gives_correct_output"/>
+    <testcase time="0.000999999999999446" classname="step_cut_function" name="adjust_levels_min_max_gives_correct_output"/>
+    <testcase time="0.0579999999999998" classname="step_cut_function" name="step_cut_integration_test"/>
+    <testcase time="0.0530000000000008" classname="step_cut_function" name="step_cut_integration_test"/>
+    <testcase time="0.0659999999999989" classname="step_cut_function" name="step_cut_integration_test"/>
+    <testcase time="0.0660000000000007" classname="step_cut_function" name="step_cut_integration_test"/>
+    <testcase time="0.0510000000000002" classname="step_cut_function" name="step_cut_integration_test"/>
+  </testsuite>
+  <testsuite name="Data framedness" timestamp="2020-12-12T23:33:28Z" hostname="cd4266ef51dd" tests="6" skipped="0" failures="0" errors="0" time="0.464">
+    <testcase time="0.458" classname="Data_framedness" name="correct_types"/>
+    <testcase time="0.00199999999999889" classname="Data_framedness" name="correct_types"/>
+    <testcase time="0.00100000000000122" classname="Data_framedness" name="correct_types"/>
+    <testcase time="0.000999999999999446" classname="Data_framedness" name="correct_types"/>
+    <testcase time="0.000999999999999446" classname="Data_framedness" name="correct_types"/>
+    <testcase time="0.00100000000000122" classname="Data_framedness" name="correct_types"/>
+  </testsuite>
+  <testsuite name="Date features" timestamp="2020-12-12T23:33:29Z" hostname="cd4266ef51dd" tests="4" skipped="4" failures="0" errors="0" time="0.048">
+    <testcase time="0.0309999999999988" classname="Date_features" name="default_option">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00699999999999967" classname="Date_features" name="nondefault_options">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000078" classname="Date_features" name="ordinal_values">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000078" classname="Date_features" name="printing">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="depth features" timestamp="2020-12-12T23:33:29Z" hostname="cd4266ef51dd" tests="12" skipped="0" failures="0" errors="0" time="0.62">
+    <testcase time="0.239999999999998" classname="depth_features" name="defaults"/>
+    <testcase time="0.00200000000000067" classname="depth_features" name="defaults"/>
+    <testcase time="0.000999999999999446" classname="depth_features" name="defaults"/>
+    <testcase time="0.00400000000000134" classname="depth_features" name="defaults"/>
+    <testcase time="0.00300000000000011" classname="depth_features" name="defaults"/>
+    <testcase time="0.145" classname="depth_features" name="alt_args"/>
+    <testcase time="0.000999999999999446" classname="depth_features" name="alt_args"/>
+    <testcase time="0.0120000000000005" classname="depth_features" name="alt_args"/>
+    <testcase time="0.0190000000000001" classname="depth_features" name="printing"/>
+    <testcase time="0.0670000000000002" classname="depth_features" name="printing"/>
+    <testcase time="0.123999999999999" classname="depth_features" name="prefix"/>
+    <testcase time="0.00200000000000067" classname="depth_features" name="prefix"/>
+  </testsuite>
+  <testsuite name="discretization" timestamp="2020-12-12T23:33:29Z" hostname="cd4266ef51dd" tests="18" skipped="0" failures="0" errors="0" time="0.423">
+    <testcase time="0.00600000000000023" classname="discretization" name="default_args"/>
+    <testcase time="0.00300000000000011" classname="discretization" name="NA_values"/>
+    <testcase time="0.00199999999999889" classname="discretization" name="NA_values_from_out_of_range"/>
+    <testcase time="0.0620000000000012" classname="discretization" name="NA_values_with_step_discretize_issue_127_"/>
+    <testcase time="0.0139999999999993" classname="discretization" name="printing_and_tidys"/>
+    <testcase time="0.0449999999999999" classname="discretization" name="printing_and_tidys"/>
+    <testcase time="0.00399999999999956" classname="discretization" name="printing_and_tidys"/>
+    <testcase time="0.077" classname="discretization" name="printing_and_tidys"/>
+    <testcase time="0.032" classname="discretization" name="bad_args"/>
+    <testcase time="0.0460000000000012" classname="discretization" name="bad_args"/>
+    <testcase time="0.0499999999999989" classname="discretization" name="bad_args"/>
+    <testcase time="0.0150000000000006" classname="discretization" name="printing"/>
+    <testcase time="0.0429999999999993" classname="discretization" name="printing"/>
+    <testcase time="0.0150000000000006" classname="discretization" name="tunable"/>
+    <testcase time="0.00200000000000067" classname="discretization" name="tunable"/>
+    <testcase time="0.00499999999999901" classname="discretization" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="discretization" name="tunable"/>
+    <testcase time="0.000999999999999446" classname="discretization" name="tunable"/>
+  </testsuite>
+  <testsuite name="Down-sampling" timestamp="2020-12-12T23:33:30Z" hostname="cd4266ef51dd" tests="8" skipped="8" failures="0" errors="0" time="0.056">
+    <testcase time="0.0210000000000008" classname="Down_sampling" name="basic_usage">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999901" classname="Down_sampling" name="ratio_value">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000078" classname="Down_sampling" name="no_skipping">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999901" classname="Down_sampling" name="bad_data">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000078" classname="Down_sampling" name="printing">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999901" classname="Down_sampling" name="_seed_produces_identical_sampling">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000078" classname="Down_sampling" name="ratio_deprecation">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999901" classname="Down_sampling" name="tunable">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="Dummy variable creation" timestamp="2020-12-12T23:33:30Z" hostname="cd4266ef51dd" tests="36" skipped="0" failures="0" errors="0" time="7.929">
+    <testcase time="1.195" classname="Dummy_variable_creation" name="dummy_variables_with_factor_inputs"/>
+    <testcase time="0.00200000000000067" classname="Dummy_variable_creation" name="dummy_variables_with_factor_inputs"/>
+    <testcase time="2.984" classname="Dummy_variable_creation" name="dummy_variables_with_factor_inputs"/>
+    <testcase time="0.00600000000000023" classname="Dummy_variable_creation" name="dummy_variables_with_factor_inputs"/>
+    <testcase time="0.00300000000000011" classname="Dummy_variable_creation" name="dummy_variables_with_factor_inputs"/>
+    <testcase time="0.0640000000000001" classname="Dummy_variable_creation" name="dummy_variables_with_non_factor_inputs"/>
+    <testcase time="0.00199999999999889" classname="Dummy_variable_creation" name="dummy_variables_with_non_factor_inputs"/>
+    <testcase time="0.114000000000001" classname="Dummy_variable_creation" name="dummy_variables_with_non_factor_inputs"/>
+    <testcase time="0.75" classname="Dummy_variable_creation" name="create_all_dummy_variables"/>
+    <testcase time="0.135999999999999" classname="Dummy_variable_creation" name="tests_for_issue_91"/>
+    <testcase time="0.138999999999999" classname="Dummy_variable_creation" name="tests_for_issue_91"/>
+    <testcase time="0.0810000000000031" classname="Dummy_variable_creation" name="tests_for_NA_values_in_factor"/>
+    <testcase time="0.041999999999998" classname="Dummy_variable_creation" name="tests_for_NA_values_in_factor"/>
+    <testcase time="0.0130000000000017" classname="Dummy_variable_creation" name="tests_for_NA_values_in_factor"/>
+    <testcase time="0.0129999999999981" classname="Dummy_variable_creation" name="tests_for_NA_values_in_factor"/>
+    <testcase time="0.0960000000000001" classname="Dummy_variable_creation" name="tests_for_NA_values_in_ordered_factor"/>
+    <testcase time="0.0420000000000016" classname="Dummy_variable_creation" name="tests_for_NA_values_in_ordered_factor"/>
+    <testcase time="0.0129999999999981" classname="Dummy_variable_creation" name="tests_for_NA_values_in_ordered_factor"/>
+    <testcase time="0.0130000000000017" classname="Dummy_variable_creation" name="tests_for_NA_values_in_ordered_factor"/>
+    <testcase time="0.00399999999999778" classname="Dummy_variable_creation" name="new_levels"/>
+    <testcase time="0.00200000000000244" classname="Dummy_variable_creation" name="new_levels"/>
+    <testcase time="0.0579999999999998" classname="Dummy_variable_creation" name="new_levels"/>
+    <testcase time="0.0180000000000007" classname="Dummy_variable_creation" name="new_levels"/>
+    <testcase time="0.0519999999999996" classname="Dummy_variable_creation" name="tests_for_issue_301"/>
+    <testcase time="0.497" classname="Dummy_variable_creation" name="tests_for_issue_301"/>
+    <testcase time="0.905999999999999" classname="Dummy_variable_creation" name="tests_for_issue_301"/>
+    <testcase time="0.00199999999999889" classname="Dummy_variable_creation" name="naming_function"/>
+    <testcase time="0.00200000000000244" classname="Dummy_variable_creation" name="naming_function"/>
+    <testcase time="0.0350000000000001" classname="Dummy_variable_creation" name="printing"/>
+    <testcase time="0.113999999999997" classname="Dummy_variable_creation" name="printing"/>
+    <testcase time="0.0660000000000025" classname="Dummy_variable_creation" name="no_columns_selected"/>
+    <testcase time="0.0139999999999993" classname="Dummy_variable_creation" name="no_columns_selected"/>
+    <testcase time="0.00399999999999778" classname="Dummy_variable_creation" name="no_columns_selected"/>
+    <testcase time="0.00300000000000011" classname="Dummy_variable_creation" name="no_columns_selected"/>
+    <testcase time="0.442" classname="Dummy_variable_creation" name="retained_columns"/>
+    <testcase time="0.00200000000000244" classname="Dummy_variable_creation" name="retained_columns"/>
+  </testsuite>
+  <testsuite name="factor to string conversion" timestamp="2020-12-12T23:33:38Z" hostname="cd4266ef51dd" tests="5" skipped="0" failures="0" errors="0" time="0.181">
+    <testcase time="0.0659999999999989" classname="factor_to_string_conversion" name="basic_functionality"/>
+    <testcase time="0.00199999999999889" classname="factor_to_string_conversion" name="basic_functionality"/>
+    <testcase time="0.0300000000000011" classname="factor_to_string_conversion" name="bad_args"/>
+    <testcase time="0.0450000000000017" classname="factor_to_string_conversion" name="printing"/>
+    <testcase time="0.0379999999999967" classname="factor_to_string_conversion" name="printing"/>
+  </testsuite>
+  <testsuite name="dplyr filter steps" timestamp="2020-12-12T23:33:38Z" hostname="cd4266ef51dd" tests="11" skipped="0" failures="0" errors="0" time="0.4">
+    <testcase time="0.0670000000000002" classname="dplyr_filter_steps" name="basic_usage_skip_FALSE"/>
+    <testcase time="0.022000000000002" classname="dplyr_filter_steps" name="basic_usage_skip_FALSE"/>
+    <testcase time="0.0479999999999983" classname="dplyr_filter_steps" name="skip_FALSE"/>
+    <testcase time="0.0229999999999997" classname="dplyr_filter_steps" name="skip_FALSE"/>
+    <testcase time="0.049000000000003" classname="dplyr_filter_steps" name="quasiquotation"/>
+    <testcase time="0.0539999999999985" classname="dplyr_filter_steps" name="quasiquotation"/>
+    <testcase time="0.0350000000000001" classname="dplyr_filter_steps" name="quasiquotation"/>
+    <testcase time="0.0120000000000005" classname="dplyr_filter_steps" name="quasiquotation"/>
+    <testcase time="0.0440000000000005" classname="dplyr_filter_steps" name="no_input"/>
+    <testcase time="0.00399999999999778" classname="dplyr_filter_steps" name="printing"/>
+    <testcase time="0.0420000000000016" classname="dplyr_filter_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="Formula stuff" timestamp="2020-12-12T23:33:38Z" hostname="cd4266ef51dd" tests="11" skipped="0" failures="0" errors="0" time="0.342">
+    <testcase time="0.0199999999999996" classname="Formula_stuff" name="is_trained_"/>
+    <testcase time="0.0210000000000008" classname="Formula_stuff" name="is_trained_"/>
+    <testcase time="0.00300000000000011" classname="Formula_stuff" name="is_trained_"/>
+    <testcase time="0.0799999999999983" classname="Formula_stuff" name="is_trained_"/>
+    <testcase time="0.00199999999999889" classname="Formula_stuff" name="is_trained_"/>
+    <testcase time="0.0530000000000008" classname="Formula_stuff" name="is_trained_"/>
+    <testcase time="0.0360000000000014" classname="Formula_stuff" name="formulas"/>
+    <testcase time="0.0410000000000004" classname="Formula_stuff" name="formulas"/>
+    <testcase time="0.032" classname="Formula_stuff" name="formulas"/>
+    <testcase time="0.036999999999999" classname="Formula_stuff" name="formulas"/>
+    <testcase time="0.0169999999999995" classname="Formula_stuff" name="bad_args"/>
+  </testsuite>
+  <testsuite name="Geographic distances" timestamp="2020-12-12T23:33:39Z" hostname="cd4266ef51dd" tests="12" skipped="0" failures="0" errors="0" time="0.281">
+    <testcase time="0.0760000000000005" classname="Geographic_distances" name="basic_functionality"/>
+    <testcase time="0.00100000000000122" classname="Geographic_distances" name="basic_functionality"/>
+    <testcase time="0.0629999999999988" classname="Geographic_distances" name="basic_functionality"/>
+    <testcase time="0.00100000000000122" classname="Geographic_distances" name="basic_functionality"/>
+    <testcase time="0.0389999999999979" classname="Geographic_distances" name="bad_args"/>
+    <testcase time="0.0259999999999998" classname="Geographic_distances" name="bad_args"/>
+    <testcase time="0.00500000000000256" classname="Geographic_distances" name="bad_args"/>
+    <testcase time="0.00399999999999778" classname="Geographic_distances" name="bad_args"/>
+    <testcase time="0.00500000000000256" classname="Geographic_distances" name="bad_args"/>
+    <testcase time="0.00499999999999901" classname="Geographic_distances" name="bad_args"/>
+    <testcase time="0.0129999999999981" classname="Geographic_distances" name="printing"/>
+    <testcase time="0.0430000000000028" classname="Geographic_distances" name="printing"/>
+  </testsuite>
+  <testsuite name="Grouped data frame tests" timestamp="2020-12-12T23:33:39Z" hostname="cd4266ef51dd" tests="1" skipped="0" failures="0" errors="0" time="0.068">
+    <testcase time="0.0679999999999978" classname="Grouped_data_frame_tests" name="grouped_data_frames_work"/>
+  </testsuite>
+  <testsuite name="Holiday features" timestamp="2020-12-12T23:33:39Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.231">
+    <testcase time="0.0960000000000001" classname="Holiday_features" name="Date_class"/>
+    <testcase time="0.00199999999999889" classname="Holiday_features" name="Date_class"/>
+    <testcase time="0.00100000000000122" classname="Holiday_features" name="Date_class"/>
+    <testcase time="0.0740000000000016" classname="Holiday_features" name="POSIXct_class"/>
+    <testcase time="0.00199999999999889" classname="Holiday_features" name="POSIXct_class"/>
+    <testcase time="0.00100000000000122" classname="Holiday_features" name="POSIXct_class"/>
+    <testcase time="0.0129999999999981" classname="Holiday_features" name="printing"/>
+    <testcase time="0.0420000000000016" classname="Holiday_features" name="printing"/>
+  </testsuite>
+  <testsuite name="Hyperbolic transformations" timestamp="2020-12-12T23:33:39Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.366">
+    <testcase time="0.0559999999999974" classname="Hyperbolic_transformations" name="simple_hyperbolic_trans"/>
+    <testcase time="0.0520000000000032" classname="Hyperbolic_transformations" name="simple_hyperbolic_trans"/>
+    <testcase time="0.0519999999999996" classname="Hyperbolic_transformations" name="simple_hyperbolic_trans"/>
+    <testcase time="0.0569999999999986" classname="Hyperbolic_transformations" name="simple_hyperbolic_trans"/>
+    <testcase time="0.0509999999999984" classname="Hyperbolic_transformations" name="simple_hyperbolic_trans"/>
+    <testcase time="0.0520000000000032" classname="Hyperbolic_transformations" name="simple_hyperbolic_trans"/>
+    <testcase time="0.0129999999999981" classname="Hyperbolic_transformations" name="printing"/>
+    <testcase time="0.0330000000000013" classname="Hyperbolic_transformations" name="printing"/>
+  </testsuite>
+  <testsuite name="ICA" timestamp="2020-12-12T23:33:40Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.643">
+    <testcase time="0.477" classname="ICA" name="correct_ICA_values"/>
+    <testcase time="0.0139999999999993" classname="ICA" name="correct_ICA_values"/>
+    <testcase time="0.0120000000000005" classname="ICA" name="correct_ICA_values"/>
+    <testcase time="0.00600000000000023" classname="ICA" name="printing"/>
+    <testcase time="0.0519999999999996" classname="ICA" name="printing"/>
+    <testcase time="0.0440000000000005" classname="ICA" name="No_ICA_comps"/>
+    <testcase time="0.00199999999999889" classname="ICA" name="No_ICA_comps"/>
+    <testcase time="0.00300000000000011" classname="ICA" name="No_ICA_comps"/>
+    <testcase time="0.00799999999999912" classname="ICA" name="No_ICA_comps"/>
+    <testcase time="0.0160000000000018" classname="ICA" name="tunable"/>
+    <testcase time="0.00199999999999889" classname="ICA" name="tunable"/>
+    <testcase time="0.00499999999999901" classname="ICA" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="ICA" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="ICA" name="tunable"/>
+  </testsuite>
+  <testsuite name="linear regression imputation" timestamp="2020-12-12T23:33:40Z" hostname="cd4266ef51dd" tests="9" skipped="0" failures="0" errors="0" time="0.799">
+    <testcase time="0.108000000000001" classname="linear_regression_imputation" name="Does_the_imputation_no_NAs_and_does_it_correctly."/>
+    <testcase time="0.00100000000000122" classname="linear_regression_imputation" name="Does_the_imputation_no_NAs_and_does_it_correctly."/>
+    <testcase time="0.0519999999999996" classname="linear_regression_imputation" name="Returns_correct_models."/>
+    <testcase time="0.00100000000000122" classname="linear_regression_imputation" name="Returns_correct_models."/>
+    <testcase time="0.0399999999999991" classname="linear_regression_imputation" name="Fails_when_one_of_the_variables_to_impute_is_non_numeric."/>
+    <testcase time="0.0440000000000005" classname="linear_regression_imputation" name="Fails_when_one_of_the_variables_to_impute_is_non_numeric."/>
+    <testcase time="0.488" classname="linear_regression_imputation" name="Maintain_data_type"/>
+    <testcase time="0.0129999999999981" classname="linear_regression_imputation" name="Prints."/>
+    <testcase time="0.0519999999999996" classname="linear_regression_imputation" name="Prints."/>
+  </testsuite>
+  <testsuite name="Integer conversion" timestamp="2020-12-12T23:33:41Z" hostname="cd4266ef51dd" tests="16" skipped="0" failures="0" errors="0" time="0.557">
+    <testcase time="0.147000000000002" classname="Integer_conversion" name="basic_functionality"/>
+    <testcase time="0.000999999999997669" classname="Integer_conversion" name="basic_functionality"/>
+    <testcase time="0.00100000000000122" classname="Integer_conversion" name="basic_functionality"/>
+    <testcase time="0.00199999999999889" classname="Integer_conversion" name="basic_functionality"/>
+    <testcase time="0.00199999999999889" classname="Integer_conversion" name="basic_functionality"/>
+    <testcase time="0.148000000000003" classname="Integer_conversion" name="zero_based"/>
+    <testcase time="0.000999999999997669" classname="Integer_conversion" name="zero_based"/>
+    <testcase time="0.00199999999999889" classname="Integer_conversion" name="zero_based"/>
+    <testcase time="0.00200000000000244" classname="Integer_conversion" name="zero_based"/>
+    <testcase time="0.00300000000000011" classname="Integer_conversion" name="zero_based"/>
+    <testcase time="0.138999999999999" classname="Integer_conversion" name="integers"/>
+    <testcase time="0.00300000000000011" classname="Integer_conversion" name="integers"/>
+    <testcase time="0.00199999999999889" classname="Integer_conversion" name="integers"/>
+    <testcase time="0.00200000000000244" classname="Integer_conversion" name="integers"/>
+    <testcase time="0.0179999999999971" classname="Integer_conversion" name="printing"/>
+    <testcase time="0.0839999999999996" classname="Integer_conversion" name="printing"/>
+  </testsuite>
+  <testsuite name="Interaction creation" timestamp="2020-12-12T23:33:42Z" hostname="cd4266ef51dd" tests="19" skipped="0" failures="0" errors="0" time="0.778">
+    <testcase time="0.117000000000001" classname="Interaction_creation" name="non_factor_variables_with_dot"/>
+    <testcase time="0.0689999999999991" classname="Interaction_creation" name="non_factor_variables_with_specific_variables"/>
+    <testcase time="0.107000000000003" classname="Interaction_creation" name="using_selectors"/>
+    <testcase time="0.0839999999999996" classname="Interaction_creation" name="using_where_works"/>
+    <testcase time="0.0609999999999999" classname="Interaction_creation" name="using_all_of_works"/>
+    <testcase time="0.00499999999999901" classname="Interaction_creation" name="printing"/>
+    <testcase time="0.0459999999999994" classname="Interaction_creation" name="printing"/>
+    <testcase time="0.00300000000000011" classname="Interaction_creation" name="finding_selectors_in_formulas"/>
+    <testcase time="0.00100000000000122" classname="Interaction_creation" name="finding_selectors_in_formulas"/>
+    <testcase time="0.00199999999999889" classname="Interaction_creation" name="finding_selectors_in_formulas"/>
+    <testcase time="0.00199999999999889" classname="Interaction_creation" name="finding_selectors_in_formulas"/>
+    <testcase time="0.00300000000000011" classname="Interaction_creation" name="replacing_selectors_in_formulas"/>
+    <testcase time="0.00200000000000244" classname="Interaction_creation" name="replacing_selectors_in_formulas"/>
+    <testcase time="0.00199999999999889" classname="Interaction_creation" name="replacing_selectors_in_formulas"/>
+    <testcase time="0.0689999999999991" classname="Interaction_creation" name="missing_columns"/>
+    <testcase time="0.0150000000000006" classname="Interaction_creation" name="missing_columns"/>
+    <testcase time="0.0850000000000009" classname="Interaction_creation" name="missing_columns"/>
+    <testcase time="0.0150000000000006" classname="Interaction_creation" name="missing_columns"/>
+    <testcase time="0.0899999999999999" classname="Interaction_creation" name="missing_columns"/>
+  </testsuite>
+  <testsuite name="Intercept creation" timestamp="2020-12-12T23:33:42Z" hostname="cd4266ef51dd" tests="0" skipped="0" failures="0" errors="0" time="0"/>
+  <testsuite name="step_intercept" timestamp="2020-12-12T23:33:42Z" hostname="cd4266ef51dd" tests="7" skipped="0" failures="0" errors="0" time="0.214">
+    <testcase time="0.0619999999999976" classname="step_intercept" name="add_appropriate_column_with_default_settings"/>
+    <testcase time="0.0560000000000009" classname="step_intercept" name="adds_arbitrary_numeric_column"/>
+    <testcase time="0.00600000000000023" classname="step_intercept" name="deals_with_bad_input"/>
+    <testcase time="0.00499999999999901" classname="step_intercept" name="deals_with_bad_input"/>
+    <testcase time="0.0390000000000015" classname="step_intercept" name="deals_with_bad_input"/>
+    <testcase time="0.0130000000000017" classname="step_intercept" name="printing"/>
+    <testcase time="0.0329999999999977" classname="step_intercept" name="printing"/>
+  </testsuite>
+  <testsuite name="inverse trans" timestamp="2020-12-12T23:33:43Z" hostname="cd4266ef51dd" tests="4" skipped="0" failures="0" errors="0" time="0.205">
+    <testcase time="0.0670000000000002" classname="inverse_trans" name="simple_inverse_trans"/>
+    <testcase time="0.0590000000000011" classname="inverse_trans" name="alt_offset"/>
+    <testcase time="0.0410000000000004" classname="inverse_trans" name="printing"/>
+    <testcase time="0.0380000000000003" classname="inverse_trans" name="printing"/>
+  </testsuite>
+  <testsuite name="Inverse logit" timestamp="2020-12-12T23:33:43Z" hostname="cd4266ef51dd" tests="5" skipped="0" failures="0" errors="0" time="0.108">
+    <testcase time="0.0579999999999998" classname="Inverse_logit" name="simple_logit_trans"/>
+    <testcase time="0.00199999999999889" classname="Inverse_logit" name="simple_logit_trans"/>
+    <testcase time="0.00199999999999889" classname="Inverse_logit" name="simple_logit_trans"/>
+    <testcase time="0.0130000000000017" classname="Inverse_logit" name="printing"/>
+    <testcase time="0.0330000000000013" classname="Inverse_logit" name="printing"/>
+  </testsuite>
+  <testsuite name="ISOmap" timestamp="2020-12-12T23:33:43Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.406">
+    <testcase time="0.148999999999997" classname="ISOmap" name="correct_Isomap_values"/>
+    <testcase time="0.00200000000000244" classname="ISOmap" name="correct_Isomap_values"/>
+    <testcase time="0.00799999999999912" classname="ISOmap" name="printing"/>
+    <testcase time="0.0519999999999996" classname="ISOmap" name="printing"/>
+    <testcase time="0.041999999999998" classname="ISOmap" name="No_ISOmap"/>
+    <testcase time="0.00500000000000256" classname="ISOmap" name="No_ISOmap"/>
+    <testcase time="0.00300000000000011" classname="ISOmap" name="No_ISOmap"/>
+    <testcase time="0.00300000000000011" classname="ISOmap" name="No_ISOmap"/>
+    <testcase time="0.106999999999999" classname="ISOmap" name="ISOmap_fails_gracefully"/>
+    <testcase time="0.0249999999999986" classname="ISOmap" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="ISOmap" name="tunable"/>
+    <testcase time="0.00499999999999901" classname="ISOmap" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="ISOmap" name="tunable"/>
+    <testcase time="0.00199999999999889" classname="ISOmap" name="tunable"/>
+  </testsuite>
+  <testsuite name="K-nn imputation" timestamp="2020-12-12T23:33:43Z" hostname="cd4266ef51dd" tests="20" skipped="0" failures="0" errors="0" time="0.333">
+    <testcase time="0.0359999999999978" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.190000000000001" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.00100000000000122" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.00199999999999889" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.00100000000000122" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.000999999999997669" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.00200000000000244" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.00900000000000034" classname="K_nn_imputation" name="imputation_values"/>
+    <testcase time="0.00499999999999901" classname="K_nn_imputation" name="printing"/>
+    <testcase time="0.0440000000000005" classname="K_nn_imputation" name="printing"/>
+    <testcase time="0.00199999999999889" classname="K_nn_imputation" name="options"/>
+    <testcase time="0.00199999999999889" classname="K_nn_imputation" name="options"/>
+    <testcase time="0.00100000000000122" classname="K_nn_imputation" name="options"/>
+    <testcase time="0.00400000000000134" classname="K_nn_imputation" name="options"/>
+    <testcase time="0.00900000000000034" classname="K_nn_imputation" name="options"/>
+    <testcase time="0.014999999999997" classname="K_nn_imputation" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="K_nn_imputation" name="tunable"/>
+    <testcase time="0.00400000000000134" classname="K_nn_imputation" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="K_nn_imputation" name="tunable"/>
+    <testcase time="0.00199999999999889" classname="K_nn_imputation" name="tunable"/>
+  </testsuite>
+  <testsuite name="Polynomial Kernel PCA" timestamp="2020-12-12T23:33:44Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.312">
+    <testcase time="0.157" classname="Polynomial_Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00300000000000011" classname="Polynomial_Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00199999999999889" classname="Polynomial_Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00799999999999912" classname="Polynomial_Kernel_PCA" name="printing"/>
+    <testcase time="0.054000000000002" classname="Polynomial_Kernel_PCA" name="printing"/>
+    <testcase time="0.0440000000000005" classname="Polynomial_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00499999999999901" classname="Polynomial_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00300000000000011" classname="Polynomial_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00300000000000011" classname="Polynomial_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.0239999999999974" classname="Polynomial_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="Polynomial_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00399999999999778" classname="Polynomial_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="Polynomial_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00199999999999889" classname="Polynomial_Kernel_PCA" name="tunable"/>
+  </testsuite>
+  <testsuite name="RBF Kernel PCA" timestamp="2020-12-12T23:33:44Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.259">
+    <testcase time="0.105" classname="RBF_Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00300000000000011" classname="RBF_Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00300000000000011" classname="RBF_Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00700000000000145" classname="RBF_Kernel_PCA" name="printing"/>
+    <testcase time="0.0589999999999975" classname="RBF_Kernel_PCA" name="printing"/>
+    <testcase time="0.0450000000000017" classname="RBF_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00499999999999901" classname="RBF_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00300000000000011" classname="RBF_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00300000000000011" classname="RBF_Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.0159999999999982" classname="RBF_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00300000000000011" classname="RBF_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00400000000000134" classname="RBF_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="RBF_Kernel_PCA" name="tunable"/>
+    <testcase time="0.00199999999999889" classname="RBF_Kernel_PCA" name="tunable"/>
+  </testsuite>
+  <testsuite name="Kernel PCA" timestamp="2020-12-12T23:33:44Z" hostname="cd4266ef51dd" tests="9" skipped="0" failures="0" errors="0" time="0.237">
+    <testcase time="0.109999999999999" classname="Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00300000000000011" classname="Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00199999999999889" classname="Kernel_PCA" name="correct_kernel_PCA_values"/>
+    <testcase time="0.00799999999999912" classname="Kernel_PCA" name="printing"/>
+    <testcase time="0.0570000000000022" classname="Kernel_PCA" name="printing"/>
+    <testcase time="0.0459999999999994" classname="Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00399999999999778" classname="Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00400000000000134" classname="Kernel_PCA" name="No_kPCA_comps"/>
+    <testcase time="0.00300000000000011" classname="Kernel_PCA" name="No_kPCA_comps"/>
+  </testsuite>
+  <testsuite name="step_lag" timestamp="2020-12-12T23:33:45Z" hostname="cd4266ef51dd" tests="7" skipped="0" failures="0" errors="0" time="0.327">
+    <testcase time="0.0659999999999989" classname="step_lag" name="default_lag_works_on_a_single_feature"/>
+    <testcase time="0.0650000000000013" classname="step_lag" name="default_lag_works_on_a_single_feature"/>
+    <testcase time="0.0560000000000009" classname="step_lag" name="default_lag_works_on_a_single_feature"/>
+    <testcase time="0.0259999999999998" classname="step_lag" name="default_lag_works_on_a_single_feature"/>
+    <testcase time="0.0649999999999977" classname="step_lag" name="specification_of_multiple_lags_in_a_vector"/>
+    <testcase time="0.0140000000000029" classname="step_lag" name="something_prints"/>
+    <testcase time="0.0350000000000001" classname="step_lag" name="something_prints"/>
+  </testsuite>
+  <testsuite name="Linear combination detection" timestamp="2020-12-12T23:33:45Z" hostname="cd4266ef51dd" tests="6" skipped="0" failures="0" errors="0" time="0.238">
+    <testcase time="0.0859999999999985" classname="Linear_combination_detection" name="example_1"/>
+    <testcase time="0.0500000000000007" classname="Linear_combination_detection" name="example_2"/>
+    <testcase time="0.0559999999999974" classname="Linear_combination_detection" name="no_exclusions"/>
+    <testcase time="0.00200000000000244" classname="Linear_combination_detection" name="no_exclusions"/>
+    <testcase time="0.00499999999999901" classname="Linear_combination_detection" name="printing"/>
+    <testcase time="0.0390000000000015" classname="Linear_combination_detection" name="printing"/>
+  </testsuite>
+  <testsuite name="List column operations" timestamp="2020-12-12T23:33:45Z" hostname="cd4266ef51dd" tests="3" skipped="0" failures="0" errors="0" time="0.011">
+    <testcase time="0.0069999999999979" classname="List_column_operations" name="number_of_complete_records"/>
+    <testcase time="0.00200000000000244" classname="List_column_operations" name="number_of_complete_records"/>
+    <testcase time="0.00199999999999889" classname="List_column_operations" name="number_of_complete_records"/>
+  </testsuite>
+  <testsuite name="Log transformation" timestamp="2020-12-12T23:33:45Z" hostname="cd4266ef51dd" tests="7" skipped="0" failures="0" errors="0" time="0.332">
+    <testcase time="0.0629999999999988" classname="Log_transformation" name="simple_log_trans"/>
+    <testcase time="0.0670000000000002" classname="Log_transformation" name="alt_base"/>
+    <testcase time="0.0560000000000009" classname="Log_transformation" name="alt_offset"/>
+    <testcase time="0.0180000000000007" classname="Log_transformation" name="printing"/>
+    <testcase time="0.0359999999999978" classname="Log_transformation" name="printing"/>
+    <testcase time="0.0570000000000022" classname="Log_transformation" name="signed_arg"/>
+    <testcase time="0.0350000000000001" classname="Log_transformation" name="signed_arg"/>
+  </testsuite>
+  <testsuite name="Logit transformation" timestamp="2020-12-12T23:33:45Z" hostname="cd4266ef51dd" tests="4" skipped="0" failures="0" errors="0" time="0.392">
+    <testcase time="0.32" classname="Logit_transformation" name="simple_logit_trans"/>
+    <testcase time="0.0269999999999975" classname="Logit_transformation" name="out_of_bounds_logit_trans"/>
+    <testcase time="0.0130000000000017" classname="Logit_transformation" name="printing"/>
+    <testcase time="0.032" classname="Logit_transformation" name="printing"/>
+  </testsuite>
+  <testsuite name="Lower limit imputation" timestamp="2020-12-12T23:33:46Z" hostname="cd4266ef51dd" tests="10" skipped="0" failures="0" errors="0" time="0.129">
+    <testcase time="0.0229999999999997" classname="Lower_limit_imputation" name="basic_usage"/>
+    <testcase time="0.0339999999999989" classname="Lower_limit_imputation" name="basic_usage"/>
+    <testcase time="0.00100000000000122" classname="Lower_limit_imputation" name="basic_usage"/>
+    <testcase time="0.00999999999999801" classname="Lower_limit_imputation" name="basic_usage"/>
+    <testcase time="0.00200000000000244" classname="Lower_limit_imputation" name="basic_usage"/>
+    <testcase time="0.00199999999999889" classname="Lower_limit_imputation" name="basic_usage"/>
+    <testcase time="0.00199999999999889" classname="Lower_limit_imputation" name="basic_usage"/>
+    <testcase time="0.0169999999999995" classname="Lower_limit_imputation" name="bad_data"/>
+    <testcase time="0.00400000000000134" classname="Lower_limit_imputation" name="printing"/>
+    <testcase time="0.0339999999999989" classname="Lower_limit_imputation" name="printing"/>
+  </testsuite>
+  <testsuite name="Matrix data types" timestamp="2020-12-12T23:33:46Z" hostname="cd4266ef51dd" tests="10" skipped="0" failures="0" errors="0" time="0.59">
+    <testcase time="0.456000000000003" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.00199999999999889" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.00400000000000134" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.00399999999999778" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.00400000000000134" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.00399999999999778" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.00300000000000011" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.00300000000000011" classname="Matrix_data_types" name="correct_types"/>
+    <testcase time="0.0920000000000023" classname="Matrix_data_types" name="bad_args"/>
+    <testcase time="0.0179999999999971" classname="Matrix_data_types" name="bad_args"/>
+  </testsuite>
+  <testsuite name="Mean imputation" timestamp="2020-12-12T23:33:47Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.45">
+    <testcase time="0.144000000000002" classname="Mean_imputation" name="simple_mean"/>
+    <testcase time="0.00199999999999889" classname="Mean_imputation" name="simple_mean"/>
+    <testcase time="0.00100000000000122" classname="Mean_imputation" name="simple_mean"/>
+    <testcase time="0.00400000000000134" classname="Mean_imputation" name="simple_mean"/>
+    <testcase time="0.00199999999999889" classname="Mean_imputation" name="simple_mean"/>
+    <testcase time="0.114999999999998" classname="Mean_imputation" name="trimmed_mean"/>
+    <testcase time="0.0609999999999999" classname="Mean_imputation" name="non_numeric"/>
+    <testcase time="0.0249999999999986" classname="Mean_imputation" name="printing"/>
+    <testcase time="0.0730000000000004" classname="Mean_imputation" name="printing"/>
+    <testcase time="0.0150000000000006" classname="Mean_imputation" name="tunable"/>
+    <testcase time="0.00199999999999889" classname="Mean_imputation" name="tunable"/>
+    <testcase time="0.00400000000000134" classname="Mean_imputation" name="tunable"/>
+    <testcase time="0.00100000000000122" classname="Mean_imputation" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="Mean_imputation" name="tunable"/>
+  </testsuite>
+  <testsuite name="Median imputation" timestamp="2020-12-12T23:33:47Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.312">
+    <testcase time="0.123000000000001" classname="Median_imputation" name="simple_median"/>
+    <testcase time="0.00100000000000122" classname="Median_imputation" name="simple_median"/>
+    <testcase time="0.000999999999997669" classname="Median_imputation" name="simple_median"/>
+    <testcase time="0.00500000000000256" classname="Median_imputation" name="simple_median"/>
+    <testcase time="0.00199999999999889" classname="Median_imputation" name="simple_median"/>
+    <testcase time="0.0590000000000011" classname="Median_imputation" name="non_numeric"/>
+    <testcase time="0.0499999999999972" classname="Median_imputation" name="printing"/>
+    <testcase time="0.0710000000000015" classname="Median_imputation" name="printing"/>
+  </testsuite>
+  <testsuite name="Missing data checks" timestamp="2020-12-12T23:33:47Z" hostname="cd4266ef51dd" tests="9" skipped="0" failures="0" errors="0" time="0.299">
+    <testcase time="0.0620000000000012" classname="Missing_data_checks" name="check_missing_passes_silently_when_no_NA"/>
+    <testcase time="0.0199999999999996" classname="Missing_data_checks" name="check_missing_passes_silently_when_no_NA"/>
+    <testcase time="0.0289999999999999" classname="Missing_data_checks" name="check_missing_throws_error_on_all_types"/>
+    <testcase time="0.027000000000001" classname="Missing_data_checks" name="check_missing_throws_error_on_all_types"/>
+    <testcase time="0.0279999999999987" classname="Missing_data_checks" name="check_missing_throws_error_on_all_types"/>
+    <testcase time="0.0330000000000013" classname="Missing_data_checks" name="check_missing_throws_error_on_all_types"/>
+    <testcase time="0.0279999999999987" classname="Missing_data_checks" name="check_missing_works_on_multiple_columns_simultaneously"/>
+    <testcase time="0.0300000000000011" classname="Missing_data_checks" name="check_missing_works_on_multiple_columns_simultaneously"/>
+    <testcase time="0.041999999999998" classname="Missing_data_checks" name="check_missing_on_a_new_set"/>
+  </testsuite>
+  <testsuite name="Mode imputation" timestamp="2020-12-12T23:33:48Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.292">
+    <testcase time="0.123999999999999" classname="Mode_imputation" name="simple_modes"/>
+    <testcase time="0.00200000000000244" classname="Mode_imputation" name="simple_modes"/>
+    <testcase time="0.000999999999997669" classname="Mode_imputation" name="simple_modes"/>
+    <testcase time="0.00500000000000256" classname="Mode_imputation" name="simple_modes"/>
+    <testcase time="0.00199999999999889" classname="Mode_imputation" name="simple_modes"/>
+    <testcase time="0.0640000000000001" classname="Mode_imputation" name="non_nominal"/>
+    <testcase time="0.0240000000000009" classname="Mode_imputation" name="printing"/>
+    <testcase time="0.0700000000000003" classname="Mode_imputation" name="printing"/>
+  </testsuite>
+  <testsuite name="Multivariate data" timestamp="2020-12-12T23:33:48Z" hostname="cd4266ef51dd" tests="3" skipped="0" failures="0" errors="0" time="0.116">
+    <testcase time="0.113" classname="Multivariate_data" name="multivariate_outcome"/>
+    <testcase time="0.000999999999997669" classname="Multivariate_data" name="multivariate_outcome"/>
+    <testcase time="0.00200000000000244" classname="Multivariate_data" name="multivariate_outcome"/>
+  </testsuite>
+  <testsuite name="dplyr mutate steps" timestamp="2020-12-12T23:33:48Z" hostname="cd4266ef51dd" tests="9" skipped="0" failures="0" errors="0" time="0.349">
+    <testcase time="0.0730000000000004" classname="dplyr_mutate_steps" name="basic_usage"/>
+    <testcase time="0.0249999999999986" classname="dplyr_mutate_steps" name="basic_usage"/>
+    <testcase time="0.0519999999999996" classname="dplyr_mutate_steps" name="quasiquotation"/>
+    <testcase time="0.0579999999999998" classname="dplyr_mutate_steps" name="quasiquotation"/>
+    <testcase time="0.0360000000000014" classname="dplyr_mutate_steps" name="quasiquotation"/>
+    <testcase time="0.0129999999999981" classname="dplyr_mutate_steps" name="quasiquotation"/>
+    <testcase time="0.0520000000000032" classname="dplyr_mutate_steps" name="no_input"/>
+    <testcase time="0.00399999999999778" classname="dplyr_mutate_steps" name="printing"/>
+    <testcase time="0.0360000000000014" classname="dplyr_mutate_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="dplyr mutate_at steps" timestamp="2020-12-12T23:33:48Z" hostname="cd4266ef51dd" tests="7" skipped="0" failures="0" errors="0" time="0.263">
+    <testcase time="0.0670000000000002" classname="dplyr_mutate_at_steps" name="basic_usage"/>
+    <testcase time="0.0269999999999975" classname="dplyr_mutate_at_steps" name="basic_usage"/>
+    <testcase time="0.0630000000000024" classname="dplyr_mutate_at_steps" name="mulitple_functions"/>
+    <testcase time="0.0309999999999988" classname="dplyr_mutate_at_steps" name="mulitple_functions"/>
+    <testcase time="0.00499999999999901" classname="dplyr_mutate_at_steps" name="no_input"/>
+    <testcase time="0.00600000000000023" classname="dplyr_mutate_at_steps" name="printing"/>
+    <testcase time="0.0640000000000001" classname="dplyr_mutate_at_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="step_naomit" timestamp="2020-12-12T23:33:49Z" hostname="cd4266ef51dd" tests="5" skipped="0" failures="0" errors="0" time="0.3">
+    <testcase time="0.0890000000000022" classname="step_naomit" name="step_naomit_on_all_columns"/>
+    <testcase time="0.0730000000000004" classname="step_naomit" name="step_naomit_on_subset_of_columns"/>
+    <testcase time="0.070999999999998" classname="step_naomit" name="step_naomit_on_subset_of_columns"/>
+    <testcase time="0.0210000000000008" classname="step_naomit" name="something_prints"/>
+    <testcase time="0.0459999999999994" classname="step_naomit" name="something_prints"/>
+  </testsuite>
+  <testsuite name="Check new values" timestamp="2020-12-12T23:33:49Z" hostname="cd4266ef51dd" tests="30" skipped="0" failures="0" errors="0" time="1.154">
+    <testcase time="0.00600000000000023" classname="Check_new_values" name="new_values_func_passes_when_no_new_values"/>
+    <testcase time="0.00600000000000023" classname="Check_new_values" name="new_values_func_breaks_when_x_contains_new_values"/>
+    <testcase time="0.00600000000000023" classname="Check_new_values" name="new_values_func_correctly_prints_multiple_new_values"/>
+    <testcase time="0.00199999999999889" classname="Check_new_values" name="new_values_func_by_default_ignores_NA"/>
+    <testcase time="0.0069999999999979" classname="Check_new_values" name="new_values_func_breaks_when_NA_is_new_value_and_ignore_NA_is_FALSE"/>
+    <testcase time="0.0110000000000028" classname="Check_new_values" name="new_values_func_correctly_prints_multiple_new_values_with_NA"/>
+    <testcase time="0.0069999999999979" classname="Check_new_values" name="new_values_func_correctly_prints_only_non_na_values_when_also_NA_as_new_value_and_ignore_NA_is_TRUE"/>
+    <testcase time="0.119" classname="Check_new_values" name="check_new_values_does_nothing_when_no_new_values"/>
+    <testcase time="0.00400000000000134" classname="Check_new_values" name="check_new_values_does_nothing_when_no_new_values"/>
+    <testcase time="0.0620000000000012" classname="Check_new_values" name="check_new_values_breaks_with_new_values"/>
+    <testcase time="0.0609999999999999" classname="Check_new_values" name="check_new_values_breaks_with_new_values"/>
+    <testcase time="0.0730000000000004" classname="Check_new_values" name="check_new_values_ignores_NA_by_default"/>
+    <testcase time="0.0659999999999989" classname="Check_new_values" name="check_new_values_ignores_NA_by_default"/>
+    <testcase time="0.0619999999999976" classname="Check_new_values" name="check_new_values_not_ignoring_NA_argument"/>
+    <testcase time="0.0600000000000023" classname="Check_new_values" name="check_new_values_not_ignoring_NA_argument"/>
+    <testcase time="0.0599999999999987" classname="Check_new_values" name="check_new_values_works_on_doubles"/>
+    <testcase time="0.00200000000000244" classname="Check_new_values" name="check_new_values_works_on_doubles"/>
+    <testcase time="0.0519999999999996" classname="Check_new_values" name="check_new_values_works_on_doubles"/>
+    <testcase time="0.0659999999999989" classname="Check_new_values" name="check_new_values_works_on_integers"/>
+    <testcase time="0.00199999999999889" classname="Check_new_values" name="check_new_values_works_on_integers"/>
+    <testcase time="0.0510000000000019" classname="Check_new_values" name="check_new_values_works_on_integers"/>
+    <testcase time="0.0739999999999981" classname="Check_new_values" name="check_new_values_works_on_factors"/>
+    <testcase time="0.00200000000000244" classname="Check_new_values" name="check_new_values_works_on_factors"/>
+    <testcase time="0.0670000000000002" classname="Check_new_values" name="check_new_values_works_on_factors"/>
+    <testcase time="0.0639999999999965" classname="Check_new_values" name="check_new_values_works_on_characters"/>
+    <testcase time="0.00300000000000011" classname="Check_new_values" name="check_new_values_works_on_characters"/>
+    <testcase time="0.0620000000000012" classname="Check_new_values" name="check_new_values_works_on_characters"/>
+    <testcase time="0.0549999999999997" classname="Check_new_values" name="check_new_values_works_on_logicals"/>
+    <testcase time="0.00200000000000244" classname="Check_new_values" name="check_new_values_works_on_logicals"/>
+    <testcase time="0.0399999999999991" classname="Check_new_values" name="check_new_values_works_on_logicals"/>
+  </testsuite>
+  <testsuite name="NNeg Matrix Fact" timestamp="2020-12-12T23:33:50Z" hostname="cd4266ef51dd" tests="3" skipped="3" failures="0" errors="0" time="0.017">
+    <testcase time="0.0069999999999979" classname="NNeg_Matrix_Fact" name="Correct_values">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000256" classname="NNeg_Matrix_Fact" name="No_NNF">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999901" classname="NNeg_Matrix_Fact" name="tunable">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="Checking factors in new data versus original" timestamp="2020-12-12T23:33:50Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.568">
+    <testcase time="0.203000000000003" classname="Checking_factors_in_new_data_versus_original" name="factors_all_the_way_down"/>
+    <testcase time="0.0529999999999973" classname="Checking_factors_in_new_data_versus_original" name="factors_all_the_way_down_with_skipping"/>
+    <testcase time="0.0570000000000022" classname="Checking_factors_in_new_data_versus_original" name="mixed_nominal_data"/>
+    <testcase time="0.0599999999999952" classname="Checking_factors_in_new_data_versus_original" name="mixed_nominal_data_with_skipping"/>
+    <testcase time="0.0480000000000018" classname="Checking_factors_in_new_data_versus_original" name="no_factors"/>
+    <testcase time="0.0489999999999995" classname="Checking_factors_in_new_data_versus_original" name="no_factors_with_skipping"/>
+    <testcase time="0.0480000000000018" classname="Checking_factors_in_new_data_versus_original" name="missing_factors"/>
+    <testcase time="0.0499999999999972" classname="Checking_factors_in_new_data_versus_original" name="missing_factors_with_skipping"/>
+  </testsuite>
+  <testsuite name="Indicator for novel levels" timestamp="2020-12-12T23:33:51Z" hostname="cd4266ef51dd" tests="21" skipped="0" failures="0" errors="0" time="0.385">
+    <testcase time="0.0990000000000038" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00199999999999534" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00199999999999534" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00199999999999534" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.000999999999997669" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00199999999999534" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00500000000000256" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.00399999999999778" classname="Indicator_for_novel_levels" name="basic_functionality"/>
+    <testcase time="0.0420000000000016" classname="Indicator_for_novel_levels" name="bad_args"/>
+    <testcase time="0.0489999999999995" classname="Indicator_for_novel_levels" name="bad_args"/>
+    <testcase time="0.0889999999999986" classname="Indicator_for_novel_levels" name="missing_values"/>
+    <testcase time="0.00200000000000244" classname="Indicator_for_novel_levels" name="missing_values"/>
+    <testcase time="0.00600000000000023" classname="Indicator_for_novel_levels" name="printing"/>
+    <testcase time="0.0660000000000025" classname="Indicator_for_novel_levels" name="printing"/>
+  </testsuite>
+  <testsuite name="Natural splines" timestamp="2020-12-12T23:33:51Z" hostname="cd4266ef51dd" tests="11" skipped="0" failures="0" errors="0" time="0.169">
+    <testcase time="0.0969999999999942" classname="Natural_splines" name="correct_basis_functions"/>
+    <testcase time="0.00100000000000477" classname="Natural_splines" name="correct_basis_functions"/>
+    <testcase time="0.000999999999997669" classname="Natural_splines" name="correct_basis_functions"/>
+    <testcase time="0.000999999999997669" classname="Natural_splines" name="correct_basis_functions"/>
+    <testcase time="0.00500000000000256" classname="Natural_splines" name="printing"/>
+    <testcase time="0.0379999999999967" classname="Natural_splines" name="printing"/>
+    <testcase time="0.0169999999999959" classname="Natural_splines" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="Natural_splines" name="tunable"/>
+    <testcase time="0.00500000000000256" classname="Natural_splines" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="Natural_splines" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="Natural_splines" name="tunable"/>
+  </testsuite>
+  <testsuite name="Number to factor conversion" timestamp="2020-12-12T23:33:51Z" hostname="cd4266ef51dd" tests="12" skipped="0" failures="0" errors="0" time="0.246">
+    <testcase time="0.0740000000000052" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00399999999999778" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00500000000000256" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00199999999999534" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.0549999999999997" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00500000000000256" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00399999999999778" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00100000000000477" classname="Number_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.0239999999999938" classname="Number_to_factor_conversion" name="bad_args"/>
+    <testcase time="0.00500000000000256" classname="Number_to_factor_conversion" name="bad_args"/>
+    <testcase time="0.0399999999999991" classname="Number_to_factor_conversion" name="printing"/>
+    <testcase time="0.027000000000001" classname="Number_to_factor_conversion" name="printing"/>
+  </testsuite>
+  <testsuite name="Near zero variance filter" timestamp="2020-12-12T23:33:51Z" hostname="cd4266ef51dd" tests="12" skipped="0" failures="0" errors="0" time="0.208">
+    <testcase time="0.0210000000000008" classname="Near_zero_variance_filter" name="nzv_filtering"/>
+    <testcase time="0.0439999999999969" classname="Near_zero_variance_filter" name="nzv_filtering"/>
+    <testcase time="0.00100000000000477" classname="Near_zero_variance_filter" name="nzv_filtering"/>
+    <testcase time="0.0180000000000007" classname="Near_zero_variance_filter" name="altered_options"/>
+    <testcase time="0.0409999999999968" classname="Near_zero_variance_filter" name="altered_options"/>
+    <testcase time="0.0189999999999984" classname="Near_zero_variance_filter" name="printing"/>
+    <testcase time="0.0410000000000039" classname="Near_zero_variance_filter" name="printing"/>
+    <testcase time="0.0139999999999958" classname="Near_zero_variance_filter" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="Near_zero_variance_filter" name="tunable"/>
+    <testcase time="0.00500000000000256" classname="Near_zero_variance_filter" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="Near_zero_variance_filter" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="Near_zero_variance_filter" name="tunable"/>
+  </testsuite>
+  <testsuite name="Ordinal data to scores" timestamp="2020-12-12T23:33:52Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.313">
+    <testcase time="0.088000000000001" classname="Ordinal_data_to_scores" name="linear_scores"/>
+    <testcase time="0.000999999999997669" classname="Ordinal_data_to_scores" name="linear_scores"/>
+    <testcase time="0.00100000000000477" classname="Ordinal_data_to_scores" name="linear_scores"/>
+    <testcase time="0.00199999999999534" classname="Ordinal_data_to_scores" name="linear_scores"/>
+    <testcase time="0.00100000000000477" classname="Ordinal_data_to_scores" name="linear_scores"/>
+    <testcase time="0.0899999999999963" classname="Ordinal_data_to_scores" name="nonlinear_scores"/>
+    <testcase time="0.00200000000000244" classname="Ordinal_data_to_scores" name="nonlinear_scores"/>
+    <testcase time="0.000999999999997669" classname="Ordinal_data_to_scores" name="nonlinear_scores"/>
+    <testcase time="0.00100000000000477" classname="Ordinal_data_to_scores" name="nonlinear_scores"/>
+    <testcase time="0.00199999999999534" classname="Ordinal_data_to_scores" name="nonlinear_scores"/>
+    <testcase time="0.0420000000000016" classname="Ordinal_data_to_scores" name="bad_spec"/>
+    <testcase time="0.0159999999999982" classname="Ordinal_data_to_scores" name="bad_spec"/>
+    <testcase time="0.017000000000003" classname="Ordinal_data_to_scores" name="printing"/>
+    <testcase time="0.0489999999999995" classname="Ordinal_data_to_scores" name="printing"/>
+  </testsuite>
+  <testsuite name="Pooling to other category" timestamp="2020-12-12T23:33:52Z" hostname="cd4266ef51dd" tests="58" skipped="0" failures="0" errors="0" time="1.148">
+    <testcase time="0.149999999999999" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.0949999999999989" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00500000000000256" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.000999999999997669" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00100000000000477" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.000999999999997669" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00399999999999778" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00100000000000477" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.0100000000000051" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.000999999999997669" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="default_inputs"/>
+    <testcase time="0.0970000000000013" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.00100000000000477" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.000999999999997669" classname="Pooling_to_other_category" name="high_threshold_much_removals"/>
+    <testcase time="0.0560000000000045" classname="Pooling_to_other_category" name="low_threshold_no_removals"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="low_threshold_no_removals"/>
+    <testcase time="0.000999999999997669" classname="Pooling_to_other_category" name="low_threshold_no_removals"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="low_threshold_no_removals"/>
+    <testcase time="0.122999999999998" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00100000000000477" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.00200000000000244" classname="Pooling_to_other_category" name="factor_inputs"/>
+    <testcase time="0.0970000000000013" classname="Pooling_to_other_category" name="novel_levels"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="novel_levels"/>
+    <testcase time="0.0940000000000012" classname="Pooling_to_other_category" name="novel_levels"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="novel_levels"/>
+    <testcase time="0.0359999999999943" classname="Pooling_to_other_category" name="_other_already_in_use"/>
+    <testcase time="0.007000000000005" classname="Pooling_to_other_category" name="printing"/>
+    <testcase time="0.0829999999999984" classname="Pooling_to_other_category" name="printing"/>
+    <testcase time="0.00500000000000256" classname="Pooling_to_other_category" name="if_threshold_argument_is_an_integer_greater_than_one_then_it_s_treated_as_a_frequency"/>
+    <testcase time="0.0829999999999984" classname="Pooling_to_other_category" name="if_threshold_argument_is_an_integer_greater_than_one_then_it_s_treated_as_a_frequency"/>
+    <testcase time="0.00600000000000023" classname="Pooling_to_other_category" name="if_the_threshold_argument_is_greather_than_one_then_it_should_be_an_integer_ish_"/>
+    <testcase time="0.054000000000002" classname="Pooling_to_other_category" name="if_threshold_is_equal_to_1_then_the_function_removes_every_factor_level_that_is_not_present_in_the_data"/>
+    <testcase time="0.0159999999999982" classname="Pooling_to_other_category" name="tunable"/>
+    <testcase time="0.00300000000000011" classname="Pooling_to_other_category" name="tunable"/>
+    <testcase time="0.00499999999999545" classname="Pooling_to_other_category" name="tunable"/>
+    <testcase time="0.00100000000000477" classname="Pooling_to_other_category" name="tunable"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="tunable"/>
+    <testcase time="0.0470000000000041" classname="Pooling_to_other_category" name="issue_415_strings_to_factor_conversion"/>
+    <testcase time="0.00199999999999534" classname="Pooling_to_other_category" name="issue_415_strings_to_factor_conversion"/>
+  </testsuite>
+  <testsuite name="PCA" timestamp="2020-12-12T23:33:53Z" hostname="cd4266ef51dd" tests="21" skipped="0" failures="0" errors="0" time="0.548">
+    <testcase time="0.146000000000001" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.00400000000000489" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.00399999999999778" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.00800000000000267" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.000999999999997669" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.000999999999997669" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.00200000000000244" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.00500000000000256" classname="PCA" name="correct_PCA_values"/>
+    <testcase time="0.102999999999994" classname="PCA" name="correct_PCA_values_with_threshold"/>
+    <testcase time="0.135000000000005" classname="PCA" name="Reduced_rotation_size"/>
+    <testcase time="0.00399999999999778" classname="PCA" name="printing"/>
+    <testcase time="0.0480000000000018" classname="PCA" name="printing"/>
+    <testcase time="0.0509999999999948" classname="PCA" name="No_PCA_comps"/>
+    <testcase time="0.00200000000000244" classname="PCA" name="No_PCA_comps"/>
+    <testcase time="0.00399999999999778" classname="PCA" name="No_PCA_comps"/>
+    <testcase time="0.00400000000000489" classname="PCA" name="No_PCA_comps"/>
+    <testcase time="0.0159999999999982" classname="PCA" name="tunable"/>
+    <testcase time="0.00300000000000011" classname="PCA" name="tunable"/>
+    <testcase time="0.00399999999999778" classname="PCA" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="PCA" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="PCA" name="tunable"/>
+  </testsuite>
+  <testsuite name="PLS (new objects)" timestamp="2020-12-12T23:33:54Z" hostname="cd4266ef51dd" tests="7" skipped="7" failures="0" errors="0" time="0.101">
+    <testcase time="0.0679999999999978" classname="PLS_new_objects_" name="PLS_dense_loadings">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000256" classname="PLS_new_objects_" name="PLS_sparse_loadings">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00600000000000023" classname="PLS_new_objects_" name="PLS_DA_dense_loadings">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000256" classname="PLS_new_objects_" name="PLS_DA_sparse_loadings">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00600000000000023" classname="PLS_new_objects_" name="No_PLS">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00600000000000023" classname="PLS_new_objects_" name="tidy_method">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999545" classname="PLS_new_objects_" name="print_method">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="PLS (old objects)" timestamp="2020-12-12T23:33:54Z" hostname="cd4266ef51dd" tests="2" skipped="0" failures="0" errors="0" time="0.062">
+    <testcase time="0.0410000000000039" classname="PLS_old_objects_" name="check_old_PLS_scores_from_recipes_version_0.1.12"/>
+    <testcase time="0.0210000000000008" classname="PLS_old_objects_" name="check_old_PLS_scores_from_recipes_version_0.1.12"/>
+  </testsuite>
+  <testsuite name="Polynomial features" timestamp="2020-12-12T23:33:54Z" hostname="cd4266ef51dd" tests="15" skipped="0" failures="0" errors="0" time="0.268">
+    <testcase time="0.0289999999999964" classname="Polynomial_features" name="correct_basis_functions"/>
+    <testcase time="0.0410000000000039" classname="Polynomial_features" name="correct_basis_functions"/>
+    <testcase time="0.046999999999997" classname="Polynomial_features" name="correct_basis_functions"/>
+    <testcase time="0.00200000000000244" classname="Polynomial_features" name="correct_basis_functions"/>
+    <testcase time="0.000999999999997669" classname="Polynomial_features" name="correct_basis_functions"/>
+    <testcase time="0.00200000000000244" classname="Polynomial_features" name="correct_basis_functions"/>
+    <testcase time="0.00499999999999545" classname="Polynomial_features" name="printing"/>
+    <testcase time="0.0420000000000016" classname="Polynomial_features" name="printing"/>
+    <testcase time="0.017000000000003" classname="Polynomial_features" name="tunable"/>
+    <testcase time="0.00199999999999534" classname="Polynomial_features" name="tunable"/>
+    <testcase time="0.00500000000000256" classname="Polynomial_features" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="Polynomial_features" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="Polynomial_features" name="tunable"/>
+    <testcase time="0.0700000000000003" classname="Polynomial_features" name="old_option_argument"/>
+    <testcase time="0.00200000000000244" classname="Polynomial_features" name="old_option_argument"/>
+  </testsuite>
+  <testsuite name="Creating profiling data" timestamp="2020-12-12T23:33:54Z" hostname="cd4266ef51dd" tests="32" skipped="0" failures="0" errors="0" time="0.795">
+    <testcase time="0.231999999999999" classname="Creating_profiling_data" name="numeric_profile"/>
+    <testcase time="0.00199999999999534" classname="Creating_profiling_data" name="numeric_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="numeric_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="numeric_profile"/>
+    <testcase time="0.00199999999999534" classname="Creating_profiling_data" name="numeric_profile"/>
+    <testcase time="0.0829999999999984" classname="Creating_profiling_data" name="factor_profile"/>
+    <testcase time="0.00300000000000011" classname="Creating_profiling_data" name="factor_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="factor_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="factor_profile"/>
+    <testcase time="0.00300000000000011" classname="Creating_profiling_data" name="factor_profile"/>
+    <testcase time="0.0769999999999982" classname="Creating_profiling_data" name="date_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="date_profile"/>
+    <testcase time="0.00199999999999534" classname="Creating_profiling_data" name="date_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="date_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="date_profile"/>
+    <testcase time="0.0659999999999954" classname="Creating_profiling_data" name="character_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="character_profile"/>
+    <testcase time="0.00300000000000011" classname="Creating_profiling_data" name="character_profile"/>
+    <testcase time="0.00200000000000244" classname="Creating_profiling_data" name="character_profile"/>
+    <testcase time="0.00199999999999534" classname="Creating_profiling_data" name="character_profile"/>
+    <testcase time="0.0380000000000038" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.00600000000000023" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.0379999999999967" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.0420000000000016" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.00500000000000256" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.00600000000000023" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.00599999999999312" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.0100000000000051" classname="Creating_profiling_data" name="bad_values"/>
+    <testcase time="0.0700000000000003" classname="Creating_profiling_data" name="printing"/>
+    <testcase time="0.00300000000000011" classname="Creating_profiling_data" name="printing"/>
+    <testcase time="0.0730000000000004" classname="Creating_profiling_data" name="tidy"/>
+    <testcase time="0.00499999999999545" classname="Creating_profiling_data" name="tidy"/>
+  </testsuite>
+  <testsuite name="Checking ranges" timestamp="2020-12-12T23:33:55Z" hostname="cd4266ef51dd" tests="20" skipped="0" failures="0" errors="0" time="0.32">
+    <testcase time="0.00600000000000023" classname="Checking_ranges" name="core_function_correct_input"/>
+    <testcase time="0.00400000000000489" classname="Checking_ranges" name="core_function_correct_input"/>
+    <testcase time="0.00499999999999545" classname="Checking_ranges" name="core_function_correct_input"/>
+    <testcase time="0.00100000000000477" classname="Checking_ranges" name="core_function_correct_input"/>
+    <testcase time="0.000999999999997669" classname="Checking_ranges" name="core_function_correct_input"/>
+    <testcase time="0.00500000000000256" classname="Checking_ranges" name="core_function_correct_input"/>
+    <testcase time="0.00199999999999534" classname="Checking_ranges" name="core_function_workings"/>
+    <testcase time="0.00399999999999778" classname="Checking_ranges" name="core_function_workings"/>
+    <testcase time="0.00500000000000256" classname="Checking_ranges" name="core_function_workings"/>
+    <testcase time="0.00500000000000256" classname="Checking_ranges" name="core_function_workings"/>
+    <testcase time="0.00499999999999545" classname="Checking_ranges" name="core_function_workings"/>
+    <testcase time="0.00600000000000023" classname="Checking_ranges" name="core_function_workings"/>
+    <testcase time="0.00200000000000244" classname="Checking_ranges" name="core_function_workings"/>
+    <testcase time="0.0589999999999975" classname="Checking_ranges" name="in_recipe"/>
+    <testcase time="0.0140000000000029" classname="Checking_ranges" name="in_recipe"/>
+    <testcase time="0.0439999999999969" classname="Checking_ranges" name="in_recipe"/>
+    <testcase time="0.0519999999999996" classname="Checking_ranges" name="in_recipe"/>
+    <testcase time="0.044000000000004" classname="Checking_ranges" name="in_recipe"/>
+    <testcase time="0.0150000000000006" classname="Checking_ranges" name="printing"/>
+    <testcase time="0.0409999999999968" classname="Checking_ranges" name="printing"/>
+  </testsuite>
+  <testsuite name="Range scaling" timestamp="2020-12-12T23:33:55Z" hostname="cd4266ef51dd" tests="7" skipped="0" failures="0" errors="0" time="0.222">
+    <testcase time="0.0760000000000005" classname="Range_scaling" name="correct_values"/>
+    <testcase time="0.00500000000000256" classname="Range_scaling" name="correct_values"/>
+    <testcase time="0.00199999999999534" classname="Range_scaling" name="correct_values"/>
+    <testcase time="0.0500000000000043" classname="Range_scaling" name="defaults"/>
+    <testcase time="0.0480000000000018" classname="Range_scaling" name="one_variable"/>
+    <testcase time="0.00499999999999545" classname="Range_scaling" name="printing"/>
+    <testcase time="0.0360000000000014" classname="Range_scaling" name="printing"/>
+  </testsuite>
+  <testsuite name="Ratio creation" timestamp="2020-12-12T23:33:55Z" hostname="cd4266ef51dd" tests="29" skipped="0" failures="0" errors="0" time="0.493">
+    <testcase time="0.0249999999999986" classname="Ratio_creation" name="1_many"/>
+    <testcase time="0.0750000000000028" classname="Ratio_creation" name="1_many"/>
+    <testcase time="0.000999999999997669" classname="Ratio_creation" name="1_many"/>
+    <testcase time="0.00200000000000244" classname="Ratio_creation" name="1_many"/>
+    <testcase time="0.00600000000000023" classname="Ratio_creation" name="1_many"/>
+    <testcase time="0.00799999999999557" classname="Ratio_creation" name="many_1"/>
+    <testcase time="0.078000000000003" classname="Ratio_creation" name="many_1"/>
+    <testcase time="0.00200000000000244" classname="Ratio_creation" name="many_1"/>
+    <testcase time="0.000999999999997669" classname="Ratio_creation" name="many_1"/>
+    <testcase time="0.00600000000000023" classname="Ratio_creation" name="many_1"/>
+    <testcase time="0.00800000000000267" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.0799999999999983" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00200000000000244" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00199999999999534" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00100000000000477" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00199999999999534" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00200000000000244" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.000999999999997669" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00200000000000244" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00199999999999534" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00100000000000477" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00199999999999534" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.00200000000000244" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.0069999999999979" classname="Ratio_creation" name="many_many"/>
+    <testcase time="0.034000000000006" classname="Ratio_creation" name="wrong_type"/>
+    <testcase time="0.0339999999999989" classname="Ratio_creation" name="wrong_type"/>
+    <testcase time="0.0420000000000016" classname="Ratio_creation" name="wrong_type"/>
+    <testcase time="0.0069999999999979" classname="Ratio_creation" name="printing"/>
+    <testcase time="0.0579999999999998" classname="Ratio_creation" name="printing"/>
+  </testsuite>
+  <testsuite name="Regex pattern matching indicators" timestamp="2020-12-12T23:33:56Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.302">
+    <testcase time="0.109000000000002" classname="Regex_pattern_matching_indicators" name="default_options"/>
+    <testcase time="0.00200000000000244" classname="Regex_pattern_matching_indicators" name="default_options"/>
+    <testcase time="0.0689999999999955" classname="Regex_pattern_matching_indicators" name="nondefault_options"/>
+    <testcase time="0.00500000000000256" classname="Regex_pattern_matching_indicators" name="bad_selector_s_"/>
+    <testcase time="0.0279999999999987" classname="Regex_pattern_matching_indicators" name="bad_selector_s_"/>
+    <testcase time="0.0360000000000014" classname="Regex_pattern_matching_indicators" name="bad_selector_s_"/>
+    <testcase time="0.00499999999999545" classname="Regex_pattern_matching_indicators" name="printing"/>
+    <testcase time="0.0480000000000018" classname="Regex_pattern_matching_indicators" name="printing"/>
+  </testsuite>
+  <testsuite name="Relevel factors" timestamp="2020-12-12T23:33:56Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.48">
+    <testcase time="0.238" classname="Relevel_factors" name="basic_functionality"/>
+    <testcase time="0.0240000000000009" classname="Relevel_factors" name="basic_functionality"/>
+    <testcase time="0.0339999999999989" classname="Relevel_factors" name="bad_args"/>
+    <testcase time="0.0380000000000038" classname="Relevel_factors" name="bad_args"/>
+    <testcase time="0.00499999999999545" classname="Relevel_factors" name="printing"/>
+    <testcase time="0.0660000000000025" classname="Relevel_factors" name="printing"/>
+    <testcase time="0.00500000000000256" classname="Relevel_factors" name="tidy_methods"/>
+    <testcase time="0.0700000000000003" classname="Relevel_factors" name="tidy_methods"/>
+  </testsuite>
+  <testsuite name="step_relu" timestamp="2020-12-12T23:33:57Z" hostname="cd4266ef51dd" tests="12" skipped="0" failures="0" errors="0" time="0.606">
+    <testcase time="0.0999999999999943" classname="step_relu" name="default_relu_settings"/>
+    <testcase time="0.0940000000000012" classname="step_relu" name="shifted_and_reversed_relu"/>
+    <testcase time="0.103999999999999" classname="step_relu" name="reversed_softplus"/>
+    <testcase time="0.0930000000000035" classname="step_relu" name="shifted_and_prefixed_softplus"/>
+    <testcase time="0.0189999999999984" classname="step_relu" name="works_with_all_predictors_selector"/>
+    <testcase time="0.0589999999999975" classname="step_relu" name="works_with_all_predictors_selector"/>
+    <testcase time="0.007000000000005" classname="step_relu" name="input_checking"/>
+    <testcase time="0.00600000000000023" classname="step_relu" name="input_checking"/>
+    <testcase time="0.00600000000000023" classname="step_relu" name="input_checking"/>
+    <testcase time="0.0419999999999945" classname="step_relu" name="input_checking"/>
+    <testcase time="0.0190000000000055" classname="step_relu" name="prints_something"/>
+    <testcase time="0.0569999999999951" classname="step_relu" name="prints_something"/>
+  </testsuite>
+  <testsuite name="dplyr rename steps" timestamp="2020-12-12T23:33:57Z" hostname="cd4266ef51dd" tests="5" skipped="0" failures="0" errors="0" time="0.235">
+    <testcase time="0.0900000000000034" classname="dplyr_rename_steps" name="basic_usage"/>
+    <testcase time="0.0309999999999988" classname="dplyr_rename_steps" name="basic_usage"/>
+    <testcase time="0.0609999999999999" classname="dplyr_rename_steps" name="no_input"/>
+    <testcase time="0.00500000000000256" classname="dplyr_rename_steps" name="printing"/>
+    <testcase time="0.0479999999999947" classname="dplyr_rename_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="dplyr rename_at steps" timestamp="2020-12-12T23:33:58Z" hostname="cd4266ef51dd" tests="6" skipped="0" failures="0" errors="0" time="0.242">
+    <testcase time="0.0870000000000033" classname="dplyr_rename_at_steps" name="basic_usage"/>
+    <testcase time="0.036999999999999" classname="dplyr_rename_at_steps" name="basic_usage"/>
+    <testcase time="0.0450000000000017" classname="dplyr_rename_at_steps" name="mulitple_functions"/>
+    <testcase time="0.0069999999999979" classname="dplyr_rename_at_steps" name="no_input"/>
+    <testcase time="0.00800000000000267" classname="dplyr_rename_at_steps" name="printing"/>
+    <testcase time="0.0579999999999998" classname="dplyr_rename_at_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="Testing retraining" timestamp="2020-12-12T23:33:58Z" hostname="cd4266ef51dd" tests="7" skipped="0" failures="0" errors="0" time="0.8">
+    <testcase time="0.582999999999998" classname="Testing_retraining" name="training_in_stages"/>
+    <testcase time="0.0600000000000023" classname="Testing_retraining" name="training_in_stages"/>
+    <testcase time="0.0519999999999996" classname="Testing_retraining" name="training_in_stages"/>
+    <testcase time="0.00199999999999534" classname="Testing_retraining" name="training_in_stages"/>
+    <testcase time="0.00100000000000477" classname="Testing_retraining" name="training_in_stages"/>
+    <testcase time="0.00199999999999534" classname="Testing_retraining" name="training_in_stages"/>
+    <testcase time="0.100000000000001" classname="Testing_retraining" name="training_in_stages"/>
+  </testsuite>
+  <testsuite name="Removing variables" timestamp="2020-12-12T23:33:59Z" hostname="cd4266ef51dd" tests="3" skipped="0" failures="0" errors="0" time="0.108">
+    <testcase time="0.0609999999999999" classname="Removing_variables" name="basics"/>
+    <testcase time="0.0130000000000052" classname="Removing_variables" name="printing"/>
+    <testcase time="0.0339999999999989" classname="Removing_variables" name="printing"/>
+  </testsuite>
+  <testsuite name="Changing roles" timestamp="2020-12-12T23:33:59Z" hostname="cd4266ef51dd" tests="50" skipped="0" failures="0" errors="0" time="1.365">
+    <testcase time="0.0229999999999961" classname="Changing_roles" name="default_method"/>
+    <testcase time="0.0319999999999965" classname="Changing_roles" name="changing_roles"/>
+    <testcase time="0.0219999999999985" classname="Changing_roles" name="change_existing_role"/>
+    <testcase time="0.0309999999999988" classname="Changing_roles" name="change_existing_role"/>
+    <testcase time="0.044000000000004" classname="Changing_roles" name="change_only_1_role_of_variable_with_multiple_roles"/>
+    <testcase time="0.0439999999999969" classname="Changing_roles" name="change_every_role_of_2_variables"/>
+    <testcase time="0.036999999999999" classname="Changing_roles" name="update_only_NA_role"/>
+    <testcase time="0.0290000000000035" classname="Changing_roles" name="new_role_for_existing_NA_role"/>
+    <testcase time="0.036999999999999" classname="Changing_roles" name="new_role_with_specified_type"/>
+    <testcase time="0.0489999999999995" classname="Changing_roles" name="add_new_role_when_two_already_exist_with_different_types"/>
+    <testcase time="0.0429999999999993" classname="Changing_roles" name="existing_role_is_skipped"/>
+    <testcase time="0.00300000000000011" classname="Changing_roles" name="existing_role_is_skipped"/>
+    <testcase time="0.044000000000004" classname="Changing_roles" name="existing_role_is_skipped_but_new_one_is_added"/>
+    <testcase time="0.00300000000000011" classname="Changing_roles" name="existing_role_is_skipped_but_new_one_is_added"/>
+    <testcase time="0.0219999999999985" classname="Changing_roles" name="cannot_add_roles_if_the_current_one_is_NA_"/>
+    <testcase time="0.0439999999999969" classname="Changing_roles" name="_update_role_cannot_be_ambiguous"/>
+    <testcase time="0.0140000000000029" classname="Changing_roles" name="_new_role_cannot_be_NA_character__"/>
+    <testcase time="0.00500000000000256" classname="Changing_roles" name="_new_role_cannot_be_NA_character__"/>
+    <testcase time="0.029999999999994" classname="Changing_roles" name="remove_roles"/>
+    <testcase time="0.00400000000000489" classname="Changing_roles" name="remove_roles"/>
+    <testcase time="0.0489999999999995" classname="Changing_roles" name="remove_roles"/>
+    <testcase time="0.0450000000000017" classname="Changing_roles" name="remove_roles"/>
+    <testcase time="0.0349999999999966" classname="Changing_roles" name="New_type_for_an_existing_role_can_be_added"/>
+    <testcase time="0.0300000000000011" classname="Changing_roles" name="can_use_tidyselect_ops_in_role_selection"/>
+    <testcase time="0.0109999999999957" classname="Changing_roles" name="can_use_tidyselect_ops_in_role_selection"/>
+    <testcase time="0.0260000000000034" classname="Changing_roles" name="can_use_tidyselect_ops_in_role_selection"/>
+    <testcase time="0.0189999999999984" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.00100000000000477" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.00999999999999801" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.000999999999997669" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.00900000000000034" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.00100000000000477" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.0120000000000005" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.00199999999999534" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.0110000000000028" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.000999999999997669" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.00999999999999801" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.000999999999997669" classname="Changing_roles" name="empty_dots_and_zero_column_selections_return_input_with_a_warning"/>
+    <testcase time="0.007000000000005" classname="Changing_roles" name="bad_args"/>
+    <testcase time="0.00499999999999545" classname="Changing_roles" name="bad_args"/>
+    <testcase time="0.00600000000000023" classname="Changing_roles" name="bad_args"/>
+    <testcase time="0.00500000000000256" classname="Changing_roles" name="bad_args"/>
+    <testcase time="0.0749999999999957" classname="Changing_roles" name="adding_multiple_roles_types_does_not_duplicate_prepped_columns"/>
+    <testcase time="0.0519999999999996" classname="Changing_roles" name="adding_multiple_roles_types_does_not_duplicate_prepped_columns"/>
+    <testcase time="0.0910000000000011" classname="Changing_roles" name="type_selectors_can_be_combined"/>
+    <testcase time="0.0790000000000006" classname="Changing_roles" name="step_rm_removes_ALL_mention_of_variables_with_that_role"/>
+    <testcase time="0.0870000000000033" classname="Changing_roles" name="Existing_NA_roles_are_not_modified_in_prep_when_new_columns_are_generated"/>
+    <testcase time="0.00499999999999545" classname="Changing_roles" name="Existing_NA_roles_are_not_modified_in_prep_when_new_columns_are_generated"/>
+    <testcase time="0.00900000000000034" classname="Changing_roles" name="Existing_NA_roles_are_not_modified_in_prep_when_new_columns_are_generated"/>
+    <testcase time="0.109999999999999" classname="Changing_roles" name="Existing_NA_roles_are_not_modified_in_prep_when_multiple_new_columns_are_generated"/>
+  </testsuite>
+  <testsuite name="Rolling features" timestamp="2020-12-12T23:34:00Z" hostname="cd4266ef51dd" tests="184" skipped="0" failures="0" errors="0" time="0.884">
+    <testcase time="0.0230000000000032" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00500000000000256" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00500000000000256" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00500000000000256" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00499999999999545" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.0249999999999986" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.00500000000000256" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.0300000000000011" classname="Rolling_features" name="error_checks"/>
+    <testcase time="0.120999999999995" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00100000000000477" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00100000000000477" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00100000000000477" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.000999999999997669" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00100000000000477" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00900000000000034" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00199999999999534" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00200000000000244" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00400000000000489" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00400000000000489" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00400000000000489" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00299999999999301" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00400000000000489" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00900000000000034" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00400000000000489" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00300000000000011" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00400000000000489" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="basic_moving_average"/>
+    <testcase time="0.125" classname="Rolling_features" name="creating_new_variables"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="creating_new_variables"/>
+    <testcase time="0.00800000000000267" classname="Rolling_features" name="printing"/>
+    <testcase time="0.046999999999997" classname="Rolling_features" name="printing"/>
+    <testcase time="0.0189999999999984" classname="Rolling_features" name="tunable"/>
+    <testcase time="0.0110000000000028" classname="Rolling_features" name="tunable"/>
+    <testcase time="0.00800000000000267" classname="Rolling_features" name="tunable"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="tunable"/>
+    <testcase time="0.00399999999999778" classname="Rolling_features" name="tunable"/>
+  </testsuite>
+  <testsuite name="Rolling imputation" timestamp="2020-12-12T23:34:01Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.335">
+    <testcase time="0.078000000000003" classname="Rolling_imputation" name="imputation_values_with_7_pt_median"/>
+    <testcase time="0.00399999999999778" classname="Rolling_imputation" name="imputation_values_with_7_pt_median"/>
+    <testcase time="0.0690000000000026" classname="Rolling_imputation" name="imputation_values_with_3_pt_mean"/>
+    <testcase time="0.00300000000000011" classname="Rolling_imputation" name="imputation_values_with_3_pt_mean"/>
+    <testcase time="0.0339999999999989" classname="Rolling_imputation" name="bad_args"/>
+    <testcase time="0.00500000000000256" classname="Rolling_imputation" name="bad_args"/>
+    <testcase time="0.046999999999997" classname="Rolling_imputation" name="bad_args"/>
+    <testcase time="0.0350000000000037" classname="Rolling_imputation" name="printing"/>
+    <testcase time="0.0360000000000014" classname="Rolling_imputation" name="printing"/>
+    <testcase time="0.0150000000000006" classname="Rolling_imputation" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="Rolling_imputation" name="tunable"/>
+    <testcase time="0.00399999999999778" classname="Rolling_imputation" name="tunable"/>
+    <testcase time="0.00200000000000244" classname="Rolling_imputation" name="tunable"/>
+    <testcase time="0.000999999999997669" classname="Rolling_imputation" name="tunable"/>
+  </testsuite>
+  <testsuite name="dplyr sampling steps" timestamp="2020-12-12T23:34:01Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.416">
+    <testcase time="0.0649999999999977" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.044000000000004" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.0459999999999994" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.0509999999999948" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.0450000000000017" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.044000000000004" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.0189999999999984" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.0459999999999994" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.000999999999997669" classname="dplyr_sampling_steps" name="basic_usage"/>
+    <testcase time="0.00500000000000256" classname="dplyr_sampling_steps" name="bad_input"/>
+    <testcase time="0.00500000000000256" classname="dplyr_sampling_steps" name="bad_input"/>
+    <testcase time="0.00399999999999778" classname="dplyr_sampling_steps" name="bad_input"/>
+    <testcase time="0.00399999999999778" classname="dplyr_sampling_steps" name="printing"/>
+    <testcase time="0.036999999999999" classname="dplyr_sampling_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="Term selection" timestamp="2020-12-12T23:34:02Z" hostname="cd4266ef51dd" tests="33" skipped="0" failures="0" errors="0" time="0.692">
+    <testcase time="0.237000000000002" classname="Term_selection" name="simple_role_selections"/>
+    <testcase time="0.00900000000000034" classname="Term_selection" name="simple_role_selections"/>
+    <testcase time="0.00500000000000256" classname="Term_selection" name="simple_role_selections"/>
+    <testcase time="0.00399999999999778" classname="Term_selection" name="simple_role_selections"/>
+    <testcase time="0.00600000000000023" classname="Term_selection" name="simple_type_selections"/>
+    <testcase time="0.00399999999999778" classname="Term_selection" name="simple_type_selections"/>
+    <testcase time="0.00500000000000256" classname="Term_selection" name="simple_type_selections"/>
+    <testcase time="0.00600000000000023" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00399999999999778" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00500000000000256" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00499999999999545" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00500000000000256" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00500000000000256" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00499999999999545" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00500000000000256" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00399999999999778" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00900000000000034" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.00400000000000489" classname="Term_selection" name="simple_name_selections"/>
+    <testcase time="0.0069999999999979" classname="Term_selection" name="combinations"/>
+    <testcase time="0.00600000000000023" classname="Term_selection" name="combinations"/>
+    <testcase time="0.00600000000000023" classname="Term_selection" name="combinations"/>
+    <testcase time="0.00900000000000034" classname="Term_selection" name="combinations"/>
+    <testcase time="0.0120000000000005" classname="Term_selection" name="namespaced_selectors"/>
+    <testcase time="0.00900000000000034" classname="Term_selection" name="namespaced_selectors"/>
+    <testcase time="0.00900000000000034" classname="Term_selection" name="namespaced_selectors"/>
+    <testcase time="0.0799999999999983" classname="Term_selection" name="new_dplyr_selectors"/>
+    <testcase time="0.00199999999999534" classname="Term_selection" name="new_dplyr_selectors"/>
+    <testcase time="0.0720000000000027" classname="Term_selection" name="new_dplyr_selectors"/>
+    <testcase time="0.00200000000000244" classname="Term_selection" name="new_dplyr_selectors"/>
+    <testcase time="0.0719999999999956" classname="Term_selection" name="new_dplyr_selectors"/>
+    <testcase time="0.00200000000000244" classname="Term_selection" name="new_dplyr_selectors"/>
+    <testcase time="0.0750000000000028" classname="Term_selection" name="new_dplyr_selectors"/>
+    <testcase time="0.00199999999999534" classname="Term_selection" name="new_dplyr_selectors"/>
+  </testsuite>
+  <testsuite name="Data shuffling" timestamp="2020-12-12T23:34:02Z" hostname="cd4266ef51dd" tests="7" skipped="0" failures="0" errors="0" time="0.36">
+    <testcase time="0.0830000000000055" classname="Data_shuffling" name="numeric_data"/>
+    <testcase time="0.0669999999999931" classname="Data_shuffling" name="nominal_data"/>
+    <testcase time="0.0700000000000003" classname="Data_shuffling" name="all_data"/>
+    <testcase time="0.017000000000003" classname="Data_shuffling" name="printing"/>
+    <testcase time="0.0450000000000017" classname="Data_shuffling" name="printing"/>
+    <testcase time="0.0749999999999957" classname="Data_shuffling" name="bake_a_single_row"/>
+    <testcase time="0.00300000000000011" classname="Data_shuffling" name="bake_a_single_row"/>
+  </testsuite>
+  <testsuite name="Skipping steps" timestamp="2020-12-12T23:34:03Z" hostname="cd4266ef51dd" tests="97" skipped="0" failures="0" errors="0" time="1.073">
+    <testcase time="0.131999999999998" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.000999999999997669" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.0949999999999989" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.0380000000000038" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.000999999999997669" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.00200000000000244" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.000999999999997669" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.0870000000000033" classname="Skipping_steps" name="simple_skip"/>
+    <testcase time="0.00600000000000023" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00400000000000489" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00400000000000489" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00400000000000489" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00900000000000034" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00600000000000023" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00400000000000489" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00400000000000489" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00600000000000023" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00399999999999778" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.0120000000000005" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00600000000000023" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00500000000000256" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.00499999999999545" classname="Skipping_steps" name="check_existing_steps_for_skip_arg"/>
+    <testcase time="0.0940000000000012" classname="Skipping_steps" name="skips_for_steps_that_remove_columns_239_"/>
+    <testcase time="0.00200000000000244" classname="Skipping_steps" name="skips_for_steps_that_remove_columns_239_"/>
+    <testcase time="0.135999999999996" classname="Skipping_steps" name="skips_for_steps_that_remove_columns_239_"/>
+    <testcase time="0.00300000000000011" classname="Skipping_steps" name="skips_for_steps_that_remove_columns_239_"/>
+    <testcase time="0.0820000000000007" classname="Skipping_steps" name="skips_for_steps_that_remove_columns_239_"/>
+    <testcase time="0.00300000000000011" classname="Skipping_steps" name="skips_for_steps_that_remove_columns_239_"/>
+    <testcase time="0.00200000000000244" classname="Skipping_steps" name="skips_for_steps_that_remove_columns_239_"/>
+  </testsuite>
+  <testsuite name="dplyr slice steps" timestamp="2020-12-12T23:34:04Z" hostname="cd4266ef51dd" tests="12" skipped="0" failures="0" errors="0" time="0.418">
+    <testcase time="0.0679999999999978" classname="dplyr_slice_steps" name="basic_usage"/>
+    <testcase time="0.0200000000000031" classname="dplyr_slice_steps" name="basic_usage"/>
+    <testcase time="0.0519999999999996" classname="dplyr_slice_steps" name="skip_FALSE"/>
+    <testcase time="0.0349999999999966" classname="dplyr_slice_steps" name="skip_FALSE"/>
+    <testcase time="0.0579999999999998" classname="dplyr_slice_steps" name="quasiquotation"/>
+    <testcase time="0.00100000000000477" classname="dplyr_slice_steps" name="quasiquotation"/>
+    <testcase time="0.0529999999999973" classname="dplyr_slice_steps" name="quasiquotation"/>
+    <testcase time="0.0339999999999989" classname="dplyr_slice_steps" name="quasiquotation"/>
+    <testcase time="0.0110000000000028" classname="dplyr_slice_steps" name="quasiquotation"/>
+    <testcase time="0.046999999999997" classname="dplyr_slice_steps" name="no_input"/>
+    <testcase time="0.00400000000000489" classname="dplyr_slice_steps" name="printing"/>
+    <testcase time="0.0349999999999966" classname="dplyr_slice_steps" name="printing"/>
+  </testsuite>
+  <testsuite name="Spare matrix format" timestamp="2020-12-12T23:34:04Z" hostname="cd4266ef51dd" tests="14" skipped="0" failures="0" errors="0" time="0.731">
+    <testcase time="0.474000000000004" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.000999999999997669" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.000999999999997669" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.00100000000000477" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.000999999999997669" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.000999999999997669" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.00400000000000489" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.00299999999999301" classname="Spare_matrix_format" name="correct_types"/>
+    <testcase time="0.0970000000000013" classname="Spare_matrix_format" name="bad_args"/>
+    <testcase time="0.0240000000000009" classname="Spare_matrix_format" name="bad_args"/>
+    <testcase time="0.106999999999999" classname="Spare_matrix_format" name="issue_206_NA_values_are_kept_when_requesting_matrix_composition"/>
+    <testcase time="0.00200000000000244" classname="Spare_matrix_format" name="issue_206_NA_values_are_kept_when_requesting_matrix_composition"/>
+    <testcase time="0.000999999999997669" classname="Spare_matrix_format" name="issue_206_NA_values_are_kept_when_requesting_matrix_composition"/>
+    <testcase time="0.0140000000000029" classname="Spare_matrix_format" name="issue_206_NA_values_are_kept_when_requesting_matrix_composition"/>
+  </testsuite>
+  <testsuite name="Spatial sign transformation" timestamp="2020-12-12T23:34:05Z" hostname="cd4266ef51dd" tests="4" skipped="0" failures="0" errors="0" time="0.384">
+    <testcase time="0.173000000000002" classname="Spatial_sign_transformation" name="spatial_sign"/>
+    <testcase time="0.0679999999999978" classname="Spatial_sign_transformation" name="Missing_values"/>
+    <testcase time="0.00900000000000034" classname="Spatial_sign_transformation" name="printing"/>
+    <testcase time="0.134" classname="Spatial_sign_transformation" name="printing"/>
+  </testsuite>
+  <testsuite name="sqrt transformation" timestamp="2020-12-12T23:34:05Z" hostname="cd4266ef51dd" tests="3" skipped="0" failures="0" errors="0" time="0.131">
+    <testcase time="0.0719999999999956" classname="sqrt_transformation" name="simple_sqrt_trans"/>
+    <testcase time="0.0159999999999982" classname="sqrt_transformation" name="printing"/>
+    <testcase time="0.0429999999999993" classname="sqrt_transformation" name="printing"/>
+  </testsuite>
+  <testsuite name="String to factor conversion" timestamp="2020-12-12T23:34:06Z" hostname="cd4266ef51dd" tests="19" skipped="0" failures="0" errors="0" time="0.436">
+    <testcase time="0.0889999999999986" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00100000000000477" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.000999999999997669" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.070999999999998" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00100000000000477" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.000999999999997669" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="String_to_factor_conversion" name="basic_functionality"/>
+    <testcase time="0.0429999999999993" classname="String_to_factor_conversion" name="bad_args"/>
+    <testcase time="0.00600000000000023" classname="String_to_factor_conversion" name="bad_args"/>
+    <testcase time="0.0629999999999953" classname="String_to_factor_conversion" name="printing"/>
+    <testcase time="0.054000000000002" classname="String_to_factor_conversion" name="printing"/>
+    <testcase time="0.0739999999999981" classname="String_to_factor_conversion" name="pre_made_factors"/>
+    <testcase time="0.007000000000005" classname="String_to_factor_conversion" name="pre_made_factors"/>
+    <testcase time="0.00600000000000023" classname="String_to_factor_conversion" name="pre_made_factors"/>
+    <testcase time="0.00499999999999545" classname="String_to_factor_conversion" name="pre_made_factors"/>
+    <testcase time="0.00600000000000023" classname="String_to_factor_conversion" name="pre_made_factors"/>
+    <testcase time="0.00200000000000244" classname="String_to_factor_conversion" name="pre_made_factors"/>
+    <testcase time="0.00199999999999534" classname="String_to_factor_conversion" name="pre_made_factors"/>
+  </testsuite>
+  <testsuite name="strings_as_factors conversion" timestamp="2020-12-12T23:34:06Z" hostname="cd4266ef51dd" tests="10" skipped="0" failures="0" errors="0" time="0.267">
+    <testcase time="0.124000000000002" classname="strings_as_factors_conversion" name="strings_as_factors_FALSE"/>
+    <testcase time="0.00200000000000244" classname="strings_as_factors_conversion" name="strings_as_factors_FALSE"/>
+    <testcase time="0.00199999999999534" classname="strings_as_factors_conversion" name="strings_as_factors_FALSE"/>
+    <testcase time="0.00100000000000477" classname="strings_as_factors_conversion" name="strings_as_factors_FALSE"/>
+    <testcase time="0.000999999999997669" classname="strings_as_factors_conversion" name="strings_as_factors_FALSE"/>
+    <testcase time="0.128" classname="strings_as_factors_conversion" name="strings_as_factors_TRUE"/>
+    <testcase time="0.00200000000000244" classname="strings_as_factors_conversion" name="strings_as_factors_TRUE"/>
+    <testcase time="0.00300000000000011" classname="strings_as_factors_conversion" name="strings_as_factors_TRUE"/>
+    <testcase time="0.00199999999999534" classname="strings_as_factors_conversion" name="strings_as_factors_TRUE"/>
+    <testcase time="0.00200000000000244" classname="strings_as_factors_conversion" name="strings_as_factors_TRUE"/>
+  </testsuite>
+  <testsuite name="Merging/updating term_info" timestamp="2020-12-12T23:34:06Z" hostname="cd4266ef51dd" tests="5" skipped="0" failures="0" errors="0" time="0.073">
+    <testcase time="0.0219999999999985" classname="Merging_updating_term_info" name="issue_"/>
+    <testcase time="0.00900000000000034" classname="Merging_updating_term_info" name="issue_"/>
+    <testcase time="0.0219999999999985" classname="Merging_updating_term_info" name="typical_use_cases"/>
+    <testcase time="0.0100000000000051" classname="Merging_updating_term_info" name="typical_use_cases"/>
+    <testcase time="0.00999999999999801" classname="Merging_updating_term_info" name="typical_use_cases"/>
+  </testsuite>
+  <testsuite name="General tidy method" timestamp="2020-12-12T23:34:06Z" hostname="cd4266ef51dd" tests="10" skipped="0" failures="0" errors="0" time="0.436">
+    <testcase time="0.162999999999997" classname="General_tidy_method" name="untrained"/>
+    <testcase time="0.233000000000004" classname="General_tidy_method" name="trained"/>
+    <testcase time="0.00300000000000011" classname="General_tidy_method" name="trained"/>
+    <testcase time="0.00499999999999545" classname="General_tidy_method" name="select_step"/>
+    <testcase time="0.00400000000000489" classname="General_tidy_method" name="select_step"/>
+    <testcase time="0.00499999999999545" classname="General_tidy_method" name="bad_args"/>
+    <testcase time="0.00300000000000011" classname="General_tidy_method" name="bad_args"/>
+    <testcase time="0.00399999999999778" classname="General_tidy_method" name="bad_args"/>
+    <testcase time="0.00399999999999778" classname="General_tidy_method" name="bad_args"/>
+    <testcase time="0.0120000000000005" classname="General_tidy_method" name="bad_args"/>
+  </testsuite>
+  <testsuite name="Convert to unknowns" timestamp="2020-12-12T23:34:07Z" hostname="cd4266ef51dd" tests="18" skipped="0" failures="0" errors="0" time="0.604">
+    <testcase time="0.222999999999999" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.000999999999997669" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.00100000000000477" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.00199999999999534" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.034000000000006" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.00300000000000011" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.000999999999997669" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.000999999999997669" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.0689999999999955" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.00200000000000244" classname="Convert_to_unknowns" name="basic_functionality"/>
+    <testcase time="0.0470000000000041" classname="Convert_to_unknowns" name="bad_args"/>
+    <testcase time="0.0479999999999947" classname="Convert_to_unknowns" name="bad_args"/>
+    <testcase time="0.00600000000000023" classname="Convert_to_unknowns" name="printing"/>
+    <testcase time="0.0760000000000005" classname="Convert_to_unknowns" name="printing"/>
+    <testcase time="0.00500000000000256" classname="Convert_to_unknowns" name="tidy_methods"/>
+    <testcase time="0.080999999999996" classname="Convert_to_unknowns" name="tidy_methods"/>
+  </testsuite>
+  <testsuite name="Unordering data" timestamp="2020-12-12T23:34:07Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.203">
+    <testcase time="0.0760000000000005" classname="Unordering_data" name="correct_var"/>
+    <testcase time="0.00200000000000244" classname="Unordering_data" name="correct_var"/>
+    <testcase time="0.000999999999997669" classname="Unordering_data" name="correct_var"/>
+    <testcase time="0.00100000000000477" classname="Unordering_data" name="correct_var"/>
+    <testcase time="0.0479999999999947" classname="Unordering_data" name="wrong_vars"/>
+    <testcase time="0.0250000000000057" classname="Unordering_data" name="wrong_vars"/>
+    <testcase time="0.00499999999999545" classname="Unordering_data" name="printing"/>
+    <testcase time="0.0450000000000017" classname="Unordering_data" name="printing"/>
+  </testsuite>
+  <testsuite name="Upsampling" timestamp="2020-12-12T23:34:08Z" hostname="cd4266ef51dd" tests="8" skipped="8" failures="0" errors="0" time="0.067">
+    <testcase time="0.0240000000000009" classname="Upsampling" name="basic_usage">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00600000000000023" classname="Upsampling" name="ratio_value">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999545" classname="Upsampling" name="no_skipping">
+      <skipped/>
+    </testcase>
+    <testcase time="0.0110000000000028" classname="Upsampling" name="bad_data">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000256" classname="Upsampling" name="printing">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00600000000000023" classname="Upsampling" name="_seed_produces_identical_sampling">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00499999999999545" classname="Upsampling" name="ratio_deprecation">
+      <skipped/>
+    </testcase>
+    <testcase time="0.00500000000000256" classname="Upsampling" name="tunable">
+      <skipped/>
+    </testcase>
+  </testsuite>
+  <testsuite name="Yeo Johnson transformation" timestamp="2020-12-12T23:34:08Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.215">
+    <testcase time="0.0219999999999985" classname="Yeo_Johnson_transformation" name="simple_YJ_trans"/>
+    <testcase time="0.0519999999999996" classname="Yeo_Johnson_transformation" name="simple_YJ_trans"/>
+    <testcase time="0.00100000000000477" classname="Yeo_Johnson_transformation" name="simple_YJ_trans"/>
+    <testcase time="0.00199999999999534" classname="Yeo_Johnson_transformation" name="simple_YJ_trans"/>
+    <testcase time="0.0459999999999994" classname="Yeo_Johnson_transformation" name="missing_data"/>
+    <testcase time="0.0380000000000038" classname="Yeo_Johnson_transformation" name="missing_data"/>
+    <testcase time="0.0169999999999959" classname="Yeo_Johnson_transformation" name="printing"/>
+    <testcase time="0.036999999999999" classname="Yeo_Johnson_transformation" name="printing"/>
+  </testsuite>
+  <testsuite name="Zero variance filter" timestamp="2020-12-12T23:34:08Z" hostname="cd4266ef51dd" tests="6" skipped="0" failures="0" errors="0" time="0.133">
+    <testcase time="0.0670000000000002" classname="Zero_variance_filter" name="zv_filtering"/>
+    <testcase time="0.017000000000003" classname="Zero_variance_filter" name="printing"/>
+    <testcase time="0.0420000000000016" classname="Zero_variance_filter" name="printing"/>
+    <testcase time="0.00300000000000011" classname="Zero_variance_filter" name="mssing_values_in_zero_variance_screen"/>
+    <testcase time="0.00199999999999534" classname="Zero_variance_filter" name="mssing_values_in_zero_variance_screen"/>
+    <testcase time="0.00200000000000244" classname="Zero_variance_filter" name="mssing_values_in_zero_variance_screen"/>
+  </testsuite>
+  <testsuite name="format" timestamp="2020-12-12T23:34:08Z" hostname="cd4266ef51dd" tests="8" skipped="0" failures="0" errors="0" time="0.101">
+    <testcase time="0.00500000000000256" classname="format" name="format_ch_vec_handles_short_vectors"/>
+    <testcase time="0.00300000000000011" classname="format" name="format_ch_vec_handles_long_vectors_with_short_items"/>
+    <testcase time="0.00499999999999545" classname="format" name="format_ch_vec_handles_long_vectors_with_short_items"/>
+    <testcase time="0.00200000000000244" classname="format" name="format_ch_vec_handles_a_vector_with_long_items"/>
+    <testcase time="0.00399999999999778" classname="format" name="format_selectors_handles_small_numbers_of_selectors"/>
+    <testcase time="0.0380000000000038" classname="format" name="format_ch_vec_handles_lots_of_small_selectors"/>
+    <testcase time="0.0409999999999968" classname="format" name="format_ch_vec_handles_lots_of_small_selectors"/>
+    <testcase time="0.00300000000000011" classname="format" name="format_ch_vec_handles_a_long_expression"/>
+  </testsuite>
+  <testsuite name="prepper" timestamp="2020-12-12T23:34:08Z" hostname="cd4266ef51dd" tests="1" skipped="0" failures="0" errors="0" time="0.244">
+    <testcase time="0.244" classname="prepper" name="prepper_uses_fresh_TRUE"/>
+  </testsuite>
+  <testsuite name="test-update" timestamp="2020-12-12T23:34:08Z" hostname="cd4266ef51dd" tests="3" skipped="0" failures="0" errors="0" time="0.016">
+    <testcase time="0.00600000000000023" classname="test_update" name="can_update_a_step"/>
+    <testcase time="0.00500000000000256" classname="test_update" name="cannot_create_new_fields_for_a_step"/>
+    <testcase time="0.00500000000000256" classname="test_update" name="cannot_update_trained_steps"/>
+  </testsuite>
+</testsuites>

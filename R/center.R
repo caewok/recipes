@@ -108,7 +108,8 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
   means <- training %>%
     dplyr::select(!!!col_names) %>%
-    dplyr::summarize_all(~ mean(., na.rm = x$na_rm)) %>%
+    dplyr::summarize_all(mean, na.rm = x$na_rm) %>%
+    as_tibble() %>%
     unlist()
 
   step_center_new(
@@ -124,15 +125,15 @@ prep.step_center <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_center <- function(object, new_data, ...) {
-
-  lazy_mutate <- parse_quos(sprintf('%s - object$means["%s"]',
+  lazy_mutate <- parse_quos(sprintf('%s - object[["means"]][["%s"]]',
                                     names(object$means),
                                     names(object$means)),
                             env = environment()) %>% setNames(names(object$means))
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate)
 
-  confirm_table_format(new_data)
+  out <- confirm_table_format(new_data)
+  return(out)
 }
 
 print.step_center <-

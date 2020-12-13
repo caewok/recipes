@@ -1,7 +1,7 @@
 filter_terms <- function(x, ...)
   UseMethod("filter_terms")
 
-## Buckets variables into discrete, mutally exclusive types
+## Buckets variables into discrete, mutually exclusive types
 get_types <- function(x) {
   var_types <-
     c(
@@ -18,21 +18,8 @@ get_types <- function(x) {
       list = "list"
     )
 
-  classes <- lapply(x, class)
-  res <- lapply(classes,
-                function(x, types) {
-                  in_types <- x %in% names(types)
-                  if (sum(in_types) > 0) {
-                    # not sure what to do with multiple matches; right now
-                    ## pick the first match which favors "factor" over "ordered"
-                    out <-
-                      unname(types[min(which(names(types) %in% x))])
-                  } else
-                    out <- "other"
-                  out
-                },
-                types = var_types)
-  res <- unlist(res)
+  res <- schema(x)
+  res[] <- var_types[res] # Use the [] to avoid overwriting the names
   tibble(variable = names(res), type = unname(res))
 }
 
@@ -183,19 +170,46 @@ fun_calls <- function(f) {
 }
 
 
+# return a named list by column names
+# if not a factor, values = NA and ordered = NA
+# if a factor, values, ordered, and factor = TRUE/FALSE
 get_levels <- function(x) {
-  if (!is.factor(x) & !is.character(x))
-    return(list(values = NA, ordered = NA))
-  out <-
-    if (is.factor(x)) {
-      list(values = levels(x),
-           ordered = is.ordered(x),
-           factor = TRUE)
-    } else {
-      list(values = sort(unique(x)),
-           ordered = FALSE,
-           factor = FALSE)
+  the_schema <- schema(x)
+  schema_categories <- by(names(the_schema), the_schema, c)
+
+  out <- replicate(n = length(the_schema), list(values = NA, ordered = NA), simplify = FALSE) %>%
+    setNames(names(the_schema))
+
+  if("factor" %in% names(schema_categories)) {
+    for(factor_col in unlist(schema_categories[["factor"]])) {
+      out[[factor_col]]$ordered <- FALSE
+      out[[factor_col]]$factor <- TRUE
+      out[[factor_col]]$values <- x %>%
+        dplyr::summarize(!!factor_col := levels(.data[[factor_col]])) %>%
+        dplyr::pull(.data[[factor_col]])
     }
+  }
+
+  if("character" %in% names(schema_categories)) {
+    for(character_col in schema_categories[["character"]]) {
+      out[[character_col]]$ordered <- FALSE
+      out[[character_col]]$factor <- FALSE
+      out[[character_col]]$values <- x %>%
+        dplyr::summarize(!!character_col := unique(.data[[character_col]])) %>%
+        dplyr::pull(.data[[character_col]]) %>% sort()
+    }
+  }
+
+  if("ordered" %in% names(schema_categories)) {
+    for(ordered_col in schema_categories[["ordered"]]) {
+      out[[ordered_col]]$ordered <- TRUE
+      out[[ordered_col]]$factor <- FALSE
+      out[[ordered_col]]$values <- x %>%
+        dplyr::summarize(!!ordered_col := levels(.data[[ordered_col]])) %>%
+        dplyr::pull(.data[[ordered_col]])
+    }
+  }
+
   out
 }
 
@@ -211,14 +225,17 @@ strings2factors <- function(x, info) {
   info <- info[check_lvls]
   vars <- names(info)
   info <- info[vars %in% names(x)]
-  for (i in seq_along(info)) {
-    lcol <- names(info)[i]
-    x[, lcol] <-
-      factor(as.character(x[[lcol]]),
-             levels = info[[i]]$values,
-             ordered = info[[i]]$ordered)
+
+  lazy_mutate <- vector("list", length = length(info)) %>% setNames(names(info))
+  for(col in names(info)) {
+    lazy_mutate[[col]] <- parse_quo(sprintf('factor(as.character(%s), levels = info[["%s"]]$values, ordered = info[["%s"]]$ordered)',
+                                            col, col, col),
+                                    env = environment())
   }
-  x
+
+  x %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 
@@ -249,8 +266,11 @@ flatten_na <- function(x) {
 
 ## short summary of training set
 train_info <- function(x) {
-  data.frame(nrows = nrow(x),
-             ncomplete = n_complete_rows(x))
+  # it is not obvious how to count complete rows in a data table without
+  # using a lot of memory. ncomplete used in only one place: the training summary
+  # so skip
+  data.frame(nrows = nrow(x %>% compute()),
+             ncomplete = if(is_dtplyr_table(x)) NA else n_complete_rows(x))
 }
 
 # ------------------------------------------------------------------------------
@@ -616,11 +636,9 @@ check_training_set <- function(x, rec, fresh) {
         )
       )
     }
-    if (!is_tibble(x)) {
-      x <- as_tibble(x[, vars, drop = FALSE])
-    } else {
-      x <- x[, vars]
-    }
+    x <- confirm_table_format(x) %>%
+      dplyr::select(!!!vars)
+
   }
 
   steps_trained <- vapply(rec$steps, is_trained, logical(1))

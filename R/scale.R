@@ -111,7 +111,8 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 
   sds <- training %>%
     dplyr::select(!!!col_names) %>%
-    dplyr::summarize_all(~ sd(., na.rm = x$na_rm)) %>%
+    dplyr::summarize_all(sd, na.rm = x$na_rm) %>%
+    as_tibble() %>%
     unlist
 
   sds <- sds * x$factor
@@ -131,7 +132,7 @@ prep.step_scale <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_scale <- function(object, new_data, ...) {
 
-  lazy_mutate <- parse_quos(sprintf('%s / object$sds["%s"]',
+  lazy_mutate <- parse_quos(sprintf('%s / object[["sds"]][["%s"]]',
                                     names(object$sds),
                                     names(object$sds)),
                             env = environment()) %>% setNames(names(object$sds))

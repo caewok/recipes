@@ -98,10 +98,20 @@ step_normalize_new <-
 prep.step_normalize <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  means <- vapply(training[, col_names], mean, c(mean = 0), na.rm = x$na_rm)
-  sds <- vapply(training[, col_names], sd, c(sd = 0), na.rm = x$na_rm)
+  means <- training %>%
+    dplyr::select(!!!col_names) %>%
+    dplyr::summarize_all(mean, na.rm = x$na_rm) %>%
+    as_tibble() %>%
+    unlist()
+
+  sds <- training %>%
+    dplyr::select(!!!col_names) %>%
+    dplyr::summarize_all(sd, na.rm = x$na_rm) %>%
+    as_tibble() %>%
+    unlist
+
   step_normalize_new(
     terms = x$terms,
     role = x$role,
@@ -116,11 +126,15 @@ prep.step_normalize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_normalize <- function(object, new_data, ...) {
-  res <- sweep(as.matrix(new_data[, names(object$means)]), 2, object$means, "-")
-  res <- sweep(res, 2, object$sds, "/")
-  res <- tibble::as_tibble(res)
-  new_data[, names(object$sds)] <- res
-  as_tibble(new_data)
+  lazy_mutate <- parse_quos(sprintf('(%s - object[["means"]][["%s"]]) / object[["sds"]][["%s"]]',
+                                    names(object$means),
+                                    names(object$means),
+                                    names(object$sds)),
+                            env = environment()) %>% setNames(names(object$sds))
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate)
+
+  confirm_table_format(new_data)
 }
 
 print.step_normalize <-

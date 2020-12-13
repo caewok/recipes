@@ -178,15 +178,14 @@ recipe.data.frame <-
     if (is.null(vars))
       vars <- colnames(x)
 
-    if (!is_tibble(x))
-      x <- as_tibble(x)
+    x <- confirm_table_format(x)
 
     if (any(table(vars) > 1))
       rlang::abort("`vars` should have unique members")
     if (any(!(vars %in% colnames(x))))
       rlang::abort("1+ elements of `vars` are not in `x`")
 
-    x <- x[, vars]
+    x <- x %>% dplyr::select(!!!vars)
 
     var_info <- tibble(variable = vars)
 
@@ -259,8 +258,7 @@ form2args <- function(formula, data, ...) {
   ## check for in-line formulas
   inline_check(formula)
 
-  if (!is_tibble(data))
-    data <- as_tibble(data)
+  data <- confirm_table_format(data)
 
   ## use rlang to get both sides of the formula
   outcomes <- get_lhs_vars(formula, data)
@@ -273,7 +271,7 @@ form2args <- function(formula, data, ...) {
   vars <- c(predictors, outcomes)
 
   ## subset data columns
-  data <- data[, vars]
+  data <- data %>% dplyr::select(!!!vars)
 
   ## derive roles
   roles <- rep("predictor", length(predictors))
@@ -390,23 +388,23 @@ prep.recipe <-
            strings_as_factors = TRUE,
            ...) {
 
-    training <- check_training_set(training, x, fresh)
+    training <- recipes:::check_training_set(training, x, fresh)
 
-    tr_data <- train_info(training)
+    tr_data <- recipes:::train_info(training)
 
     # Record the original levels for later checking
-    orig_lvls <- lapply(training, get_levels)
+    orig_lvls <- recipes:::get_levels(training)
 
     if (strings_as_factors) {
-      lvls <- lapply(training, get_levels)
-      training <- strings2factors(training, lvls)
+      lvls <- orig_lvls
+      training <- recipes:::strings2factors(training, lvls)
     } else {
       lvls <- NULL
     }
 
     # The only way to get the results for skipped steps is to
     # use `retain = TRUE` so issue a warning if this is not the case
-    skippers <- map_lgl(x$steps, is_skipable)
+    skippers <- map_lgl(x$steps, recipes:::is_skipable)
     if (any(skippers) & !retain)
       rlang::warn(
         paste0(
@@ -419,7 +417,7 @@ prep.recipe <-
 
     running_info <- x$term_info %>% mutate(number = 0, skip = FALSE)
     for (i in seq(along.with = x$steps)) {
-      needs_tuning <- map_lgl(x$steps[[i]], is_tune)
+      needs_tuning <- map_lgl(x$steps[[i]], recipes:::is_tune)
       if (any(needs_tuning)) {
         arg <- names(needs_tuning)[needs_tuning]
         arg <- paste0("'", arg, "'", collapse = ", ")
@@ -438,7 +436,7 @@ prep.recipe <-
           cat(note, "[training]", "\n")
         }
 
-        before_nms <- names(training)
+        before_nms <- colnames(training)
 
         # Compute anything needed for the preprocessing steps
         # then apply it to the current training set
@@ -448,7 +446,7 @@ prep.recipe <-
                info = x$term_info)
         training <- bake(x$steps[[i]], new_data = training)
         x$term_info <-
-          merge_term_info(get_types(training), x$term_info)
+          recipes:::merge_term_info(recipes:::get_types(training), x$term_info)
 
         # Update the roles and the term source
         if (!is.na(x$steps[[i]]$role)) {
@@ -462,7 +460,7 @@ prep.recipe <-
 
         }
 
-        changelog(log_changes, before_nms, names(training), x$steps[[i]])
+        recipes:::changelog(log_changes, before_nms, colnames(training), x$steps[[i]])
 
         running_info <- rbind(
           running_info,
@@ -477,7 +475,7 @@ prep.recipe <-
 
     ## The steps may have changed the data so reassess the levels
     if (strings_as_factors) {
-      lvls <- lapply(training, get_levels)
+      lvls <- get_levels(training)
       check_lvls <- has_lvls(lvls)
       if (!any(check_lvls)) lvls <- NULL
     } else lvls <- NULL
@@ -525,15 +523,15 @@ bake <- function(object, ...)
 #'   [prep.recipe()], apply the computations to new data.
 #' @param object A trained object such as a [recipe()] with at least
 #'   one preprocessing operation.
-#' @param new_data A data frame or tibble for whom the preprocessing will be
+#' @param new_data A data frame or tibble or dtplyr table for whom the preprocessing will be
 #'   applied. If `NULL` is given to `new_data`, the pre-processed _training
 #'   data_ will be returned (assuming that `prep(retain = TRUE)` was used).
 #' @param ... One or more selector functions to choose which variables will be
 #'   returned by the function. See [selections()] for more details.
 #'   If no selectors are given, the default is to use
 #'   [everything()].
-#' @param composition Either "tibble", "matrix", "data.frame", or
-#'  "dgCMatrix" for the format of the processed data set. Note that
+#' @param composition Either "tibble", "matrix", "data.frame",
+#'  "dgCMatrix", or "dtplyr" for the format of the processed data set. Note that
 #'  all computations during the baking process are done in a
 #'  non-sparse format. Also, note that this argument should be
 #'  called **after** any selectors and the selectors should only
@@ -608,18 +606,16 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     }
   }
 
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
+  new_data <- recipes:::confirm_table_format(new_data)
 
-  check_nominal_type(new_data, object$orig_lvls)
+  recipes:::check_nominal_type(new_data, object$orig_lvls)
 
   # Drop completely new columns from `new_data` and reorder columns that do
   # still exist to match the ordering used when training
-  original_names <- names(new_data)
+  original_names <- colnames(new_data)
   original_training_names <- unique(object$var_info$variable)
   bakeable_names <- intersect(original_training_names, original_names)
-  new_data <- new_data[, bakeable_names]
+  new_data <- new_data %>% dplyr::select(!!!bakeable_names)
 
   n_steps <- length(object$steps)
 
@@ -632,9 +628,8 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
     new_data <- bake(step, new_data = new_data)
 
-    if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
-    }
+    new_data <- confirm_table_format(new_data)
+
   }
 
   # Use `last_term_info`, which maintains info on all columns that got added
@@ -645,7 +640,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
   # Now reduce to only user selected columns
   out_names <- eval_select_recipes(terms, new_data, info)
-  new_data <- new_data[, out_names]
+  new_data <- new_data %>% dplyr::select(!!!out_names)
 
   ## The levels are not null when no nominal data are present or
   ## if strings_as_factors = FALSE in `prep`
@@ -666,6 +661,10 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     new_data <- convert_matrix(new_data, sparse = FALSE)
   } else if (composition == "data.frame") {
     new_data <- base::as.data.frame(new_data)
+  } else if (composition == "tibble") {
+    new_data <- as_tibble(new_data)
+  } else if(composition == "dtplyr") {
+    new_data <- lazy_dt(new_data)
   }
 
   new_data
@@ -703,12 +702,12 @@ print.recipe <- function(x, form_width = 30, ...) {
         x$tr_info$nrows,
         " data points and ",
         sep = "")
-    if (x$tr_info$nrows == x$tr_info$ncomplete)
+    if (!is.na(x$tr_info$ncomplete) & (x$tr_info$nrows == x$tr_info$ncomplete))
       cat("no missing data.\n")
     else
       cat(nmiss,
           "incomplete",
-          ifelse(nmiss > 1, "rows.", "row."),
+          ifelse(is.na(nmiss) | nmiss > 1, "rows.", "row."),
           "\n")
   }
   if (!is.null(x$steps)) {
@@ -829,7 +828,7 @@ juice <- function(object, ..., composition = "tibble") {
   new_data
 }
 
-formats <- c("tibble", "dgCMatrix", "matrix", "data.frame")
+formats <- c("tibble", "dgCMatrix", "matrix", "data.frame", "dtplyr")
 
 utils::globalVariables(c("number"))
 
