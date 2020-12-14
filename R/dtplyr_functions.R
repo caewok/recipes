@@ -20,8 +20,8 @@ schema.default <- function(x) {
   lapply(x, . %>% class %>% first) %>% unlist()
 }
 schema.dtplyr_step <- function(x) {
-  x %>% summarize_all(~ . %>% class %>% first) %>%
-    as.data.frame() %>% unlist()
+  x <- x %>% head() %>% as_tibble()
+  NextMethod()
 }
 
 
