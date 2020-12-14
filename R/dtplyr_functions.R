@@ -63,5 +63,41 @@ convert_named_vector_to_hierarchical_list <- function(vec, sep = ".") {
   }
 
   return(lst)
+}
 
+#' Bind a dtplyr table with another table
+#' Uses join to avoid errors when using bind_cols on dtplyr tables.
+#' Uses bind_cols otherwise
+#' @param ... two or more tables
+#' @param .name_repair unique, universal, check_unique, minimal
+#' ignored for dtplyr tables
+bind_cols_dtplyr <- function(...,
+                             .name_repair = c("unique", "universal", "check_unique", "minimal")) {
+  dots <- rlang::list2(...)
+  dots <- rlang::squash_if(dots, vctrs::vec_is_list)
+  dots <- purrr::discard(dots, is.null)
+  is_dtplyr_table <- purrr::map_lgl(dots, recipes:::is_dtplyr_table)
+
+  if(!any(is_dtplyr_table)) {
+    return(dplyr::bind_cols(..., .name_repair = .name_repair))
+  }
+
+  if(length(dots) == 1) return(dots[[1]])
+
+  # add index to each table, attempt to join columns
+  dots <- lapply(dots, function(tbl) {
+    tbl %>% dplyr::mutate(idx_bind_cols_dtplyr = row_number())
+  })
+
+  out <- dots[[1]]
+  for(df in dots[2:length(dots)]) {
+    out <- out %>%
+      dplyr::full_join(y = df,
+                       by = "idx_bind_cols_dtplyr",
+                       copy = TRUE)
+  }
+
+  out %>%
+    dplyr::select(-idx_bind_cols_dtplyr) %>%
+    compute()
 }

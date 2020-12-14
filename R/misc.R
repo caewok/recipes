@@ -218,24 +218,26 @@ has_lvls <- function(info) {
 }
 
 strings2factors <- function(x, info) {
-  check_lvls <- has_lvls(info)
+  check_lvls <- recipes:::has_lvls(info)
   if (!any(check_lvls)) {
     return(x)
   }
   info <- info[check_lvls]
   vars <- names(info)
-  info <- info[vars %in% names(x)]
+  info <- info[vars %in% colnames(x)]
 
   lazy_mutate <- vector("list", length = length(info)) %>% setNames(names(info))
   for(col in names(info)) {
-    lazy_mutate[[col]] <- parse_quo(sprintf('factor(as.character(%s), levels = info[["%s"]]$values, ordered = info[["%s"]]$ordered)',
-                                            col, col, col),
+    lazy_mutate[[col]] <- parse_quo(sprintf('factor(as.character(%s), levels = c(%s), ordered = %s)',
+                                            col,
+                                            paste(sprintf('"%s"', info[[col]]$values), collapse = ", "),
+                                            info[[col]]$ordered),
                                     env = environment())
   }
 
   x %>%
     dplyr::mutate(!!!lazy_mutate) %>%
-    confirm_table_format()
+    recipes:::confirm_table_format()
 }
 
 

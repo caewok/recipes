@@ -112,15 +112,19 @@ ns_wrapper <- function(x, args) {
 
 #' @export
 prep.step_ns <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes:::eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  recipes:::check_type(training %>% dplyr::select(!!!col_names))
 
   opt <- x$options
   opt$df <- x$deg_free
-  obj <- lapply(training[, col_names], ns_wrapper, opt)
-  for (i in seq(along.with = col_names))
-    attr(obj[[i]], "var") <- col_names[i]
+
+  obj <- vector("list", length = length(col_names)) %>% setNames(col_names)
+  for(col in col_names) {
+    obj[[col]] <- recipes:::ns_wrapper(training %>% dplyr::pull(.data[[col]]), opt)
+    attr(obj[[col]], "var") <- col
+  }
+
   step_ns_new(
     terms = x$terms,
     role = x$role,
@@ -137,25 +141,25 @@ prep.step_ns <- function(x, training, info = NULL, ...) {
 bake.step_ns <- function(object, new_data, ...) {
   ## pre-allocate a matrix for the basis functions.
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
-  ns_values <-
-    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
-  colnames(ns_values) <- rep("", sum(new_cols))
+  if(length(new_cols) == 0) return(confirm_table_format(new_data))
+
+
   strt <- 1
-  for (i in names(object$objects)) {
-    cols <- (strt):(strt + new_cols[i] - 1)
-    orig_var <- attr(object$objects[[i]], "var")
-    ns_values[, cols] <-
-      predict(object$objects[[i]], getElement(new_data, i))
-    new_names <-
-      paste(orig_var, "ns", names0(new_cols[i], ""), sep = "_")
-    colnames(ns_values)[cols] <- new_names
+  for (idx in names(object$objects)) {
+    cols <- (strt):(strt + new_cols[idx] - 1)
+    orig_var <- attr(object$objects[[idx]], "var")
+
+    pred <- predict(object$objects[[idx]], dplyr::pull(new_data, .data[[idx]])) %>% as_tibble()
+    colnames(pred) <- paste(orig_var, "ns", names0(new_cols[idx], ""), sep = "_")
+
+    new_data <- new_data %>%
+      dplyr::select(-.data[[orig_var]]) %>%
+      bind_cols_dtplyr(pred)
+
     strt <- max(cols) + 1
-    new_data[, orig_var] <- NULL
   }
-  new_data <- bind_cols(new_data, as_tibble(ns_values))
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+
+  confirm_table_format(new_data)
 }
 
 

@@ -88,6 +88,11 @@ prep.step_intercept <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_intercept <- function(object, new_data, ...) {
+  # simpler to not relocate the column for dtplyr data
+  if(is_dtplyr_table(new_data)) {
+    return(new_data %>%
+             dplyr::mutate(!!object$name := object$value))
+  }
   tibble::add_column(new_data, !!object$name := object$value, .before = TRUE)
 }
 

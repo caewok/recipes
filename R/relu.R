@@ -132,7 +132,7 @@ step_relu_new <-
 #' @export
 prep.step_relu <- function(x, training, info = NULL, ...) {
   columns <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, columns])
+  check_type(training %>% dplyr::select(!!!columns))
 
   step_relu_new(
     terms = x$terms,
@@ -150,27 +150,23 @@ prep.step_relu <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relu <- function(object, new_data, ...) {
-  make_relu_call <- function(col) {
-    call2("relu", sym(col), object$shift, object$reverse, object$smooth)
-  }
-  exprs <- purrr::map(object$columns, make_relu_call)
+
+  # not clear why, but call2 does not capture the function call correctly,
+  # so it cannot be found by dplyr::mutate. Instead, use parse_quos.
+  # make_relu_call <- function(col) {
+  #   call2("recipes:::relu", sym(col), object$shift, object$reverse, object$smooth)
+  # }
+  # exprs <- purrr::map(object$columns, make_relu_call)
+
+
+  exprs <- parse_quos(sprintf('recipes:::relu(%s, %s, %s, %s)',
+                             object$columns, "object$shift", object$reverse, object$smooth),
+                    env = environment())
   newname <- paste0(object$prefix, object$columns)
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
-  dplyr::mutate(new_data, !!!exprs)
+
+  dplyr::mutate(new_data, !!!exprs) %>% recipes:::confirm_table_format()
 }
-
-
-print.step_relu <-
-  function(x, width = max(20, options()$width - 30), ...) {
-    cat("Adding relu transform for ", sep = "")
-    cat(format_selectors(x$terms, width = width))
-    if (x$trained)
-      cat(" [trained]\n")
-    else
-      cat("\n")
-    invisible(x)
-}
-
 
 relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   if (!is.numeric(x))
@@ -189,6 +185,20 @@ relu <- function(x, shift = 0, reverse = FALSE, smooth = FALSE) {
   }
   out
 }
+
+print.step_relu <-
+  function(x, width = max(20, options()$width - 30), ...) {
+    cat("Adding relu transform for ", sep = "")
+    cat(format_selectors(x$terms, width = width))
+    if (x$trained)
+      cat(" [trained]\n")
+    else
+      cat("\n")
+    invisible(x)
+}
+
+
+
 
 #' @rdname step_relu
 #' @param x A `step_relu` object.

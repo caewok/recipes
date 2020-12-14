@@ -640,7 +640,14 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
 
   # Now reduce to only user selected columns
   out_names <- eval_select_recipes(terms, new_data, info)
-  new_data <- new_data %>% dplyr::select(!!!out_names)
+
+  # if nothing is selected, dtplyr will return 0 rows and 0 columns.
+  # default to using a tibble in that case.
+  if(length(out_names) == 0 && is_dtplyr_table(new_data)) {
+    new_data <- tibble(.rows = nrow(new_data %>% compute()))
+  } else {
+    new_data <- new_data %>% dplyr::select(!!!out_names)
+  }
 
   ## The levels are not null when no nominal data are present or
   ## if strings_as_factors = FALSE in `prep`
@@ -803,7 +810,14 @@ juice <- function(object, ..., composition = "tibble") {
   # Get user requested columns
   new_data <- object$template
   out_names <- eval_select_recipes(terms, new_data, object$term_info)
-  new_data <- new_data[, out_names]
+
+  # if nothing is selected, dtplyr will return 0 rows and 0 columns.
+  # default to using a tibble in that case.
+  if(length(out_names) == 0 && is_dtplyr_table(new_data)) {
+    new_data <- tibble(.rows = nrow(new_data %>% compute()))
+  } else {
+    new_data <- new_data %>% dplyr::select(!!!out_names)
+  }
 
   ## Since most models require factors, do the conversion from character
   if (!is.null(object$levels)) {
@@ -823,6 +837,10 @@ juice <- function(object, ..., composition = "tibble") {
     new_data <- convert_matrix(new_data, sparse = FALSE)
   } else if (composition == "data.frame") {
     new_data <- base::as.data.frame(new_data)
+  } else if(composition == "tibble") {
+    new_data <- as_tibble(new_data)
+  } else if(composition == "dtplyr") {
+    new_data <- lazy_dt(new_data)
   }
 
   new_data
