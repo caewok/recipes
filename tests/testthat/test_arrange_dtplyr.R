@@ -9,7 +9,9 @@ context("dplyr arrange steps")
 
 # ------------------------------------------------------------------------------
 
-iris_dt <- lazy_dt(iris)
+# for some reason, running Test Package throws errors when slicing iris_dt
+# unless compute is first used.
+iris_dt <- lazy_dt(iris) %>% compute()
 iris_rec <- recipe( ~ ., data = iris_dt)
 
 # ------------------------------------------------------------------------------
@@ -20,21 +22,22 @@ test_that('basic usage', {
     step_arrange(desc(Sepal.Length), 1/Petal.Length)
 
   prepped <- prep(rec, training = iris_dt %>% slice(1:75))
-
+  cat("finished prep\n")
   dplyr_train <-
-    iris_dt %>%
+    iris %>%
     slice(1:75) %>%
     dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
 
   rec_train <- juice(prepped)
-  expect_equal(dplyr_train %>% as_tibble(), rec_train %>% as_tibble())
+  expect_equal(dplyr_train, rec_train %>% as.data.frame())
 
   dplyr_test <-
-    iris_dt %>%
+    iris %>%
     slice(76:150) %>%
     dplyr::arrange(desc(Sepal.Length), 1/Petal.Length)
+
   rec_test <- bake(prepped, iris_dt %>% slice(76:150))
-  expect_equal(dplyr_test %>% as_tibble(), rec_test %>% as_tibble())
+  expect_equal(dplyr_test, rec_test %>% as.data.frame())
 })
 
 test_that('quasiquotation', {
@@ -47,12 +50,12 @@ test_that('quasiquotation', {
   prepped_1 <- prep(rec_1, training = iris_dt %>% slice(1:75))
 
   dplyr_train <-
-    iris_dt %>%
+    iris %>%
     slice(1:75) %>%
     arrange(Sepal.Length, Petal.Length)
 
   rec_1_train <- juice(prepped_1)
-  expect_equal(dplyr_train %>% as_tibble(), rec_1_train %>% as_tibble())
+  expect_equal(dplyr_train, rec_1_train %>% as.data.frame())
 
 })
 

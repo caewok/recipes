@@ -149,7 +149,7 @@ step_bagimpute_new <-
 
 bag_wrap <- function(vars, dat, opt, seed_val) {
   seed_val <- seed_val[1]
-  dat <- as.data.frame(dat[, c(vars$y, vars$x)])
+  dat <- as.data.frame(dat %>% dplyr::select(one_of(c(vars$y, vars$x))))
   if (!is.null(seed_val) && !is.na(seed_val))
     set.seed(seed_val)
 
@@ -177,6 +177,10 @@ impute_var_lists <- function(to_impute, impute_using, training, info) {
 
 #' @export
 prep.step_bagimpute <- function(x, training, info = NULL, ...) {
+  if(is_dtplyr_table(training)) {
+    warning("Bag Impute relies on ipredbagg, which requires a data.frame. Dtplyr tables will be converted to a data frame first, which may have memory usage implications.")
+  }
+
   var_lists <-
     impute_var_lists(
       to_impute = x$terms,
@@ -212,6 +216,11 @@ prep.step_bagimpute <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_bagimpute <- function(object, new_data, ...) {
+  if(is_dtplyr_table(new_data)) {
+    warning("BagImpute: Converting dtplyr table to a tibble to retrieve complete cases.")
+    new_data <- as_tibble(new_data)
+  }
+
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
     return(new_data)

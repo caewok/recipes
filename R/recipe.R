@@ -388,6 +388,12 @@ prep.recipe <-
            strings_as_factors = TRUE,
            ...) {
 
+    # fresh = FALSE
+    # verbose = FALSE
+    # retain = TRUE
+    # log_changes = FALSE
+    # strings_as_factors = TRUE
+
     training <- recipes:::check_training_set(training, x, fresh)
 
     tr_data <- recipes:::train_info(training)
