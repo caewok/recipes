@@ -3,10 +3,10 @@ library(recipes)
 library(tibble)
 library(dtplyr)
 
-context("Intercept creation")
+context("dtplyr: Intercept creation")
 
 
-context("step_intercept")
+context("dtplyr: step_intercept")
 
 ex_dat <- tibble(cat = factor(rep(c("A", "B"), each = 5)),
                  numer = 1:10)

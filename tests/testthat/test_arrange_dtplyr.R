@@ -5,7 +5,7 @@ library(dtplyr)
 
 # ------------------------------------------------------------------------------
 
-context("dplyr arrange steps")
+context("dtplyr: dplyr arrange steps")
 
 # ------------------------------------------------------------------------------
 
@@ -22,7 +22,6 @@ test_that('basic usage', {
     step_arrange(desc(Sepal.Length), 1/Petal.Length)
 
   prepped <- prep(rec, training = iris_dt %>% slice(1:75))
-  cat("finished prep\n")
   dplyr_train <-
     iris %>%
     slice(1:75) %>%

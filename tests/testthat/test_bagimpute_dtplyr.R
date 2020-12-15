@@ -4,7 +4,7 @@ library(rpart)
 library(recipes)
 library(dtplyr)
 
-context("bagged imputation")
+context("dtplyr: bagged imputation")
 
 library(modeldata)
 data(biomass)
