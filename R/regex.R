@@ -133,22 +133,25 @@ prep.step_regex <- function(x, training, info = NULL, ...) {
 }
 
 bake.step_regex <- function(object, new_data, ...) {
+  default_args <- list(ignore.case = FALSE,
+                       perl = FALSE,
+                       fixed = FALSE,
+                       useBytes = FALSE)
   ## sub in options
-  regex <- expr(
-    grepl(
-      x = getElement(new_data, object$input),
-      pattern = object$pattern,
-      ignore.case = FALSE,
-      perl = FALSE,
-      fixed = FALSE,
-      useBytes = FALSE
-    )
-  )
   if (length(object$options) > 0)
-    regex <- mod_call_args(regex, args = object$options)
+    default_args <- mod_call_args(default_args, args = object$options)
 
-  new_data[, object$result] <- ifelse(eval(regex), 1, 0)
-  new_data
+  # works b/c all the arguments are TRUE/FALSE, so no quotes required as would be for character args.
+  args_char <- paste(sprintf('%s = %s', names(default_args), default_args), collapse = ", ")
+  lazy_mutate <- parse_quos(sprintf('ifelse(grepl(x = %s, pattern = "%s", %s), 1, 0)',
+                                    object$input,
+                                    object$pattern,
+                                    args_char),
+                            env = environment()) %>% setNames(object$result)
+
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 print.step_regex <-
