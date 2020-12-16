@@ -128,6 +128,8 @@ prep.step_mutate <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_mutate <- function(object, new_data, ...) {
+  if(length(object$inputs) == 0) return(new_data) # dtplyr does not handle mutate if nothing is provided to mutate
+
   dplyr::mutate(new_data, !!!object$inputs)
 }
 
