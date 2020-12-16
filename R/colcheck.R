@@ -70,7 +70,7 @@ prep.check_cols <- function(x, training, info = NULL, ...) {
 
 bake.check_cols <- function(object, new_data, ...) {
   original_cols <- object$columns
-  new_cols      <- names(new_data)
+  new_cols      <- colnames(new_data %>% compute()) # compute is for dtplyr
   missing <- setdiff(original_cols, new_cols)
   if (length(missing) > 0) {
     mis_cols <- paste(paste0("`", missing, "`"), collapse = ", ")
