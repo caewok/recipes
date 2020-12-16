@@ -5,7 +5,7 @@ data(biomass)
 library(splines)
 library(dtplyr)
 
-context("B-splines")
+context("dtplyr: B-splines")
 
 biomass_tr <- biomass[biomass$dataset == "Training",]
 biomass_te <- biomass[biomass$dataset == "Testing",]
