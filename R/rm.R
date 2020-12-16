@@ -86,9 +86,13 @@ prep.step_rm <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_rm <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  as_tibble(new_data)
+  if (length(object$removals) > 0) {
+    cols_to_keep <- setdiff(colnames(new_data), object$removals)
+    new_data <- new_data %>%
+      dplyr::select(!!!cols_to_keep)
+
+  }
+  confirm_table_format(new_data)
 }
 
 print.step_rm <-
