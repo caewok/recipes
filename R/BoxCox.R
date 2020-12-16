@@ -112,7 +112,8 @@ prep.step_BoxCox <- function(x, training, info = NULL, ...) {
 
   values <- training %>%
     dplyr::select(!!!col_names) %>%
-    dplyr::summarize_all(~ estimate_bc(., limits = x$limits, num_unique = x$num_unique)) %>%
+    dplyr::summarize_all(recipes:::estimate_bc, limits = x$limits, num_unique = x$num_unique) %>%
+    as_tibble() %>%
     unlist()
 
   values <- values[!is.na(values)]
