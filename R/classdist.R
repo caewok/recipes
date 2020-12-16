@@ -134,12 +134,17 @@ get_both <- function(x, mfun = mean, cfun = cov) {
 
 #' @export
 prep.step_classdist <- function(x, training, info = NULL, ...) {
+  if(is_dtplyr_table(training)) warning("Dtplyr tables will be transformed to tibbles to measure class distance.")
+
   class_var <- x$class[1]
   x_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, x_names])
+  check_type(training %>% dplyr::select(!!!x_names))
 
+  # should be possible to use data.table::split for dtplyr tables
+  # this should probably use dplyr/data.table groups instead
   x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+    split(training %>% dplyr::select(!!!x_names) %>% as_tibble,
+          training %>% dplyr::pull(.data[[class_var]]))
   if (x$pool) {
     res <- list(
       center = lapply(x_dat, get_center, mfun = x$mean_func),
@@ -169,6 +174,8 @@ prep.step_classdist <- function(x, training, info = NULL, ...) {
   )
 }
 
+# might be possible to re-write mahalanobis to use a dplyr version for
+# dtplyr or spark tables.
 mah_by_class <- function(param, x)
   mahalanobis(x, param$center, param$scale)
 
@@ -183,23 +190,22 @@ bake.step_classdist <- function(object, new_data, ...) {
     res <- lapply(
       object$objects$center,
       mah_pooled,
-      x = new_data[, x_cols],
+      x = new_data %>% dplyr::select(!!!x_cols) %>% as_tibble(),
       cov_mat = object$objects$scale
     )
   } else {
     x_cols <- names(object$objects[[1]]$center)
     res <-
-      lapply(object$objects, mah_by_class, x = new_data[, x_cols])
+      lapply(object$objects, mah_by_class, x = new_data %>% dplyr::select(!!!x_cols) %>% as_tibble())
   }
   if (object$log)
     res <- lapply(res, log)
   res <- as_tibble(res)
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
-  res <- bind_cols(new_data, res)
-  if (!is_tibble(res))
-    res <- as_tibble(res)
-  res
+
+  res <- bind_cols_dtplyr(new_data, res)
+  confirm_table_format(res)
 }
 
 print.step_classdist <-
