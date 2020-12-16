@@ -137,18 +137,16 @@ prep.step_ratio <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_ratio <- function(object, new_data, ...) {
-  res <- new_data[, object$columns$top] /
-    new_data[, object$columns$bottom]
-  colnames(res) <-
-    apply(object$columns, 1, function(x)
-      object$naming(x[1], x[2]))
-  if (!is_tibble(res))
-    res <- as_tibble(res)
+  new_names <- apply(object$columns, 1, function(x)
+    object$naming(x[1], x[2]))
 
-  new_data <- bind_cols(new_data, res)
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+  lazy_mutate <- parse_quos(sprintf('%s / %s',
+                                    object$columns$top,
+                                    object$columns$bottom),
+                            env = environment()) %>% setNames(new_names)
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 print.step_ratio <-
