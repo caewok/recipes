@@ -117,12 +117,14 @@ step_corr_new <-
 
 #' @export
 prep.step_corr <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  col_names <- recipes:::eval_select_recipes(x$terms, training, info)
+  recipes:::check_type(training %>% dplyr::select(!!!col_names))
+
+  if(recipes:::is_dtplyr_table(training)) warning("Correlation copies the dtplyr table to a matrix.")
 
   if (length(col_names) > 1) {
     filter <- corr_filter(
-      x = training[, col_names],
+      x = training %>% dplyr::select(!!!col_names) %>% as_tibble(), # as_tibble primarily for dtplyr
       cutoff = x$threshold,
       use = x$use,
       method = x$method
@@ -146,9 +148,12 @@ prep.step_corr <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_corr <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
-    new_data <- new_data[,!(colnames(new_data) %in% object$removals)]
-  as_tibble(new_data)
+  if (length(object$removals) > 0) {
+    cols_to_keep <- setdiff(colnames(new_data), object$removals)
+    new_data <- new_data %>%
+      dplyr::select(!!!cols_to_keep)
+  }
+  confirm_table_format(new_data)
 }
 
 print.step_corr <-
