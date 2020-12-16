@@ -134,27 +134,41 @@ prep.step_count <- function(x, training, info = NULL, ...) {
   )
 }
 
-bake.step_count <- function(object, new_data, ...) {
-  ## sub in options
-  regex <- expr(
-    gregexpr(
-      text = getElement(new_data, object$input),
-      pattern = object$pattern,
-      ignore.case = FALSE,
-      perl = FALSE,
-      fixed = FALSE,
-      useBytes = FALSE
-    )
-  )
-  if (length(object$options) > 0)
-    regex <- mod_call_args(regex, args = object$options)
 
-  new_data[, object$result] <- vapply(eval(regex), counter, integer(1))
+bake.step_count <- function(object, new_data, ...) {
+  # similar to bake.step_regex
+  default_args <- list(ignore.case = FALSE,
+                       perl = FALSE,
+                       fixed = FALSE,
+                       useBytes = FALSE)
+  ## sub in options
+  if (length(object$options) > 0)
+    default_args <- mod_call_args(default_args, args = object$options)
+
+  # works b/c all the arguments are TRUE/FALSE, so no quotes required as would be for character args.
+  args_char <- paste(sprintf('%s = %s', names(default_args), default_args), collapse = ", ")
+  lazy_mutate <- parse_quos(sprintf('vapply(gregexpr(text = .data$%s, pattern = "%s", %s), counter, integer(1))',
+                                    object$input,
+                                    object$pattern,
+                                    args_char),
+                            env = environment()) %>% setNames(object$result)
+
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate)
+
+
   if(object$normalize) {
-    totals <- nchar(as.character(getElement(new_data, object$input)))
-    new_data[, object$result] <- new_data[, object$result]/totals
+    # take the counts and divide by the total number of characters for each element.
+    lazy_mutate <- parse_quos(sprintf('%s / nchar(as.character(%s))',
+                                      object$result,
+                                      object$input),
+                                      env = environment()) %>% setNames(object$result)
+    new_data <- new_data %>%
+      dplyr::mutate(!!!lazy_mutate)
   }
-  new_data
+
+  confirm_table_format(new_data)
+
 }
 
 counter <- function(x) length(x[x > 0])
