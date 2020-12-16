@@ -103,16 +103,17 @@ step_cut_new <-
   }
 
 prep.step_cut <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
+  col_names <- recipes:::eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
+  # different columns can have different lengths for breaks
   all_breaks <- vector("list", length(col_names))
   names(all_breaks) <- col_names
   for (col_name in col_names) {
     all_breaks[[col_name]] <-
-      create_full_breaks(training[ ,col_name, drop = TRUE], breaks = x$breaks)
-    full_breaks_check(all_breaks[[col_name]])
+      recipes:::create_full_breaks(training %>% dplyr::pull(.data[[col_name]]), breaks = x$breaks)
+    recipes:::full_breaks_check(all_breaks[[col_name]])
   }
 
   step_cut_new(
@@ -147,13 +148,17 @@ full_breaks_check <- function(breaks) {
 }
 
 bake.step_cut <- function(object, new_data, ...) {
-  for (col_name in names(object$breaks)) {
-    res <- cut_var(new_data[, col_name, drop = TRUE],
-              object$breaks[[col_name]],
-              object$include_outside_range)
-    new_data[, col_name] <- res
-  }
-  as_tibble(new_data)
+  cols <- names(object$breaks)
+
+  lazy_mutate <- parse_quos(sprintf('recipes:::cut_var(%s, breaks = c(%s), %s)',
+                                    cols,
+                                    lapply(object$breaks[cols], paste, collapse = ", "),
+                                    object$include_outside_range),
+                            env = environment()) %>% setNames(cols)
+
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 cut_var <- function(var, breaks, include_outside_range) {
