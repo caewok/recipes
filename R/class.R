@@ -141,7 +141,7 @@ prep.check_class <- function(x,
   # class can give back multiple values, return shape
   # is not predetermined. Thats why we use lapply instead.
   if (is.null(x$class_nm)) {
-    class_list <- lapply(training[ ,col_names], class)
+    class_list <- lapply(training %>% dplyr::select(!!!col_names) %>% head %>% as_tibble, class)
   } else {
     class_list <- rep(list(x$class_nm), length(col_names))
     names(class_list) <- col_names
@@ -203,12 +203,12 @@ bake.check_class <- function(object,
 
   col_names <- names(object$class_list)
   mapply(bake_check_class_core,
-         new_data[ ,col_names],
+         new_data %>% dplyr::select(!!!col_names) %>% head %>% as_tibble,
          object$class_list,
          col_names,
          aa = object$allow_additional)
 
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 print.check_class <-
