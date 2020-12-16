@@ -117,8 +117,6 @@ bs_wrapper <- function(x, args) {
 
 #' @export
 prep.step_bs <- function(x, training, info = NULL, ...) {
-  if(is_dtplyr_table(training)) stop("Prep bs.R: Dtplyr not yet implemented.")
-
   col_names <- eval_select_recipes(x$terms, training, info)
   check_type(training %>% dplyr::select(!!!col_names))
 
@@ -126,9 +124,13 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
   opt$df <- x$deg_free
   opt$degree <- x$degree
 
-  obj <- lapply(training[, col_names], bs_wrapper, opt)
-  for (i in seq(along.with = col_names))
-    attr(obj[[i]], "var") <- col_names[i]
+  stopifnot(length(col_names) > 0)
+  obj <- vector("list", length = length(col_names)) %>% setNames(col_names)
+  for(col in col_names) {
+    obj[[col]] <- bs_wrapper(training %>% dplyr::pull(.data[[col]]), opt)
+    attr(obj[[col]], "var") <- col
+  }
+
   step_bs_new(
     terms = x$terms,
     role = x$role,
@@ -144,28 +146,26 @@ prep.step_bs <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_bs <- function(object, new_data, ...) {
-  if(is_dtplyr_table(new_data)) stop("Bake bs.R: Dtplyr not yet implemented.")
-  ## pre-allocate a matrix for the basis functions.
+  # just like the bake.step_ns function
   new_cols <- vapply(object$objects, ncol, c(int = 1L))
-  bs_values <-
-    matrix(NA, nrow = nrow(new_data), ncol = sum(new_cols))
-  colnames(bs_values) <- rep("", sum(new_cols))
+  if(length(new_cols) == 0) return(confirm_table_format(new_data))
+
   strt <- 1
-  for (i in names(object$objects)) {
-    cols <- (strt):(strt + new_cols[i] - 1)
-    orig_var <- attr(object$objects[[i]], "var")
-    bs_values[, cols] <-
-      predict(object$objects[[i]], getElement(new_data, i))
-    new_names <-
-      paste(orig_var, "bs", names0(new_cols[i], ""), sep = "_")
-    colnames(bs_values)[cols] <- new_names
+  for (idx in names(object$objects)) {
+    cols <- (strt):(strt + new_cols[idx] - 1)
+    orig_var <- attr(object$objects[[idx]], "var")
+
+    pred <- predict(object$objects[[idx]], dplyr::pull(new_data, .data[[idx]])) %>% as_tibble()
+    colnames(pred) <- paste(orig_var, "bs", names0(new_cols[idx], ""), sep = "_")
+
+    new_data <- new_data %>%
+      dplyr::select(-.data[[orig_var]]) %>%
+      bind_cols_dtplyr(pred)
+
     strt <- max(cols) + 1
-    new_data[, orig_var] <- NULL
   }
-  new_data <- bind_cols(new_data, as_tibble(bs_values))
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+
+  confirm_table_format(new_data)
 }
 
 
