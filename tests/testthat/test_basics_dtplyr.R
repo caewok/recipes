@@ -4,7 +4,7 @@ library(recipes)
 library(dtplyr)
 library(dplyr)
 
-context("Testing basic functionalities")
+context("dtplyr: Testing basic functionalities")
 
 library(modeldata)
 data(biomass)
