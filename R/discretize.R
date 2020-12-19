@@ -300,8 +300,8 @@ bin_wrapper <- function(x, args) {
 
 #' @export
 prep.step_discretize <- function(x, training, info = NULL, ...) {
-  col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  col_names <- recipes:::eval_select_recipes(x$terms, training, info)
+  recipes:::check_type(training %>% dplyr::select(!!!col_names))
 
   if (length(col_names) > 1 & any(names(x$options) %in% c("prefix", "labels"))) {
     rlang::warn(
@@ -315,7 +315,11 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
   x$options$cuts <- x$num_breaks
   x$options$min_unique <- x$min_unique
 
-  obj <- lapply(training[, col_names], bin_wrapper, x$options)
+  obj <- vector("list", length = length(col_names)) %>% setNames(col_names)
+  for(col in col_names) {
+    obj[[col]] <- recipes:::bin_wrapper(training %>% dplyr::pull(.data[[col]]), args = x$options)
+  }
+
   step_discretize_new(
     terms = x$terms,
     role = x$role,
@@ -331,10 +335,18 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
-  for (i in names(object$objects))
-    new_data[, i] <-
-      predict(object$objects[[i]], getElement(new_data, i))
-  as_tibble(new_data)
+
+  this_env <- environment()
+  assign("objs_to_predict", object$objects, envir = this_env)
+  lazy_mutate <- parse_quos(sprintf('predict(objs_to_predict[["%s"]], %s)',
+                                    names(object$objects),
+                                    names(object$objects)),
+                            env = this_env) %>% setNames(names(object$objects))
+
+
+  new_data <- new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 print.step_discretize <-
