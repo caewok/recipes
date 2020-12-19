@@ -141,12 +141,15 @@ step_depth_new <-
 
 #' @export
 prep.step_depth <- function(x, training, info = NULL, ...) {
+  if(is_dtplyr_table(training)) warning("Dtplyr tables will be transformed to tibbles to measure class distance.")
+
   class_var <- x$class[1]
   x_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, x_names])
+  check_type(training %>% dplyr::select(!!!x_names))
 
   x_dat <-
-    split(training[, x_names], getElement(training, class_var))
+    split(training %>% dplyr::select(!!!x_names) %>% as_tibble,
+          training %>% dplyr::pull(.data[[class_var]]))
   x_dat <- lapply(x_dat, as.matrix)
   step_depth_new(
     terms = x$terms,
@@ -174,10 +177,10 @@ get_depth <- function(tr_dat, new_dat, metric, opts) {
 #' @export
 bake.step_depth <- function(object, new_data, ...) {
   x_names <- colnames(object$data[[1]])
-  x_data <- as.matrix(new_data[, x_names])
+  x_data <- new_data %>% dplyr::select(!!!x_names) %>% collect() %>% as.matrix
   res <- lapply(
     object$data,
-    get_depth,
+    recipes:::get_depth,
     new_dat = x_data,
     metric = object$metric,
     opts = object$options
@@ -185,10 +188,9 @@ bake.step_depth <- function(object, new_data, ...) {
   res <- as_tibble(res)
   newname <- paste0(object$prefix, colnames(res))
   res <- check_name(res, new_data, object, newname)
-  res <- bind_cols(new_data, res)
-  if (!is_tibble(res))
-    res <- as_tibble(res)
-  res
+
+  res <- bind_cols_dtplyr(new_data, res)
+  confirm_table_format(res)
 }
 
 print.step_depth <-
