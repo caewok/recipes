@@ -168,7 +168,9 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
   if (length(col_names) > 0) {
-    fac_check <- vapply(training[, col_names], is.factor, logical(1))
+    col_schema <- schema(training %>% dplyr::select(!!!col_names))
+    fac_check <- col_schema == "factor" | col_schema == "ordered"
+
     if (any(!fac_check))
       rlang::warn(
         paste0(
@@ -199,7 +201,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       }
       form <- as.formula(form_chr)
       terms <- model.frame(form,
-                           data = training,
+                           data = training %>% head %>% collect,
                            xlev = x$levels[[i]],
                            na.action = na.pass)
       levels[[i]] <- attr(terms, "terms")
@@ -211,7 +213,7 @@ prep.step_dummy <- function(x, training, info = NULL, ...) {
       ## not a factor anymore. We'll save them here and reset them
       ## in `bake.step_dummy` just prior to calling `model.matrix`
       attr(levels[[i]], "values") <-
-        levels(getElement(training, col_names[i]))
+        levels(training %>% dplyr::pull(.data[[col_names[[i]]]])) # should probably do this w/o pulling columns
       attr(levels[[i]], ".Environment") <- NULL
     }
   } else {
@@ -275,20 +277,38 @@ bake.step_dummy <- function(object, new_data, ...) {
         paste0("Only one factor level in ", orig_var)
         )
 
-    warn_new_levels(
-      new_data[[orig_var]],
+    recipes:::warn_new_levels(
+      new_data %>% dplyr::pull(.data[[orig_var]]),
       attr(object$levels[[i]], "values")
     )
 
-    new_data[, orig_var] <-
-      factor(getElement(new_data, orig_var),
-             levels = attr(object$levels[[i]], "values"),
-             ordered = fac_type == "ordered")
+    lazy_mutate <- parse_quos(sprintf('factor(%s, levels = c(%s), ordered = %s)',
+                                      orig_var,
+                                      paste(sprintf('"%s"',
+                                                    attr(object$levels[[i]], "values")),
+                                            collapse = ","),
+                                      fac_type == "ordered"),
+                                      env = environment()) %>% setNames(orig_var)
+
+
+    # this_levels <- attr(object$levels[[i]], "values")
+    # this_ordered <- fac_type == "ordered"
+    # new_data <- new_data %>%
+    #   dplyr::mutate_at(orig_var, ~ factor(., levels = this_levels, ordered = this_ordered)) %>%
+    #   compute()
+
+    new_data <- new_data %>%
+      dplyr::mutate(!!!lazy_mutate)
+
+    # new_data[, orig_var] <-
+    #   factor(getElement(new_data, orig_var),
+    #          levels = attr(object$levels[[i]], "values"),
+    #          ordered = fac_type == "ordered")
 
     indicators <-
       model.frame(
         as.formula(paste0("~", orig_var)),
-        data = new_data[, orig_var],
+        data = new_data %>% dplyr::select(!!orig_var) %>% as_tibble(),
         xlev = attr(object$levels[[i]], "values"),
         na.action = na.pass
       )
@@ -310,14 +330,14 @@ bake.step_dummy <- function(object, new_data, ...) {
     ## use backticks for nonstandard factor levels here
     used_lvl <- gsub(paste0("^", col_names[i]), "", colnames(indicators))
     colnames(indicators) <- object$naming(col_names[i], used_lvl, fac_type == "ordered")
-    new_data <- bind_cols(new_data, as_tibble(indicators))
+    new_data <- bind_cols_dtplyr(new_data, as_tibble(indicators))
     if (!object$preserve) {
-      new_data[, col_names[i]] <- NULL
+      new_data <- new_data %>%
+        dplyr::select(-one_of(col_names[i]))
     }
   }
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+
+  new_data %>% confirm_table_format()
 }
 
 print.step_dummy <-
