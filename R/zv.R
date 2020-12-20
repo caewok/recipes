@@ -92,7 +92,11 @@ one_unique <- function(x) {
 #' @export
 prep.step_zv <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  filter <- vapply(training[, col_names], one_unique, logical(1))
+
+  filter <- training %>%
+    dplyr::select(!!!col_names) %>%
+    dplyr::summarize_all(~ recipes:::one_unique(.)) %>%
+    collect() %>% unlist()
 
   step_zv_new(
     terms = x$terms,
@@ -106,9 +110,13 @@ prep.step_zv <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_zv <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  as_tibble(new_data)
+  if (length(object$removals) > 0) {
+    cols_to_keep <- setdiff(colnames(new_data), object$removals)
+    new_data <- new_data %>%
+      dplyr::select(!!!cols_to_keep)
+  }
+
+  confirm_table_format(new_data)
 }
 
 print.step_zv <-
