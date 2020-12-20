@@ -92,8 +92,9 @@ step_factor2string_new <-
 #' @export
 prep.step_factor2string <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  fac_check <-
-    vapply(training[, col_names], is.factor, logical(1))
+  this_schema <- schema(training %>% dplyr::select(!!!col_names))
+  fac_check <- this_schema == "factor" | this_schema == "ordered"
+
   if (any(!fac_check))
     rlang::abort(
       paste0(
@@ -114,13 +115,9 @@ prep.step_factor2string <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_factor2string <- function(object, new_data, ...) {
-  new_data[, object$columns] <-
-    map_df(new_data[, object$columns],
-           as.character)
-
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+  new_data %>%
+    dplyr::mutate_at(object$columns, as.character) %>%
+    confirm_table_format()
 }
 
 print.step_factor2string <-
