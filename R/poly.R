@@ -127,19 +127,31 @@ poly_wrapper <- function(x, args) {
   out
 }
 
+# dtplyr throws an error if the mutate is predict()[,1]
+# handle the column selection inside a wrapper function to avoid
+poly_pred_wrapper <- function(..., col = 1) {
+  predict(...)[, col]
+}
+
 
 #' @export
 prep.step_poly <- function(x, training, info = NULL, ...) {
-  col_names <- recipes:::eval_select_recipes(x$terms, training, info)
-  # eval_select_recipes_original(x$terms, training, info)
+  col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   opts <- x$options
   opts$degree <- x$degree
-  obj <- lapply(training[, col_names], poly_wrapper, opts)
-  for (i in seq(along.with = col_names)) {
-    attr(obj[[i]], "var") <- col_names[i]
+
+  obj <- training %>%
+    ungroup %>%
+    dplyr::select(!!!col_names) %>%
+    collect() %>% # dtplyr tables do not correctly return lists, so pull to local tibble
+    dplyr::summarize_at(col_names, recipes:::poly_wrapper, args = opts) %>%
+    as.list()
+
+  for (col in col_names) {
+    attr(obj[[col]], "var") <- col
   }
 
   step_poly_new(
@@ -158,13 +170,21 @@ prep.step_poly <- function(x, training, info = NULL, ...) {
 bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", 1:ncol(.x), sep = "_"))
-  poly_values <-
-    purrr::map2(new_data[, col_names], object$objects, ~ predict(.y, .x)) %>%
-    purrr::map(as_tibble) %>%
-    purrr::map2_dfc(new_names, ~ setNames(.x, .y))
-  new_data <- dplyr::bind_cols(new_data, poly_values)
-  new_data <- dplyr::select(new_data, -one_of(col_names))
-  new_data
+
+  env <- environment()
+  assign("obj", value = object$objects, envir = env)
+
+  n <- object$degree
+  lazy_mutate <- parse_quos(sprintf('recipes:::poly_pred_wrapper(obj[["%s"]], %s, col = %d)',
+                                    rep(col_names, each = n),
+                                    rep(col_names, each = n),
+                                    rep(seq_along(col_names), times = n)),
+                            env = env) %>% setNames(unlist(new_names))
+
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    dplyr::select(-one_of(col_names)) %>%
+    confirm_table_format()
 }
 
 
