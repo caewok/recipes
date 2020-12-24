@@ -105,21 +105,21 @@ step_geodist_new <-
 
 #' @export
 prep.step_geodist <- function(x, training, info = NULL, ...) {
-  lon_name <- eval_select_recipes(x$lon, training, info)
-  lat_name <- eval_select_recipes(x$lat, training, info)
+  lon_name <- recipes:::eval_select_recipes(x$lon, training, info)
+  lat_name <- recipes:::eval_select_recipes(x$lat, training, info)
 
   if (length(lon_name) > 1)
     rlang::abort("`lon` should resolve to a single column name.")
-  check_type(training[, lon_name])
+  recipes:::check_type(training %>% dplyr::select(!!lon_name))
 
   if (length(lat_name) > 1)
     rlang::abort("`lat` should resolve to a single column name.")
-  check_type(training[, lat_name])
+  recipes:::check_type(training %>% dplyr::select(!!lat_name))
 
   if (any(names(training) == x$name))
     rlang::abort("'", x$name, "' is already used in the data.")
 
-  step_geodist_new(
+  recipes:::step_geodist_new(
     lon = x$lon,
     lat = x$lat,
     role = x$role,
@@ -134,20 +134,25 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
   )
 }
 
-geo_dist_calc <- function(x, a, b)
-  apply(x, 1, function(x, a, b) sqrt((x[1] - a) ^ 2 + (x[2] - b) ^ 2),
-        a = a, b = b)
-
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
-  dist_vals <-
-    geo_dist_calc(new_data[, object$columns], object$ref_lat, object$ref_lon)
-  if (object$log) {
-    new_data[, object$name] <- log(dist_vals)
-  } else {
-    new_data[, object$name] <- dist_vals
+  env <- environment()
+  assign("ref_lat", value = object$ref_lat, envir = env)
+  assign("ref_lon", value = object$ref_lon, envir = env)
+
+
+  str <- sprintf('sqrt((%s - ref_lat) ^ 2 + (%s - ref_lon) ^ 2)',
+                 object$columns[[1]], object$columns[[2]])
+
+  if(object$log) {
+    str <- sprintf('log(%s)', str)
   }
-  new_data
+  lazy_mutate <- parse_quos(str, env = env) %>% setNames(object$name)
+
+
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 print.step_geodist <-

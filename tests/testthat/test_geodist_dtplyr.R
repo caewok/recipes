@@ -1,11 +1,13 @@
 library(testthat)
 library(recipes)
+library(dtplyr)
 
-context("Geographic distances")
+context("dtplyr: Geographic distances")
 
 set.seed(4693)
 rand_data <- data.frame(x = round(runif(10), 2), y = round(runif(10), 2))
 rand_data$x[1] <- NA
+rand_data_dt <- lazy_dt(rand_data)
 
 dists <-
   apply(as.matrix(rand_data),
@@ -16,22 +18,22 @@ dists <-
 
 
 test_that('basic functionality', {
-  rec <- recipe( ~ x + y, data = rand_data) %>%
+  rec <- recipe( ~ x + y, data = rand_data_dt) %>%
     step_geodist(x, y, ref_lat = 0.5, ref_lon = 0.25, log = FALSE)
-  rec_trained <- prep(rec, training = rand_data)
+  rec_trained <- prep(rec, training = rand_data_dt)
 
   tr_int <- juice(rec_trained, all_predictors())
-  te_int <- bake(rec_trained, rand_data, all_predictors())
+  te_int <- bake(rec_trained, rand_data_dt, all_predictors())
 
   expect_equal(tr_int[["geo_dist"]], dists)
   expect_equal(te_int[["geo_dist"]], dists)
 
-  rec_log <- recipe( ~ x + y, data = rand_data) %>%
+  rec_log <- recipe( ~ x + y, data = rand_data_dt) %>%
     step_geodist(x, y, ref_lat = 0.5, ref_lon = 0.25, log = TRUE)
-  rec_log_trained <- prep(rec_log, training = rand_data)
+  rec_log_trained <- prep(rec_log, training = rand_data_dt)
 
   tr_log_int <- juice(rec_log_trained, all_predictors())
-  te_log_int <- bake(rec_log_trained, rand_data, all_predictors())
+  te_log_int <- bake(rec_log_trained, rand_data_dt, all_predictors())
 
   expect_equal(tr_log_int[["geo_dist"]], log(dists))
   expect_equal(te_log_int[["geo_dist"]], log(dists))
@@ -42,44 +44,46 @@ test_that('bad args', {
   rand_data_2 <- rand_data
   rand_data_2$x1 <- runif(nrow(rand_data_2))
   rand_data_2$y1 <- runif(nrow(rand_data_2))
-  rec <- recipe( ~ ., data = rand_data_2)
+  rand_data_2_dt <- lazy_dt(rand_data_2)
+
+  rec <- recipe( ~ ., data = rand_data_2_dt)
 
   expect_error(
     rec %>%
       step_geodist(starts_with("x"), y, ref_lat = 0.5, ref_lon = 0.25) %>%
-      prep(training = rand_data_2)
+      prep(training = rand_data_2_dt)
   )
   expect_error(
     rec %>%
       step_geodist(x, starts_with("y"), ref_lat = 0.5, ref_lon = 0.25) %>%
-      prep(training = rand_data_2)
+      prep(training = rand_data_2_dt)
   )
   expect_error(
     rec %>%
       step_geodist(x, y, ref_lat = letters[1:2], ref_lon = 0.25) %>%
-      prep(training = rand_data_2)
+      prep(training = rand_data_2_dt)
   )
   expect_error(
     rec %>%
       step_geodist(x, y, ref_lon = letters[1:2], ref_lat = 0.25) %>%
-      prep(training = rand_data_2)
+      prep(training = rand_data_2_dt)
   )
   expect_error(
     rec %>%
       step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, name = 1) %>%
-      prep(training = rand_data_2)
+      prep(training = rand_data_2_dt)
   )
   expect_error(
     rec %>%
       step_geodist(x, y, ref_lon = 0.5, ref_lat = 0.25, log = exp(1)) %>%
-      prep(training = rand_data_2)
+      prep(training = rand_data_2_dt)
   )
 })
 
 test_that('printing', {
-  rec <- recipe( ~ x + y, data = rand_data) %>%
+  rec <- recipe( ~ x + y, data = rand_data_dt) %>%
     step_geodist(x, y, ref_lat = 0.5, ref_lon = 0.25, log = FALSE)
   expect_output(print(rec))
-  expect_output(prep(rec, training = rand_data, verbose = TRUE))
+  expect_output(prep(rec, training = rand_data_dt, verbose = TRUE))
 })
 
