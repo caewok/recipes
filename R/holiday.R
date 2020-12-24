@@ -119,39 +119,27 @@ prep.step_holiday <- function(x, training, info = NULL, ...) {
 }
 
 
-is_holiday <- function(hol, dt) {
-  hdate <- holiday(year = unique(year(dt)), Holiday = hol)
+is_holiday <- function(vec, hol) {
+  vec <- as.Date(vec)
+  hdate <- holiday(year = unique(year(vec)), Holiday = hol)
   hdate <- as.Date(hdate)
-  out <- rep(0, length(dt))
-  out[dt %in% hdate] <- 1
+  out <- rep(0, length(vec))
+  out[vec %in% hdate] <- 1
   out
 }
 
-get_holiday_features <- function(dt, hdays) {
-  if (!is.Date(dt)) {
-    dt <- as.Date(dt)
-  }
-  hdays <- as.list(hdays)
-  hfeat <- lapply(hdays, is_holiday, dt = dt)
-  hfeat <- do.call("cbind", hfeat)
-  colnames(hfeat) <- unlist(hdays)
-  as_tibble(hfeat)
-}
 
 #' @export
 bake.step_holiday <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns)) {
-    tmp <- get_holiday_features(dt = new_data[[ object$columns[i] ]],
-                                hdays = object$holidays)
+  new_cols <- apply(expand.grid(col = object$columns, hday = object$holidays), 1, paste, collapse = "_")
+  lazy_mutate <- parse_quos(sprintf('recipes:::is_holiday(%s, hol = "%s")',
+                                    rep(object$columns, each = length(object$holidays)),
+                                    rep(object$holidays, times = length(object$columns))),
+                            env = environment()) %>% setNames(new_cols)
 
-    names(tmp) <- paste(object$columns[i], names(tmp), sep = "_")
-    new_data <- bind_cols(new_data, tmp)
-  }
-
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
-  new_data
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 print.step_holiday <-
