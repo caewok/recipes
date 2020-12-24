@@ -77,7 +77,7 @@ step_sqrt_new <-
 #' @export
 prep.step_sqrt <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   step_sqrt_new(
     terms = x$terms,
@@ -92,10 +92,10 @@ prep.step_sqrt <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_sqrt <- function(object, new_data, ...) {
   col_names <- object$columns
-  for (i in seq_along(col_names))
-    new_data[, col_names[i]] <-
-      sqrt(getElement(new_data, col_names[i]))
-  as_tibble(new_data)
+
+  new_data %>%
+    dplyr::mutate_at(col_names, sqrt) %>%
+    confirm_table_format()
 }
 
 print.step_sqrt <- function(x, width = max(20, options()$width - 29), ...) {
