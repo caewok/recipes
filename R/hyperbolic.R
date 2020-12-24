@@ -92,7 +92,7 @@ step_hyperbolic_new <-
 #' @export
 prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   step_hyperbolic_new(
     terms = x$terms,
@@ -108,15 +108,11 @@ prep.step_hyperbolic <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_hyperbolic <- function(object, new_data, ...) {
-  func <- if (object$inverse)
-    get(paste0("a", object$func))
-  else
-    get(object$func)
-  col_names <- object$columns
-  for (i in seq_along(col_names))
-    new_data[, col_names[i]] <-
-    func(getElement(new_data, col_names[i]))
-  as_tibble(new_data)
+  func <- ifelse(object$inverse, paste0("a", object$func), object$func)
+
+  new_data %>%
+    dplyr::mutate_at(object$columns, func) %>%
+    confirm_table_format()
 }
 
 print.step_hyperbolic <-
