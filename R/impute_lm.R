@@ -113,7 +113,7 @@ step_impute_linear_new <-
 
 
 lm_wrap <- function(vars, dat) {
-  dat <- as.data.frame(dat[, c(vars$y, vars$x)])
+  dat <- as.data.frame(dat %>% dplyr::select(c(vars$y, vars$x)))
   dat <- na.omit(dat)
   if (nrow(dat) == 0) {
     rlang::abort(
@@ -176,6 +176,10 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_impute_linear <- function(object, new_data, ...) {
+  # for now, just transform new_data into tibble if dtplyr table
+  # needs more work to avoid dropping to local tibble
+  if(is_dtplyr_table(new_data)) new_data <- new_data %>% as_tibble()
+
   missing_rows <- !complete.cases(new_data)
   if (!any(missing_rows))
     return(new_data)
@@ -201,7 +205,7 @@ bake.step_impute_linear <- function(object, new_data, ...) {
     }
   }
 
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 
