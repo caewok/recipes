@@ -145,7 +145,7 @@ step_ica_new <-
 #' @export
 prep.step_ica <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   if (x$num_comp > 0) {
     x$num_comp <- min(x$num_comp, length(col_names))
@@ -154,7 +154,7 @@ prep.step_ica <- function(x, training, info = NULL, ...) {
     indc <-
       try(
         indc@fun(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+          dimRed::dimRedData(as.data.frame(training %>% dplyr::select(!!!col_names))),
           list(ndim = x$num_comp)
         ),
         silent = TRUE
@@ -186,16 +186,18 @@ bake.step_ica <- function(object, new_data, ...) {
     comps <-
       object$res@apply(
         dimRed::dimRedData(
-          as.data.frame(new_data[, ica_vars, drop = FALSE])
+          as.data.frame(new_data %>% dplyr::select(!!!ica_vars))
         )
       )@data
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% ica_vars), drop = FALSE]
+    new_data <- bind_cols_dtplyr(new_data, as_tibble(comps))
+
+    chosen_cols <- setdiff(colnames(new_data), ica_vars)
+    new_data <- new_data %>%
+      dplyr::select(one_of(chosen_cols))
   }
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 
