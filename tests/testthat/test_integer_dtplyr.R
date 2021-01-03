@@ -1,7 +1,8 @@
 library(testthat)
 library(recipes)
+library(dtplyr)
 
-context("Integer conversion")
+context("dtplyr: Integer conversion")
 
 tr_n <- 10
 tr_dat <-
@@ -23,6 +24,9 @@ te_dat <-
   )
 te_dat$x[1] <- NA
 te_dat$y[1] <- NA
+
+tr_dat_dt <- lazy_dt(tr_dat)
+te_dat_dt <- lazy_dt(te_dat)
 
 test_that('basic functionality', {
   rec <- recipe( ~ x + y + z, data = tr_dat) %>%
