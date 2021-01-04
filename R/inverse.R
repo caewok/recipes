@@ -82,7 +82,7 @@ step_inverse_new <-
 prep.step_inverse <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   step_inverse_new(
     terms = x$terms,
@@ -97,10 +97,16 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_inverse <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
-    new_data[, object$columns[i]] <-
-      1 / (new_data [[ object$columns[i] ]] + object$offset)
-  as_tibble(new_data)
+  # put the offset in an environment to avoid errors w/ number of digits
+  env <- environment()
+  assign(x = "offset", value = object$offset, envir = env)
+
+  lazy_mutate <- parse_quos(sprintf("1 / (%s + offset)",
+                                    object$columns), env = env) %>% setNames(object$columns)
+
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 
