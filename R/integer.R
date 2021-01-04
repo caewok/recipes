@@ -159,9 +159,6 @@ prep.step_integer <- function(x, training, info = NULL, ...) {
 map_key_to_int <- function(dat, key, key_name, strict = FALSE, zero = FALSE) {
   key_dat <- tibble(key, seq_along(key)) %>% setNames(c(key_name, "int"))
   if(!strict) key_dat$int <- as.numeric(key_dat$int)
-
-
-
 }
 
 map_key_to_int <- function(dat, key, strict = FALSE, zero = FALSE) {
