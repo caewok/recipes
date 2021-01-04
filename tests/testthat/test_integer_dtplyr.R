@@ -29,12 +29,12 @@ tr_dat_dt <- lazy_dt(tr_dat)
 te_dat_dt <- lazy_dt(te_dat)
 
 test_that('basic functionality', {
-  rec <- recipe( ~ x + y + z, data = tr_dat) %>%
+  rec <- recipe( ~ x + y + z, data = tr_dat_dt) %>%
     step_integer(all_predictors())
-  rec_trained <- prep(rec, training = tr_dat)
+  rec_trained <- prep(rec, training = tr_dat_dt)
 
   tr_int <- juice(rec_trained, all_predictors())
-  te_int <- bake(rec_trained, te_dat, all_predictors())
+  te_int <- bake(rec_trained, te_dat_dt, all_predictors())
 
   exp_x <- c(NA, 2, 2, 1, 0)
   exp_y <- c(NA, 4, 3, 3, 0)
@@ -49,12 +49,12 @@ test_that('basic functionality', {
 
 
 test_that('zero-based', {
-  rec <- recipe( ~ x + y + z, data = tr_dat) %>%
+  rec <- recipe( ~ x + y + z, data = tr_dat_dt) %>%
     step_integer(all_predictors(), zero_based = TRUE)
-  rec_trained <- prep(rec, training = tr_dat)
+  rec_trained <- prep(rec, training = tr_dat_dt)
 
   tr_int <- juice(rec_trained, all_predictors())
-  te_int <- bake(rec_trained, te_dat, all_predictors())
+  te_int <- bake(rec_trained, te_dat_dt, all_predictors())
 
   exp_x <- c(NA, 1, 1, 0, 3)
   exp_y <- c(NA, 3, 2, 2, 4)
@@ -68,12 +68,12 @@ test_that('zero-based', {
 })
 
 test_that('integers', {
-  rec <- recipe( ~ x + y + z, data = tr_dat) %>%
+  rec <- recipe( ~ x + y + z, data = tr_dat_dt) %>%
     step_integer(all_predictors(), strict = TRUE)
-  rec_trained <- prep(rec, training = tr_dat)
+  rec_trained <- prep(rec, training = tr_dat_dt)
 
   tr_int <- juice(rec_trained, all_predictors())
-  te_int <- bake(rec_trained, te_dat, all_predictors())
+  te_int <- bake(rec_trained, te_dat_dt, all_predictors())
 
   expect_true(all(vapply(te_int, is.numeric, logical(1))))
   expect_true(all(vapply(te_int, is.integer, logical(1))))
@@ -83,10 +83,10 @@ test_that('integers', {
 })
 
 test_that('printing', {
-  rec <- recipe( ~ x + y + z, data = tr_dat)
+  rec <- recipe( ~ x + y + z, data = tr_dat_dt)
   ints <- rec %>% step_integer(all_predictors())
   expect_output(print(ints))
-  expect_output(prep(ints, training = tr_dat, verbose = TRUE))
+  expect_output(prep(ints, training = tr_dat_dt, verbose = TRUE))
 })
 
 
