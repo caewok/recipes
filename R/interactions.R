@@ -225,7 +225,7 @@ bake.step_interact <- function(object, new_data, ...) {
     lapply(res, function(x)
       x[, grepl(":", colnames(x)), drop = FALSE])
   ncols <- vapply(res, ncol, c(int = 1L))
-  out <- matrix(NA, nrow = nrow(new_data), ncol = sum(ncols))
+  out <- matrix(NA, nrow = nrow(new_data %>% compute()), ncol = sum(ncols))
   strt <- 1
   for (i in seq_along(ncols)) {
     cols <- (strt):(strt + ncols[i] - 1)
@@ -234,10 +234,10 @@ bake.step_interact <- function(object, new_data, ...) {
   }
   colnames(out) <-
     gsub(":", object$sep, unlist(lapply(res, colnames)))
-  new_data <- bind_cols(new_data, as_tibble(out))
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+  new_data %>%
+    bind_cols_dtplyr(as_tibble(out)) %>%
+    confirm_table_format()
+
 }
 
 ## This uses the highest level of interactions
