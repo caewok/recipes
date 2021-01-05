@@ -147,13 +147,25 @@ prep.step_other <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
   if (length(col_names) > 0) {
-    objects <- lapply(training[, col_names],
-                      keep_levels,
-                      threshold = x$threshold,
-                      other = x$other)
+    env <- new.env()
+    assign("threshold", value = x$threshold, envir = env)
+    assign("other", value = x$other, envir = env)
+    lazy_summary <- parse_quos(sprintf('list(recipes:::keep_levels(%s, threshold = threshold, other = other))',
+                                       col_names), env = env) %>% setNames(col_names)
+
+    objects <- training %>%
+      dplyr::select(!!!col_names) %>%
+      dplyr::summarize(!!!lazy_summary) %>%
+      # below doesn't work when testing
+      # dplyr::summarize_all(~ list(recipes:::keep_levels(., threshold = .env[["x"]]$threshold, other = .env[["x"]]$other))) %>%
+      collect() %>%
+      as.list() %>%
+      drop_top_list_level()
+
   } else {
     objects <- NULL
   }
+
 
   step_other_new(
     terms = x$terms,
@@ -170,31 +182,28 @@ prep.step_other <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_other <- function(object, new_data, ...) {
   if (!is.null(object$objects)) {
-    for (i in names(object$objects)) {
-      if (object$objects[[i]]$collapse) {
-        tmp <- if (!is.character(new_data[, i]))
-          as.character(getElement(new_data, i))
-        else
-          getElement(new_data, i)
+    cols_to_transform <- names(object$objects)[sapply(object$objects, function(obj) obj$collapse)]
+    if(length(cols_to_transform) > 0) {
 
-        tmp <- ifelse(
-          !(tmp %in% object$objects[[i]]$keep) & !is.na(tmp),
-          object$objects[[i]]$other,
-          tmp
-        )
+    lazy_mutate <- vector("list", length = length(cols_to_transform)) %>% setNames(cols_to_transform)
+    for(col in cols_to_transform) {
+      env <- new.env()
+      assign(x = "keep", value = object$objects[[col]]$keep, envir = env)
+      assign(x = "other", value = object$objects[[col]]$other, envir = env)
 
-        # assign other factor levels other here too.
-        tmp <- factor(tmp,
-                      levels = c(object$objects[[i]]$keep,
-                                 object$objects[[i]]$other))
+      lazy_mutate[[col]] <- parse_quo(sprintf('case_when(!(%s %%in%% keep) & !is.na(%s) ~ other,
+                                            TRUE ~ %s)',
+                                              col, col, col), env = env)
+    }
 
-        new_data[, i] <- tmp
-      }
+    new_data <- new_data %>%
+      dplyr::mutate_at(cols_to_transform, as.character) %>%
+      dplyr::mutate(!!!lazy_mutate) %>%
+      dplyr::mutate_at(cols_to_transform, as.factor)
     }
   }
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+
+  new_data %>%  confirm_table_format()
 }
 
 print.step_other <-

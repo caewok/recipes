@@ -171,7 +171,7 @@ bake.step_poly <- function(object, new_data, ...) {
   col_names <- names(object$objects)
   new_names <- purrr::map(object$objects, ~ paste(attr(.x, "var"), "poly", 1:ncol(.x), sep = "_"))
 
-  env <- environment()
+  env <- new.env()
   assign("obj", value = object$objects, envir = env)
 
   n <- object$degree

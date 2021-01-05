@@ -201,8 +201,8 @@ bake.step_integer <- function(object, new_data, ...) {
       dat_to_join[[int_col]] <- as.numeric(dat_to_join[[int_col]])
     }
 
-    # env <- new.env()
-    env <- environment()
+
+    env <- new.env()
     # assign(x = "n", value = n, envir = env)
     assign(x = "na_replacement", value = na_replacement, envir = env)
 

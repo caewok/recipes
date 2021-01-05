@@ -153,16 +153,16 @@ step_isomap_new <-
 prep.step_isomap <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   if (x$num_terms > 0) {
     x$num_terms <- min(x$num_terms, ncol(training))
-    x$neighbors <- min(x$neighbors, nrow(training))
+    x$neighbors <- min(x$neighbors, nrow(training %>% compute()))
 
     iso_map <-
       try(
         dimRed::embed(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+          dimRed::dimRedData(as.data.frame(training %>% dplyr::select(!!!col_names))),
           "Isomap",
           knn = x$neighbors,
           ndim = x$num_terms,
@@ -197,15 +197,15 @@ bake.step_isomap <- function(object, new_data, ...) {
     isomap_vars <- colnames(environment(object$res@apply)$indata)
     comps <-
       object$res@apply(
-        dimRed::dimRedData(as.data.frame(new_data[, isomap_vars, drop = FALSE]))
+        dimRed::dimRedData(as.data.frame(new_data %>% dplyr::select(!!!isomap_vars)))
       )@data
     comps <- comps[, 1:object$num_terms, drop = FALSE]
     comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% isomap_vars), drop = FALSE]
-    if (!is_tibble(new_data))
-      new_data <- as_tibble(new_data)
+
+    new_data <- new_data %>%
+      bind_cols_dtplyr(as_tibble(comps)) %>%
+      dplyr::select(-one_of(isomap_vars)) %>%
+      confirm_table_format()
   }
   new_data
 }

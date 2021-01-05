@@ -136,7 +136,7 @@ prep.step_geodist <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_geodist <- function(object, new_data, ...) {
-  env <- environment()
+  env <- new.env()
   assign("ref_lat", value = object$ref_lat, envir = env)
   assign("ref_lon", value = object$ref_lon, envir = env)
 

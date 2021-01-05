@@ -98,7 +98,7 @@ prep.step_inverse <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_inverse <- function(object, new_data, ...) {
   # put the offset in an environment to avoid errors w/ number of digits
-  env <- environment()
+  env <- new.env()
   assign(x = "offset", value = object$offset, envir = env)
 
   lazy_mutate <- parse_quos(sprintf("1 / (%s + offset)",

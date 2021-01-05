@@ -336,7 +336,7 @@ prep.step_discretize <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_discretize <- function(object, new_data, ...) {
 
-  this_env <- environment()
+  this_env <- new.env()
   assign("objs_to_predict", object$objects, envir = this_env)
   lazy_mutate <- parse_quos(sprintf('predict(objs_to_predict[["%s"]], %s)',
                                     names(object$objects),
