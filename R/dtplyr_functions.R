@@ -101,3 +101,9 @@ bind_cols_dtplyr <- function(...,
     dplyr::select(-idx_bind_cols_dtplyr) %>%
     compute()
 }
+
+#' Drop the top list level, keeping everything under it
+#' Keep the names from the top level
+drop_top_list_level <- function(lst) {
+   lapply(lst, function(l) { return(l[[1]]) })
+}
