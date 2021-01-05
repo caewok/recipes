@@ -128,7 +128,7 @@ bake.step_center <- function(object, new_data, ...) {
   lazy_mutate <- parse_quos(sprintf('%s - object[["means"]][["%s"]]',
                                     names(object$means),
                                     names(object$means)),
-                            env = environment()) %>% setNames(names(object$means))
+                            env = new.env()) %>% setNames(names(object$means))
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate)
 

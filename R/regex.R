@@ -147,7 +147,7 @@ bake.step_regex <- function(object, new_data, ...) {
                                     object$input,
                                     object$pattern,
                                     args_char),
-                            env = environment()) %>% setNames(object$result)
+                            env = new.env()) %>% setNames(object$result)
 
   new_data %>%
     dplyr::mutate(!!!lazy_mutate) %>%

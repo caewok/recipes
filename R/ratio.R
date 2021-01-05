@@ -143,7 +143,7 @@ bake.step_ratio <- function(object, new_data, ...) {
   lazy_mutate <- parse_quos(sprintf('%s / %s',
                                     object$columns$top,
                                     object$columns$bottom),
-                            env = environment()) %>% setNames(new_names)
+                            env = new.env()) %>% setNames(new_names)
   new_data %>%
     dplyr::mutate(!!!lazy_mutate) %>%
     confirm_table_format()

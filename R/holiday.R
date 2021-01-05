@@ -135,7 +135,7 @@ bake.step_holiday <- function(object, new_data, ...) {
   lazy_mutate <- parse_quos(sprintf('recipes:::is_holiday(%s, hol = "%s")',
                                     rep(object$columns, each = length(object$holidays)),
                                     rep(object$holidays, times = length(object$columns))),
-                            env = environment()) %>% setNames(new_cols)
+                            env = new.env()) %>% setNames(new_cols)
 
   new_data %>%
     dplyr::mutate(!!!lazy_mutate) %>%

@@ -232,7 +232,7 @@ strings2factors <- function(x, info) {
                                             col,
                                             paste(sprintf('"%s"', info[[col]]$values), collapse = ", "),
                                             info[[col]]$ordered),
-                                    env = environment())
+                                    env = new.env())
   }
 
   x %>%

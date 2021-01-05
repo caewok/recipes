@@ -118,7 +118,7 @@ bake.step_bin2factor <- function(object, new_data, ...) {
                                     object$columns,
                                     object$levels[1],
                                     object$levels[2]),
-                            env = environment()) %>% setNames(object$columns)
+                            env = new.env()) %>% setNames(object$columns)
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate)
 

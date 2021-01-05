@@ -161,7 +161,7 @@ bake.step_relu <- function(object, new_data, ...) {
 
   exprs <- parse_quos(sprintf('recipes:::relu(%s, %s, %s, %s)',
                              object$columns, "object$shift", object$reverse, object$smooth),
-                    env = environment())
+                    env = new.env())
   newname <- paste0(object$prefix, object$columns)
   exprs <- check_name(exprs, new_data, object, newname, TRUE)
 

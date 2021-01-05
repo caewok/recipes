@@ -151,7 +151,7 @@ bake.step_count <- function(object, new_data, ...) {
                                     object$input,
                                     object$pattern,
                                     args_char),
-                            env = environment()) %>% setNames(object$result)
+                            env = new.env()) %>% setNames(object$result)
 
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate)
@@ -162,7 +162,7 @@ bake.step_count <- function(object, new_data, ...) {
     lazy_mutate <- parse_quos(sprintf('%s / nchar(as.character(%s))',
                                       object$result,
                                       object$input),
-                                      env = environment()) %>% setNames(object$result)
+                                      env = new.env()) %>% setNames(object$result)
     new_data <- new_data %>%
       dplyr::mutate(!!!lazy_mutate)
   }

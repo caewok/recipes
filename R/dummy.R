@@ -288,7 +288,7 @@ bake.step_dummy <- function(object, new_data, ...) {
                                                     attr(object$levels[[i]], "values")),
                                             collapse = ","),
                                       fac_type == "ordered"),
-                                      env = environment()) %>% setNames(orig_var)
+                                      env = new.env()) %>% setNames(orig_var)
 
 
     # this_levels <- attr(object$levels[[i]], "values")

@@ -135,7 +135,7 @@ bake.step_scale <- function(object, new_data, ...) {
   lazy_mutate <- parse_quos(sprintf('%s / object[["sds"]][["%s"]]',
                                     names(object$sds),
                                     names(object$sds)),
-                            env = environment()) %>% setNames(names(object$sds))
+                            env = new.env()) %>% setNames(names(object$sds))
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate)
 

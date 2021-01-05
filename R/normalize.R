@@ -130,7 +130,7 @@ bake.step_normalize <- function(object, new_data, ...) {
                                     names(object$means),
                                     names(object$means),
                                     names(object$sds)),
-                            env = environment()) %>% setNames(names(object$sds))
+                            env = new.env()) %>% setNames(names(object$sds))
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate)
 

@@ -137,7 +137,7 @@ bake.step_BoxCox <- function(object, new_data, ...) {
   lazy_mutate <- parse_quos(sprintf("recipes:::bc_trans(%s, lambda = object$lambdas[%d])",
                                     names(object$lambdas),
                                     seq_along(object$lambdas)),
-                            env = environment()) %>% setNames(names(object$lambdas))
+                            env = new.env()) %>% setNames(names(object$lambdas))
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate)
 

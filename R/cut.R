@@ -154,7 +154,7 @@ bake.step_cut <- function(object, new_data, ...) {
                                     cols,
                                     lapply(object$breaks[cols], paste, collapse = ", "),
                                     object$include_outside_range),
-                            env = environment()) %>% setNames(cols)
+                            env = new.env()) %>% setNames(cols)
 
   new_data <- new_data %>%
     dplyr::mutate(!!!lazy_mutate) %>%
