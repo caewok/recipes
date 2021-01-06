@@ -97,13 +97,13 @@ step_lowerimpute_new <-
 #' @export
 prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  threshold <-
-    vapply(training[, col_names],
-           min,
-           numeric(1),
-           na.rm = TRUE)
+  threshold <- training %>%
+    dplyr::summarize_at(col_names, ~ min(., na.rm = TRUE)) %>%
+    collect() %>%
+    unlist()
+
   if (any(threshold < 0))
     rlang::abort(
       paste0(
@@ -123,13 +123,31 @@ prep.step_lowerimpute <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_lowerimpute <- function(object, new_data, ...) {
-  for (i in names(object$threshold)) {
-    affected <- which(new_data[[i]] <= object$threshold[[i]])
-    if (length(affected) > 0)
-      new_data[[i]][affected] <- runif(length(affected),
-                                      max = object$threshold[[i]])
+  n <- new_data %>% compute %>% nrow
+  for(col in names(object$threshold)) {
+    threshold <- object$threshold[[col]]
+    env <- new.env()
+    assign("threshold", object$threshold[[col]], envir = env)
+    lazy_mutate <- parse_quos(sprintf('ifelse(.affected, runif(n, max = threshold), %s)',
+                                      col),
+                              env = env) %>% setNames(col)
+
+    new_data <- new_data %>%
+      dplyr::mutate(.affected = .data[[col]] <= threshold) %>%
+      dplyr::mutate(!!!lazy_mutate) %>%
+      dplyr::mutate(-.affected) %>%
+      compute()
   }
-  as_tibble(new_data)
+
+
+
+  # for (i in names(object$threshold)) {
+  #   affected <- which(new_data[[i]] <= object$threshold[[i]])
+  #   if (length(affected) > 0)
+  #     new_data[[i]][affected] <- runif(length(affected),
+  #                                     max = object$threshold[[i]])
+  # }
+  confirm_table_format(new_data)
 }
 
 print.step_lowerimpute <-
