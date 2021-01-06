@@ -98,9 +98,9 @@ step_lincomb_new <-
 prep.step_lincomb <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  filter <- iter_lc_rm(x = training[, col_names],
+  filter <- iter_lc_rm(x = training %>% dplyr::select(!!!col_names) %>% collect(),
                        max_steps = x$max_steps)
 
   step_lincomb_new(
@@ -117,8 +117,8 @@ prep.step_lincomb <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_lincomb <- function(object, new_data, ...) {
   if (length(object$removals) > 0)
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  as_tibble(new_data)
+    new_data <- new_data %>% dplyr::select(-one_of(object$removals))
+  confirm_table_format(new_data)
 }
 
 print.step_lincomb <-
