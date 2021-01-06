@@ -80,7 +80,7 @@ step_logit_new <-
 prep.step_logit <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   step_logit_new(
     terms = x$terms,
@@ -94,10 +94,9 @@ prep.step_logit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_logit <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
-    new_data[, object$columns[i]] <-
-      binomial()$linkfun(getElement(new_data, object$columns[i]))
-  as_tibble(new_data)
+  new_data %>%
+    dplyr::mutate_at(object$columns, binomial()$linkfun) %>%
+    confirm_table_format()
 }
 
 
