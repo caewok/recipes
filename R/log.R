@@ -112,7 +112,7 @@ step_log_new <-
 prep.step_log <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   step_log_new(
     terms = x$terms,
@@ -130,25 +130,30 @@ prep.step_log <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_log <- function(object, new_data, ...) {
   col_names <- object$columns
+
   # for backward compat
   if(all(names(object) != "offset"))
     object$offset <- 0
 
-  if (!object$signed){
-    for (i in seq_along(col_names))
-      new_data[, col_names[i]] <-
-        log(new_data[[ col_names[i] ]] + object$offset, base = object$base)
+  env <- new.env()
+  assign("offset", object$offset, envir = env)
+  assign("objbase", object$base, envir = env)
+  if(!object$signed) {
+    lazy_mutate <- parse_quos(sprintf('log(%s + offset, base = objbase)',
+                                      col_names),
+                              env = env) %>% setNames(col_names)
   } else {
     if (object$offset != 0)
       rlang::warn("When signed is TRUE, offset will be ignored")
-     for (i in seq_along(col_names))
-       new_data[, col_names[i]] <-
-         ifelse(abs(new_data[[ col_names[i] ]]) < 1,
-                0,
-                sign(new_data[[ col_names[i] ]]) *
-                  log(abs(new_data[[ col_names[i] ]]), base = object$base ))
+
+    lazy_mutate <- parse_quos(sprintf('ifelse(abs(%s) < 1, 0, sign(%s) * log(abs(%s), base = objbase))',
+                                      col_names, col_names, col_names),
+                              env = env) %>% setNames(col_names)
   }
-  as_tibble(new_data)
+
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    confirm_table_format()
 }
 
 print.step_log <-
