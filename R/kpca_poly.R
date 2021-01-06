@@ -156,7 +156,7 @@ step_kpca_poly_new <-
 prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   if (x$num_comp > 0) {
     kprc <-
@@ -172,7 +172,7 @@ prep.step_kpca_poly <- function(x, training, info = NULL, ...) {
     kprc <-
       try(
         kprc@fun(
-          dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE])),
+          dimRed::dimRedData(as.data.frame(training %>% dplyr::select(!!!col_names))),
           kprc@stdpars
         ),
         silent = TRUE
@@ -205,14 +205,16 @@ bake.step_kpca_poly <- function(object, new_data, ...) {
   if (object$num_comp > 0) {
     pca_vars <- colnames(environment(object$res@apply)$indata)
     comps <- object$res@apply(
-      dimRed::dimRedData(as.data.frame(new_data[, pca_vars, drop = FALSE]))
+      dimRed::dimRedData(as.data.frame(new_data %>% dplyr::select(!!!pca_vars)))
     )@data
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <- new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+
+    new_data <- new_data %>%
+      bind_cols_dtplyr(as_tibble(comps)) %>%
+      dplyr::select(-one_of(pca_vars))
   }
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 print.step_kpca_poly <- function(x, width = max(20, options()$width - 40), ...) {
