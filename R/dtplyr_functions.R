@@ -107,3 +107,43 @@ bind_cols_dtplyr <- function(...,
 drop_top_list_level <- function(lst) {
    lapply(lst, function(l) { return(l[[1]]) })
 }
+
+#' Handle complete cases for dtplyr tables
+complete_cases_dtplyr <- function(...) {
+  args <- list(...)
+  if(!any(sapply(args, is_dtplyr_table))) return(complete.cases(...))
+
+  len <- sapply(args, function(x) {
+    if(is.null(dim(x))) return(length(x))
+    return(nrow(x %>% compute()))
+  })
+
+  if(any(len != len[[1]])) stop("not all arguments have the same length")
+
+  out <- rep(TRUE, times = len) # start by assuming everything is complete unless told otherwise
+  for(x in args) {
+    if(is_dtplyr_table(x)) {
+      # currently rowwise is not understood by dtplyr
+      # mtcars %>%
+      #   dplyr::mutate_all(~ is.na(.)) %>%
+      #   rowwise() %>%
+      #   mutate(sumVar = sum(c_across())) %>%
+      #   dplyr::pull(sumVar)
+
+      # which rows have NAs
+      tmp <- x %>%
+        dplyr::mutate_all(~ is.na(.)) %>%
+        dplyr::mutate(sumVar = rowSums(.)) %>%
+        dplyr::pull(sumVar) %>%
+        as.logical()
+
+      # which rows *do not* have NAs
+      out <- out & !tmp
+
+    } else {
+      out <- out & complete.cases(x)
+    }
+  }
+
+  return(out)
+}

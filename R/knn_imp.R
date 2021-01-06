@@ -156,7 +156,7 @@ step_knnimpute_new <-
 #' @export
 prep.step_knnimpute <- function(x, training, info = NULL, ...) {
   var_lists <-
-    impute_var_lists(
+    recipes:::impute_var_lists(
       to_impute = x$terms,
       impute_using = x$impute_with,
       training = training,
@@ -171,7 +171,7 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     neighbors = x$neighbors,
     impute_with = x$impute_with,
-    ref_data = training[, all_x_vars],
+    ref_data = training %>% dplyr::select(!!!all_x_vars),
     options = x$options,
     columns = var_lists,
     skip = x$skip,
@@ -181,52 +181,70 @@ prep.step_knnimpute <- function(x, training, info = NULL, ...) {
 
 nn_index <- function(miss_data, ref_data, vars, K, opt) {
   gower_topn(
-    ref_data[, vars],
-    miss_data[, vars],
+    ref_data %>% dplyr::select(!!!vars) %>% collect(),
+    miss_data %>% dplyr::select(!!!vars) %>% collect(),
     n = K,
     nthread = opt$nthread,
     eps = opt$eps
   )$index
 }
 
-nn_pred <- function(index, dat) {
-  dat <- dat[index, ]
-  dat <- getElement(dat, names(dat))
-  dat <- dat[!is.na(dat)]
-  est <- if (is.factor(dat) | is.character(dat))
-    mode_est(dat)
+nn_pred <- function(index, vec) {
+  vec <- vec[index]
+  # dat <- getElement(dat, names(dat))
+  vec <- vec[!is.na(vec)]
+  est <- if (is.factor(vec) | is.character(vec))
+    mode_est(vec)
   else
-    mean(dat)
+    mean(vec)
   est
 }
 
 
 #' @export
 bake.step_knnimpute <- function(object, new_data, ...) {
-  missing_rows <- !complete.cases(new_data)
+
+  missing_rows <- !complete_cases_dtplyr(new_data)
   if (!any(missing_rows))
     return(new_data)
 
   old_data <- new_data
   for (i in seq(along.with = object$columns)) {
     imp_var <- object$columns[[i]]$y
-    missing_rows <- !complete.cases(new_data[, imp_var])
+    missing_rows <- !complete.cases(new_data %>% dplyr::pull(.data[[imp_var]]))
     if (any(missing_rows)) {
-      preds <- object$columns[[i]]$x
-      imp_data <- old_data[missing_rows, preds, drop = FALSE]
+
       ## do a better job of checking this:
-      if (all(is.na(imp_data))) {
+      if (all(missing_rows)) {
         rlang::warn("All predictors are missing; cannot impute")
       } else {
-        imp_var_complete <- !is.na(object$ref_data[[imp_var]])
-        nn_ind <- nn_index(object$ref_data[imp_var_complete,],
-                           imp_data, preds,
+        preds <- object$columns[[i]]$x
+
+        imp_data <- old_data %>%
+          dplyr::mutate(.missing_rows = missing_rows) %>%
+          dplyr::filter(.missing_rows) %>%
+          dplyr::select(!!!preds) %>%
+          compute()
+
+        tmp_ref_data <- object$ref_data %>%
+          dplyr::mutate(.imp_var_complete = !is.na(.data[[imp_var]])) %>%
+          dplyr::select(-.imp_var_complete) %>%
+          compute()
+
+        nn_ind <- nn_index(tmp_ref_data,
+                           imp_data,
+                           preds,
                            object$neighbors,
                            object$options)
         pred_vals <-
-          apply(nn_ind, 2, nn_pred, dat = object$ref_data[imp_var_complete, imp_var])
-        pred_vals <- cast(pred_vals, object$ref_data[[imp_var]])
-        new_data[missing_rows, imp_var] <- pred_vals
+          apply(nn_ind, 2, nn_pred, vec = tmp_ref_data %>% dplyr::pull(.data[[imp_var]]))
+        new_vals <- rep(NA, times = length(missing_rows))
+        new_vals[missing_rows] <- pred_vals
+        new_vals <- cast(new_vals, object$ref_data %>% head() %>% dplyr::pull(.data[[imp_var]]))
+
+        new_data <- new_data %>%
+          dplyr::mutate_at(imp_var, coalesce, new_vals) %>%
+          compute()
       }
     }
   }
