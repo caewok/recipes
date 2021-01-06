@@ -176,31 +176,42 @@ prep.step_impute_linear <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_impute_linear <- function(object, new_data, ...) {
-  # for now, just transform new_data into tibble if dtplyr table
-  # needs more work to avoid dropping to local tibble
-  if(is_dtplyr_table(new_data)) new_data <- new_data %>% as_tibble()
 
-  missing_rows <- !complete.cases(new_data)
+  missing_rows <- !complete_cases_dtplyr(new_data)
   if (!any(missing_rows))
     return(new_data)
 
   old_data <- new_data
   for (i in seq(along.with = object$models)) {
     imp_var <- names(object$models)[i]
-    missing_rows <- !complete.cases(new_data[, imp_var])
+    missing_rows <- !complete.cases(new_data %>% dplyr::pull(.data[[imp_var]]))
     if (any(missing_rows)) {
       preds <- object$models[[imp_var]]$..imp_vars
-      pred_data <- old_data[missing_rows, preds, drop = FALSE]
+      pred_data <- old_data %>%
+        dplyr::mutate(.missing_rows = missing_rows) %>%
+        dplyr::filter(.missing_rows) %>%
+        dplyr::select(!!!preds) %>%
+        compute()
+
+      preds_are_na <- pred_data %>%
+        dplyr::summarize_all(~any(is.na(.))) %>%
+        collect() %>% unlist()
       ## do a better job of checking this:
-      if (any(is.na(pred_data))) {
+      if (any(preds_are_na)) {
         rlang::warn("
           There were missing values in the predictor(s) used to impute;
           imputation did not occur.
         ")
       } else {
-        pred_vals <- predict(object$models[[imp_var]], pred_data)
-        pred_vals <- cast(pred_vals, new_data[[imp_var]])
-        new_data[missing_rows, imp_var] <- pred_vals
+        pred_vals <- predict(object$models[[imp_var]], pred_data %>% collect())
+
+        new_vals <- rep(NA, times = length(missing_rows))
+        new_vals[missing_rows] <- pred_vals
+        new_vals <- cast(new_vals, new_data %>% head() %>% dplyr::pull(.data[[imp_var]]))
+
+        new_data <- new_data %>%
+          dplyr::mutate_at(imp_var, coalesce, new_vals) %>%
+          compute()
       }
     }
   }
