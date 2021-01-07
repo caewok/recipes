@@ -96,10 +96,16 @@ step_meanimpute_new <-
 prep.step_meanimpute <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
+  the_trim <- x$trim
 
-  means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
-  means <- purrr::map2(means, training[, col_names], cast)
+  means <- training %>%
+    dplyr::summarize_at(col_names, mean, na.rm = TRUE, trim = the_trim) %>%
+    collect() %>%
+    unlist()
+
+  # means <- lapply(training[, col_names], mean, trim = x$trim, na.rm = TRUE)
+  means <- purrr::map2(means, training %>% dplyr::select(!!!col_names) %>% head %>% collect(), cast)
 
   step_meanimpute_new(
     terms = x$terms,
@@ -114,11 +120,12 @@ prep.step_meanimpute <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_meanimpute <- function(object, new_data, ...) {
-  for (i in names(object$means)) {
-    if (any(is.na(new_data[[i]])))
-      new_data[is.na(new_data[[i]]), i] <- object$means[[i]]
+  for(col in names(object$means)) {
+    new_data <- new_data %>%
+      dplyr::mutate_at(col, coalesce, object$means[[col]])
   }
-  as_tibble(new_data)
+
+  confirm_table_format(new_data)
 }
 
 print.step_meanimpute <-

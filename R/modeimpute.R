@@ -91,7 +91,17 @@ step_modeimpute_new <-
 #' @export
 prep.step_modeimpute <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  modes <- vapply(training[, col_names], mode_est, c(mode = ""))
+
+  modes <- training %>%
+    dplyr::summarize_at(col_names, mode_est) %>%
+    collect() %>%
+    unlist()
+
+  # using this results in one failed test; not clear on whether the test is correct.
+  # this below would keep factors as factors, but it is probably preferable to keep factors as characters.
+  # so omitting below is probably correct.
+  # modes <- purrr::map2(modes, training %>% dplyr::select(!!!col_names) %>% head %>% collect(), cast)
+
   step_modeimpute_new(
     terms = x$terms,
     role = x$role,
@@ -104,13 +114,12 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_modeimpute <- function(object, new_data, ...) {
-  for (i in names(object$modes)) {
-    if (any(is.na(new_data[, i]))) {
-      mode_val <- cast(object$modes[[i]], new_data[[i]])
-      new_data[is.na(new_data[[i]]), i] <- mode_val
-    }
+  for(col in names(object$modes)) {
+    new_data <- new_data %>%
+      dplyr::mutate_at(col, coalesce, object$modes[[col]])
   }
-  as_tibble(new_data)
+
+  confirm_table_format(new_data)
 }
 
 print.step_modeimpute <-

@@ -90,10 +90,13 @@ step_medianimpute_new <-
 prep.step_medianimpute <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  medians <- lapply(training[, col_names], median, na.rm = TRUE)
-  medians <- purrr::map2(medians, training[, col_names], cast)
+  medians <- training %>%
+    dplyr::summarize_at(col_names, median, na.rm = TRUE) %>%
+    collect() %>%
+    unlist()
+  medians <- purrr::map2(medians, training %>% dplyr::select(!!!col_names) %>% head %>% collect(), cast)
 
   step_medianimpute_new(
     terms = x$terms,
@@ -107,11 +110,12 @@ prep.step_medianimpute <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_medianimpute <- function(object, new_data, ...) {
-  for (i in names(object$medians)) {
-    if (any(is.na(new_data[[i]])))
-      new_data[is.na(new_data[[i]]), i] <- object$medians[[i]]
+  for(col in names(object$medians)) {
+    new_data <- new_data %>%
+      dplyr::mutate_at(col, coalesce, object$medians[[col]])
   }
-  as_tibble(new_data)
+
+  confirm_table_format(new_data)
 }
 
 print.step_medianimpute <-
