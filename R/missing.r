@@ -107,9 +107,12 @@ prep.check_missing <- function(x, training, info = NULL, ...) {
 }
 
 bake.check_missing <- function(object, new_data, ...) {
-  col_names       <- object$columns
-  subset_to_check <- new_data[col_names]
-  nr_na           <- colSums(is.na(subset_to_check))
+  col_names <- object$columns
+  nr_na <- new_data %>%
+    dplyr::summarize_at(col_names, ~sum(is.na(.), na.rm = TRUE)) %>%
+    collect() %>%
+    unlist()
+
   if (any(nr_na > 0)) {
     with_na     <- names(nr_na[nr_na > 0])
     with_na_str <- paste(paste0("`", with_na, "`"), collapse = ", ")
