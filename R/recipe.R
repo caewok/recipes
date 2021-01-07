@@ -612,9 +612,9 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     }
   }
 
-  new_data <- recipes:::confirm_table_format(new_data)
+  new_data <- confirm_table_format(new_data)
 
-  recipes:::check_nominal_type(new_data, object$orig_lvls)
+  check_nominal_type(new_data, object$orig_lvls)
 
   # Drop completely new columns from `new_data` and reorder columns that do
   # still exist to match the ordering used when training
@@ -628,7 +628,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
   for (i in seq_len(n_steps)) {
     step <- object$steps[[i]]
 
-    if (is_skipable(step)) {
+    if (recipes:::is_skipable(step)) {
       next
     }
 
@@ -666,6 +666,10 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     var_levels <- var_levels[check_values]
     if (length(var_levels) > 0)
       new_data <- strings2factors(new_data, var_levels)
+  }
+
+  if(is_dtplyr_table(new_data) & composition != "dtplyr") {
+    new_data <- new_data %>% collect()
   }
 
   if (composition == "dgCMatrix") {
@@ -835,6 +839,10 @@ juice <- function(object, ..., composition = "tibble") {
     var_levels <- var_levels[check_values]
     if (length(var_levels) > 0)
       new_data <- strings2factors(new_data, var_levels)
+  }
+
+  if(is_dtplyr_table(new_data) & composition != "dtplyr") {
+    new_data <- new_data %>% collect()
   }
 
   if (composition == "dgCMatrix") {

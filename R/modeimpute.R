@@ -98,7 +98,7 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
     unlist()
 
   # using this results in one failed test; not clear on whether the test is correct.
-  # this below would keep factors as factors, but it is probably preferable to keep factors as characters.
+  # this below would keep factors as factors, but it is probably preferable to store factors as characters.
   # so omitting below is probably correct.
   # modes <- purrr::map2(modes, training %>% dplyr::select(!!!col_names) %>% head %>% collect(), cast)
 
@@ -114,6 +114,8 @@ prep.step_modeimpute <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_modeimpute <- function(object, new_data, ...) {
+  object$modes <- purrr::map2(object$modes, new_data %>% dplyr::select(!!!names(object$modes)) %>% head %>% collect(), cast)
+
   for(col in names(object$modes)) {
     new_data <- new_data %>%
       dplyr::mutate_at(col, coalesce, object$modes[[col]])
