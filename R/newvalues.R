@@ -124,7 +124,12 @@ new_values_func <- function(x,
 prep.check_new_values <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  values <- lapply(training[ ,col_names], unique)
+  values <- training %>%
+    dplyr::summarize_at(col_names, ~list(unique(.))) %>%
+    collect() %>%
+    as.list
+
+  values <- lapply(values, function(lst) lst[[1]])
 
   check_new_values_new(
     terms   = x$terms,
@@ -144,12 +149,12 @@ bake.check_new_values <- function(object,
   col_names <- names(object$values)
   for (i in seq_along(col_names)) {
     colname <- col_names[i]
-    new_values_func(new_data[[ colname ]],
+    new_values_func(new_data %>% dplyr::pull(.data[[ colname ]]),
                     object$values[[colname]],
                     colname,
                     ignore_NA = object$ignore_NA)
   }
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 print.check_new_values <-

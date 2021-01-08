@@ -1,5 +1,7 @@
-context("Check new values")
+library(dtplyr)
 library(modeldata)
+context("dtplyr: Check new values")
+
 
 x    <- rep(letters[1:3], 2)
 x_na <- c(rep(letters[1:3], 2), NA)
@@ -42,11 +44,12 @@ test_that("new_values_func correctly prints only non na-values when also NA as n
 })
 
 test_that("check_new_values does nothing when no new values", {
-  data("credit_data")
+  data(credit_data)
+  credit_data_dt <- lazy_dt(credit_data)
 
   expect_error(
-    x <- recipe(credit_data) %>% check_new_values(Home) %>%
-      prep() %>% bake(credit_data),
+    x <- recipe(credit_data_dt) %>% check_new_values(Home) %>%
+      prep() %>% bake(credit_data_dt),
     NA
   )
   expect_equal(x, as_tibble(credit_data))
@@ -55,16 +58,18 @@ test_that("check_new_values does nothing when no new values", {
 test_that("check_new_values breaks with new values", {
   x1 <- data.frame(a = letters[1:3])
   x2 <- data.frame(a = letters[1:5])
+  x1_dt <- lazy_dt(x1)
+  x2_dt <- lazy_dt(x2)
 
   expect_error(
-    recipe(x1) %>% check_new_values(a) %>%
-      prep() %>% bake(x2[1:4, , drop = FALSE]),
+    recipe(x1_dt) %>% check_new_values(a) %>%
+      prep() %>% bake(x2_dt %>% dplyr::slice(1:4)),
     "a contains the new value(s): d", fixed = TRUE
   )
 
   expect_error(
-    recipe(x1) %>% check_new_values(a) %>%
-      prep() %>% bake(x2),
+    recipe(x1_dt) %>% check_new_values(a) %>%
+      prep() %>% bake(x2_dt),
     "a contains the new value(s): d,e", fixed = TRUE
   )
 })
@@ -72,15 +77,18 @@ test_that("check_new_values breaks with new values", {
 test_that("check_new_values ignores NA by default", {
   x1 <- data.frame(a = letters[1:3])
   x2 <- data.frame(a = letters[1:4] %>% c(NA))
+  x1_dt <- lazy_dt(x1)
+  x2_dt <- lazy_dt(x2)
+
   expect_error(
-    recipe(x1) %>% check_new_values(a) %>%
-      prep() %>% bake(x2[-4, , drop = FALSE]),
+    recipe(x1_dt) %>% check_new_values(a) %>%
+      prep() %>% bake(x2_dt %>% dplyr::slice(-4)),
     NA
   )
 
   expect_error(
-    recipe(x1) %>% check_new_values(a) %>%
-      prep() %>% bake(x2),
+    recipe(x1_dt) %>% check_new_values(a) %>%
+      prep() %>% bake(x2_dt),
     "a contains the new value(s): d", fixed = TRUE
   )
 })
@@ -88,25 +96,29 @@ test_that("check_new_values ignores NA by default", {
 test_that("check_new_values not ignoring NA argument", {
   x1 <- data.frame(a = letters[1:3])
   x2 <- data.frame(a = letters[1:4] %>% c(NA))
+  x1_dt <- lazy_dt(x1)
+  x2_dt <- lazy_dt(x2)
 
   expect_error(
-    recipe(x1) %>% check_new_values(a, ignore_NA = FALSE) %>%
-      prep() %>% bake(x2[-4, , drop = FALSE]),
+    recipe(x1_dt) %>% check_new_values(a, ignore_NA = FALSE) %>%
+      prep() %>% bake(x2_dt %>% dplyr::slice(-4)),
     "a contains the new value(s): NA", fixed = TRUE
   )
 
   expect_error(
-    recipe(x1) %>% check_new_values(a, ignore_NA = FALSE) %>%
-      prep() %>% bake(x2),
+    recipe(x1_dt) %>% check_new_values(a, ignore_NA = FALSE) %>%
+      prep() %>% bake(x2_dt),
     "a contains the new value(s): d,NA", fixed = TRUE
   )
 })
 
 check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
+  x1_dt <- lazy_dt(x1)
+  x2_dt <- lazy_dt(x2)
 
   expect_error(
-    res <- recipe(x1) %>% check_new_values(a) %>%
-      prep(strings_as_factors = saf) %>% bake(x1),
+    res <- recipe(x1_dt) %>% check_new_values(a) %>%
+      prep(strings_as_factors = saf) %>% bake(x1_dt),
     NA
   )
 
@@ -114,8 +126,8 @@ check_new_values_data_type_unit_tests <- function(x1, x2, saf = TRUE) {
 
   error_msg <- paste( "a contains the new value(s):", pull(x2[3,], a))
   expect_error(
-    recipe(x1) %>% check_new_values(a) %>%
-      prep() %>% bake(x2),
+    recipe(x1_dt) %>% check_new_values(a) %>%
+      prep() %>% bake(x2_dt),
     error_msg, fixed = TRUE
   )
 }
