@@ -131,15 +131,20 @@ step_num2factor_new <-
   }
 
 get_ord_lvls_num <- function(x, foo)
-  sort(unique(as.character(foo(x))))
+  list(sort(unique(as.character(foo(x)))))
 
 #' @export
 prep.step_num2factor <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  res <- lapply(training[, col_names], get_ord_lvls_num, foo = x$transform)
+  res <- training %>%
+    dplyr::summarize_at(col_names, get_ord_lvls_num, foo =  x$transform) %>%
+    collect() %>%
+    as.list()
+  res <- lapply(res, function(lst) lst[[1]])
+
   res <- c(res, ..levels = list(x$levels))
 
   ord <- rep(x$ordered, length(col_names))
@@ -173,16 +178,12 @@ bake.step_num2factor <- function(object, new_data, ...) {
   lvls <- object$levels[names(object$levels) == "..levels"]
   object$levels <- object$levels[names(object$levels) != "..levels"]
 
-  new_data[, col_names] <-
-    map_df(new_data[, col_names],
-            make_factor_num,
-            lvl = lvls[[1]],
-            ord = object$ordered[1],
-            foo = object$transform)
-
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+  new_data %>%
+    dplyr::mutate_at(col_names, make_factor_num,
+                     lvl = lvls[[1]],
+                     ord = object$ordered[1],
+                     foo = object$transform) %>%
+    confirm_table_format
 }
 
 print.step_num2factor <-
