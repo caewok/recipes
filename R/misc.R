@@ -573,7 +573,7 @@ rand_id <- function(prefix = "step", len = 5) {
 
 
 check_nominal_type <- function(x, lvl) {
-  all_act_cols <- names(x)
+  all_act_cols <- colnames(x)
 
   # What columns do we expect to be factors based on the data
   # _before_ the recipes was prepped.
@@ -589,8 +589,7 @@ check_nominal_type <- function(x, lvl) {
   if (length(fac_ref_cols) > 0) {
 
     # Which are actual factors?
-    fac_act_cols <- purrr::map_lgl(x, is.factor)
-
+    fac_act_cols <- x %>% dplyr::summarize_all(is.factor) %>% collect %>% unlist
     fac_act_cols <- names(fac_act_cols)[fac_act_cols]
 
     # There may be some original factors that do not
