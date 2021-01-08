@@ -77,7 +77,14 @@ prep.step_naomit <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_naomit <- function(object, new_data, ...) {
-  tibble::as_tibble(tidyr::drop_na(new_data, object$columns))
+
+  # the .preserve in filter_at is being misinterpreted for dtplyr tables
+  # this is a somewhat stupid work-around
+  new_data %>%
+    dplyr::mutate(.preserve = TRUE) %>%
+    dplyr::filter_at(object$columns, all_vars(!is.na(.))) %>%
+    dplyr::select(-.preserve) %>%
+    confirm_table_format()
 }
 
 print.step_naomit <-
