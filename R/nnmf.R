@@ -128,7 +128,7 @@ step_nnmf_new <-
 prep.step_nnmf <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   if (x$num_comp > 0) {
 
@@ -139,7 +139,7 @@ prep.step_nnmf <- function(x, training, info = NULL, ...) {
     opts$nrun <- x$num_run
     opts$seed <- x$seed
     opts$.mute <- c("message", "output")
-    opts$.data <- dimRed::dimRedData(as.data.frame(training[, col_names, drop = FALSE]))
+    opts$.data <- dimRed::dimRedData(as.data.frame(training %>% dplyr::select(!!!col_names)))
     opts$.method <- "NNMF"
 
     for (i in nmf_pkg) {
@@ -178,16 +178,17 @@ bake.step_nnmf <- function(object, new_data, ...) {
     comps <-
       object$res@apply(
         dimRed::dimRedData(
-          as.data.frame(new_data[, nnmf_vars, drop = FALSE])
+          as.data.frame(new_data %>% dplyr::select(!!!nnmf_vars))
         )
       )@data
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     colnames(comps) <- names0(ncol(comps), object$prefix)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% nnmf_vars), drop = FALSE]
+    new_data <- new_data %>%
+      bind_cols_dtplyr(as_tibble(comps)) %>%
+      dplyr::select(-one_of(nnmf_vars))
+
   }
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 

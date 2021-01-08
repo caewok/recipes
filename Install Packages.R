@@ -31,3 +31,6 @@ renv::install("igraph")
 
 renv::snapshot()
 renv::install("RANN")
+
+# renv::install("NMF")
+# renv::install("Biobase")
