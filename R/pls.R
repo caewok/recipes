@@ -222,8 +222,8 @@ make_pls_call <- function(ncomp, keepX, args = NULL) {
   cl <-
     rlang::call2(
       "pls_fit",
-      x = rlang::expr(as.matrix(training[, x_names])),
-      y = rlang::expr(training[[y_names]]),
+      x = rlang::expr(as.matrix(training %>% dplyr::select(!!!x_names))),
+      y = rlang::expr(training %>% dplyr::pull(.data[[y_names]])),
       ncomp = ncomp,
       keepX = keepX,
       !!!args
@@ -251,7 +251,7 @@ butcher_pls <- function(x) {
 
 pls_project <- function(object, x) {
   pls_vars <- names(object$mu)
-  x <- x[, pls_vars]
+  x <- x %>% dplyr::select(!!!pls_vars) %>% collect()
   if (!is.matrix(x)) {
     x <- as.matrix(x)
   }
@@ -265,8 +265,8 @@ pls_project <- function(object, x) {
 
 old_pls_project <- function(object, x) {
   pls_vars <- rownames(object$projection)
-  n <- nrow(x)
-  input_data <- as.matrix(x[, pls_vars])
+  input_data <- as.matrix(x %>% dplyr::select(!!!pls_vars) %>% collect())
+  n <- nrow(input_data)
   if (!all(is.na(object$scale))) {
     input_data <- sweep(input_data, 2, object$scale,  "/")
   }
@@ -298,7 +298,7 @@ prep.step_pls <- function(x, training, info = NULL, ...) {
   x_names <- eval_select_recipes(x$terms, training, info)
   y_names <- eval_select_recipes(x$outcome, training, info)
 
-  check_type(training[, x_names])
+  check_type(training %>% dplyr::select(!!!x_names))
   if (length(y_names) > 1 ) {
     rlang::abort("`step_pls()` only supports univariate models.")
   }
@@ -352,23 +352,23 @@ bake.step_pls <- function(object, new_data, ...) {
     names(comps) <- names0(ncol(comps), object$prefix)
     comps <- check_name(comps, new_data, object)
 
-    new_data <- bind_cols(new_data, as_tibble(comps))
+    new_data <- new_data %>%
+      bind_cols_dtplyr(as_tibble(comps))
+
 
     # Old pls never preserved original columns,
     # but didn't have the `preserve` option
     if (use_old_pls(object$res)) {
       pls_vars <- rownames(object$res$projection)
-      keep_vars <- !(colnames(new_data) %in% pls_vars)
-      new_data <- new_data[, keep_vars, drop = FALSE]
+      new_data <- new_data %>%
+        dplyr::select(-one_of(pls_vars))
     } else if (!object$preserve) {
       pls_vars <- names(object$res$mu)
-      keep_vars <- !(colnames(new_data) %in% pls_vars)
-      new_data <- new_data[, keep_vars, drop = FALSE]
+      new_data <- new_data %>%
+        dplyr::select(-one_of(pls_vars))
     }
 
-    if (!is_tibble(new_data)) {
-      new_data <- as_tibble(new_data)
-    }
+    new_data <- confirm_table_format(new_data)
   }
   new_data
 }
