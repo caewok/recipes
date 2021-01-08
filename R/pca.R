@@ -160,7 +160,7 @@ step_pca_new <-
 prep.step_pca <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   if (x$num_comp > 0) {
     prc_call <-
@@ -173,7 +173,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     if (length(x$options) > 0)
       prc_call <- mod_call_args(prc_call, args = x$options)
 
-    prc_call$x <- expr(training[, col_names, drop = FALSE])
+    prc_call$x <- expr(training %>% dplyr::select(!!!col_names) %>% collect())
     prc_obj <- eval(prc_call)
 
     x$num_comp <- min(x$num_comp, length(col_names))
@@ -189,7 +189,7 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
     ## e.g. `sdev` etc.
 
   } else {
-    # fake a roation matrix so that the resolved names can be used for tidy()
+    # fake a rotation matrix so that the resolved names can be used for tidy()
     fake_matrix <- matrix(NA, nrow = length(col_names))
     rownames(fake_matrix) <- col_names
     prc_obj <- list(rotation = fake_matrix)
@@ -213,14 +213,15 @@ prep.step_pca <- function(x, training, info = NULL, ...) {
 bake.step_pca <- function(object, new_data, ...) {
   if (!all(is.na(object$res$rotation))) {
     pca_vars <- rownames(object$res$rotation)
-    comps <- predict(object$res, newdata = new_data[, pca_vars])
+    comps <- predict(object$res, newdata = new_data %>% dplyr::select(!!!pca_vars) %>% collect())
     comps <- comps[, 1:object$num_comp, drop = FALSE]
     comps <- check_name(comps, new_data, object)
-    new_data <- bind_cols(new_data, as_tibble(comps))
-    new_data <-
-      new_data[, !(colnames(new_data) %in% pca_vars), drop = FALSE]
+
+    new_data <- new_data %>%
+      bind_cols_dtplyr(as_tibble(comps)) %>%
+      dplyr::select(-one_of(pca_vars))
   }
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 print.step_pca <-
