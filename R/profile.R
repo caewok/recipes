@@ -175,14 +175,14 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
         "variables to be fixed."
         )
       )
-  fixed_vals <- lapply(
-    training[, fixed_names],
-    fixed,
-    pct = x$pct,
-    index = x$index
-  )
+
+  fixed_vals <- training %>%
+    dplyr::summarize_at(fixed_names, fixed, pct = x$pct, index = x$index) %>%
+    collect() %>%
+    as.list()
+
   profile_vals <-
-    list(prof(training[[profile_name]], grid = x$grid))
+    list(prof(training %>% dplyr::pull(.data[[profile_name]]), grid = x$grid))
   names(profile_vals)[[1]] <- profile_name
 
   step_profile_new(
@@ -201,18 +201,14 @@ prep.step_profile <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_profile <- function(object, new_data, ...) {
-  n <- length(object$profile[[1]])
-  new_data <- new_data[rep(1, n), ]
-  keepers <- c(names(object$columns), names(object$profile))
-  # Keep the predictors in the same order
-  keepers <- names(new_data)[names(new_data) %in% keepers]
-  new_data <- dplyr::select(new_data,! !keepers)
-
-  for (i in names(object$columns)) {
-    new_data[[i]] <- rep(object$columns[[i]], n)
+  profile_col <- names(object$profile)
+  out <- tibble(!!profile_col := object$profile[[profile_col]])
+  for (col in names(object$columns)) {
+    out[[col]] <- object$columns[[col]]
   }
-  new_data[[names(object$profile)]] <- object$profile[[1]]
-  as_tibble(new_data)
+
+  if(is_dtplyr_table(new_data)) out <- lazy_dt(out)
+  confirm_table_format(out)
 }
 
 print.step_profile <-
