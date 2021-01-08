@@ -108,8 +108,12 @@ step_ordinalscore_new <-
 prep.step_ordinalscore <-
   function(x, training, info = NULL, ...) {
     col_names <- eval_select_recipes(x$terms, training, info)
-    ord_check <-
-      vapply(training[, col_names], is.ordered, c(logic = TRUE))
+
+    ord_check <- training %>%
+      dplyr::summarize_at(col_names, is.ordered) %>%
+      collect() %>%
+      unlist()
+
     if (!all(ord_check))
       rlang::abort(
         paste0(
@@ -130,10 +134,9 @@ prep.step_ordinalscore <-
 
 #' @export
 bake.step_ordinalscore <- function(object, new_data, ...) {
-  scores <- lapply(new_data[, object$columns], object$convert)
-  for (i in object$columns)
-    new_data[, i] <- scores[[i]]
-  as_tibble(new_data)
+  new_data %>%
+    dplyr::mutate_at(object$columns, object$convert) %>%
+    confirm_table_format()
 }
 
 print.step_ordinalscore <-
