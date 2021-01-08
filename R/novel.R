@@ -128,7 +128,12 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
     )
 
   # Get existing levels and their factor type (i.e. ordered)
-  objects <- lapply(training[, col_names], get_existing_values)
+  objects <- training %>%
+    dplyr::summarize_at(col_names, ~ list(get_existing_values(.))) %>%
+    collect() %>%
+    as.list()
+  objects <- lapply(objects, function(lst) lst[[1]])
+
   # Check to make sure that there are not duplicate levels
   level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
@@ -153,23 +158,41 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_novel <- function(object, new_data, ...) {
-  for (i in names(object$objects)) {
-    new_data[[i]] <- ifelse(
-      # Preserve NA values by adding them to the list of existing
-      # possible values
-      !(new_data[[i]] %in% c(object$object[[i]], NA)),
-      object$new_level,
-      as.character(new_data[[i]])
-    )
+  for (col in names(object$objects)) {
+    lvls <- c(object$object[[col]], object$new_level)
+    ordered <- attributes(object$object[[col]])$is_ordered
 
-    new_data[[i]] <-
-      factor(new_data[[i]],
-             levels = c(object$object[[i]], object$new_level),
-             ordered = attributes(object$object[[i]])$is_ordered)
+    env <- new.env()
+    assign("existing_lvls", object$object[[col]], envir = env)
+    lazy_mutate <- rlang::parse_quos(sprintf('case_when(is.na(%s) ~ NA_character_,
+                                      !(%s %%in%% existing_lvls) ~ "%s",
+                                      TRUE ~ as.character(%s))',
+                                      col, col, object$new_level, col),
+                              env = env) %>% setNames(col)
+
+    new_data <- new_data %>%
+      dplyr::mutate(!!!lazy_mutate) %>%
+      dplyr::mutate_at(col, factor,
+                       levels = lvls,
+                       ordered = ordered) %>%
+      compute()
+
+
+    # new_data[[i]] <- ifelse(
+    #   # Preserve NA values by adding them to the list of existing
+    #   # possible values
+    #   !(new_data[[i]] %in% c(object$object[[i]], NA)),
+    #   object$new_level,
+    #   as.character(new_data[[i]])
+    # )
+
+    # new_data[[i]] <-
+    #   factor(new_data[[i]],
+    #          levels = c(object$object[[i]], object$new_level),
+    #          ordered = attributes(object$object[[i]])$is_ordered)
   }
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+
+  new_data %>% confirm_table_format()
 }
 
 print.step_novel <-
