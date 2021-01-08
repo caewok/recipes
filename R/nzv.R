@@ -139,11 +139,14 @@ step_nzv_new <-
 prep.step_nzv <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  filter <- nzv(
-    x = training[, col_names],
-    freq_cut = x$freq_cut,
-    unique_cut = x$unique_cut
-  )
+  filter <- training %>%
+    dplyr::summarize_at(col_names, recipes:::is_nzv,
+                        freq_cut = x$freq_cut,
+                        unique_cut = x$unique_cut) %>%
+    collect() %>%
+    unlist()
+
+  filter <- names(filter)[filter]
 
   step_nzv_new(
     terms = x$terms,
@@ -160,9 +163,11 @@ prep.step_nzv <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_nzv <- function(object, new_data, ...) {
-  if (length(object$removals) > 0)
-    new_data <- new_data[, !(colnames(new_data) %in% object$removals)]
-  as_tibble(new_data)
+  if (length(object$removals) > 0) {
+    new_data <- new_data %>%
+      dplyr::select(-one_of(object$removals))
+  }
+  confirm_table_format(new_data)
 }
 
 print.step_nzv <-
@@ -183,6 +188,27 @@ print.step_nzv <-
       cat("\n")
     invisible(x)
   }
+
+
+is_nzv <- function(vec,
+                   freq_cut = 95 / 5,
+                   unique_cut = 10) {
+
+  fr_foo <- function(vec) {
+    t <- table(vec[!is.na(vec)])
+    if(length(t) <= 1) return(0)
+    w <- which.max(t)
+    return(max(t, na.rm = TRUE) / max(t[-w], na.rm = TRUE))
+  }
+  freq_ratio <- fr_foo(vec)
+  lunique <- length(unique(vec[!is.na(vec)]))
+  pct_unique <- 100 * lunique / length(vec)
+
+ zero_var <- (lunique == 1) | all(is.na(vec))
+
+ (freq_ratio > freq_cut & pct_unique <= unique_cut) | zero_var
+}
+
 
 nzv <- function(x,
                 freq_cut = 95 / 5,
