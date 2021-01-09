@@ -111,7 +111,7 @@ step_sample_new <-
 #' @export
 prep.step_sample <- function(x, training, info = NULL, ...) {
   if (is.null(x$size)) {
-    x$size <- nrow(training)
+    x$size <- nrow(training %>% compute())
   }
   step_sample_new(
     terms = x$terms,
@@ -128,14 +128,16 @@ prep.step_sample <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_sample <- function(object, new_data, ...) {
   if (object$size >= 1) {
-    n <- min(object$size, nrow(new_data))
+    n <- min(object$size, nrow(new_data %>% compute()))
     new_data <-
       dplyr::sample_n(new_data, size = floor(n), replace = object$replace)
   } else {
+    if(is_dtplyr_table(new_data)) warning("Dtplyr tables may result in slightly different sample sizes than tibbles or data frames when using step_sample.")
+
     new_data <-
       dplyr::sample_frac(new_data, size = object$size, replace = object$replace)
   }
-  new_data
+  new_data %>% confirm_table_format()
 }
 
 
