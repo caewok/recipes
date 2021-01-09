@@ -96,12 +96,18 @@ step_range_new <-
 #' @export
 prep.step_range <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  mins <-
-    vapply(training[, col_names], min, c(min = 0), na.rm = TRUE)
-  maxs <-
-    vapply(training[, col_names], max, c(max = 0), na.rm = TRUE)
+  mins <- training %>%
+    dplyr::summarize_at(col_names, min, na.rm = TRUE) %>%
+    collect() %>%
+    unlist()
+
+  maxs <- training %>%
+    dplyr::summarize_at(col_names, max, na.rm = TRUE) %>%
+    collect() %>%
+    unlist()
+
   step_range_new(
     terms = x$terms,
     role = x$role,
@@ -116,18 +122,43 @@ prep.step_range <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_range <- function(object, new_data, ...) {
-  tmp <- as.matrix(new_data[, colnames(object$ranges)])
-  tmp <- sweep(tmp, 2, object$ranges[1, ], "-")
-  tmp <- tmp * (object$max - object$min)
-  tmp <- sweep(tmp, 2, object$ranges[2, ] - object$ranges[1, ], "/")
-  tmp <- tmp + object$min
 
-  tmp[tmp < object$min] <- object$min
-  tmp[tmp > object$max] <- object$max
+  env <- new.env()
+  assign("ranges", object$ranges, envir = env)
+  assign("objmax", object$max, envir = env)
+  assign("objmin", object$min, envir = env)
+  cols <- colnames(object$ranges)
 
-  tmp <- tibble::as_tibble(tmp)
-  new_data[, colnames(object$ranges)] <- tmp
-  as_tibble(new_data)
+  lazy_mutate_norm <- parse_quos(sprintf('(((%s - ranges["mins", "%s"]) * (objmax - objmin)) / (ranges["maxs", "%s"] - ranges["mins", "%s"])) + objmin',
+                                         cols, cols, cols, cols),
+                                 env = env) %>% setNames(cols)
+
+
+  lazy_mutate_cutoffs <- parse_quos(sprintf('case_when(%s < objmin ~ objmin,
+                                                       %s > objmax ~ objmax,
+                                                       TRUE ~ %s)',
+                                        cols,
+                                        cols,
+                                        cols), env = env) %>% setNames(cols)
+
+  new_data %>%
+    dplyr::mutate(!!!lazy_mutate_norm) %>%
+    dplyr::mutate(!!!lazy_mutate_cutoffs) %>%
+    confirm_table_format()
+
+  # (((col - mins) * (max - min)) / (maxs - mins)) + min
+  # tmp <- as.matrix(new_data[, colnames(object$ranges)])
+  # tmp <- sweep(tmp, 2, object$ranges[1, ], "-")
+  # tmp <- tmp * (object$max - object$min)
+  # tmp <- sweep(tmp, 2, object$ranges[2, ] - object$ranges[1, ], "/")
+  # tmp <- tmp + object$min
+  #
+  # tmp[tmp < object$min] <- object$min
+  # tmp[tmp > object$max] <- object$max
+  #
+  # tmp <- tibble::as_tibble(tmp)
+  # new_data[, colnames(object$ranges)] <- tmp
+  # as_tibble(new_data)
 }
 
 print.step_range <-
