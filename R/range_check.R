@@ -124,11 +124,16 @@ prep.check_range <- function(x,
   col_names <- eval_select_recipes(x$terms, training, info)
 
   ## TODO add informative error for nonnumerics
+  lower_vals <- training %>%
+    dplyr::summarize_at(col_names, min, na.rm = TRUE) %>%
+    collect() %>%
+    unlist()
 
-  lower_vals <- vapply(training[ ,col_names], min, c(min = 1),
-                       na.rm = TRUE)
-  upper_vals <- vapply(training[ ,col_names], max, c(max = 1),
-                       na.rm = TRUE)
+  upper_vals <- training %>%
+    dplyr::summarize_at(col_names, max, na.rm = TRUE) %>%
+    collect() %>%
+    unlist()
+
   check_range_new(
     terms      = x$terms,
     role       = x$role,
@@ -186,16 +191,15 @@ bake.check_range <- function(object,
                              ...) {
 
   col_names <- names(object$lower)
-  for (i in seq_along(col_names)) {
-    colname <- col_names[i]
-    range_check_func(new_data[[ colname ]],
-                     object$lower[colname],
-                     object$upper[colname],
+  for (col in col_names) {
+    range_check_func(new_data %>% dplyr::pull(.data[[ col ]]),
+                     object$lower[col],
+                     object$upper[col],
                      object$slack_prop,
                      object$warn,
-                     colname)
+                     col)
   }
-  as_tibble(new_data)
+  confirm_table_format(new_data)
 }
 
 print.check_range <-
