@@ -247,22 +247,47 @@ roller <- function(x, stat = "mean", window = 3L, na_rm = TRUE) {
 
 #' @export
 bake.step_window <- function(object, new_data, ...) {
-  for (i in seq(along.with = object$columns)) {
-    if (!is.null(object$names)) {
-      new_data[, object$names[i]] <-
-        roller(x = getElement(new_data, object$columns[i]),
-               stat = object$statistic,
-               na_rm = object$na_rm,
-               window = object$size)
-    } else {
-      new_data[, object$columns[i]] <-
-        roller(x = getElement(new_data, object$columns[i]),
-               stat = object$statistic,
-               na_rm = object$na_rm,
-               window = object$size)
-    }
+
+  if(!is.null(object$names)) {
+    # the windowed columns will be saved to new columns
+    names_vec <- paste(object$columns, "roller", sep = "_") %>% setNames(object$names)
+    new_data <- new_data %>%
+      dplyr::mutate_at(object$columns, list(roller = roller),
+                       stat = object$statistic,
+                       na_rm = object$na_rm,
+                       window = object$size) %>%
+      dplyr::rename(!!!names_vec)
+  } else {
+    # the windowed columns will replace existing columns
+    new_data <- new_data %>%
+      dplyr::mutate_at(object$columns, roller,
+                       stat = object$statistic,
+                       na_rm = object$na_rm,
+                       window = object$size)
+
   }
-  new_data
+
+
+
+  new_data %>%
+    confirm_table_format()
+
+  # for (i in seq(along.with = object$columns)) {
+  #   if (!is.null(object$names)) {
+  #     new_data[, object$names[i]] <-
+  #       roller(x = getElement(new_data, object$columns[i]),
+  #              stat = object$statistic,
+  #              na_rm = object$na_rm,
+  #              window = object$size)
+  #   } else {
+  #     new_data[, object$columns[i]] <-
+  #       roller(x = getElement(new_data, object$columns[i]),
+  #              stat = object$statistic,
+  #              na_rm = object$na_rm,
+  #              window = object$size)
+  #   }
+  # }
+  # new_data
 }
 
 
