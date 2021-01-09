@@ -84,16 +84,17 @@ prep.step_shuffle <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_shuffle <- function(object, new_data, ...) {
-  if (nrow(new_data) == 1) {
+  if (nrow(new_data %>% compute()) == 1) {
     rlang::warn("`new_data` contains a single row; unable to shuffle")
     return(new_data)
   }
 
-  if (length(object$columns) > 0)
-    for (i in seq_along(object$columns))
-      new_data[, object$columns[i]] <-
-        sample(getElement(new_data, object$columns[i]))
-    as_tibble(new_data)
+  if (length(object$columns) > 0) {
+    new_data <- new_data %>%
+      dplyr::mutate_at(object$columns, sample)
+  }
+
+  new_data %>% confirm_table_format()
 }
 
 print.step_shuffle <-
