@@ -98,7 +98,12 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
   }
 
   # Get existing levels and their factor type (i.e. ordered)
-  objects <- lapply(training[, col_names], get_existing_values)
+  objects <- training %>%
+    dplyr::summarize_at(col_names, ~ list(get_existing_values(.))) %>%
+    collect() %>%
+    as.list()
+  objects <- lapply(objects, function(lst) lst[[1]])
+
   # Check to make sure that no ordered levels are provided
   order_check <- map_lgl(objects, attr, "is_ordered")
   if (any(order_check)) {
@@ -134,13 +139,10 @@ prep.step_relevel <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_relevel <- function(object, new_data, ...) {
-  for (i in names(object$objects)) {
-    new_data[[i]] <- stats::relevel(as.factor(new_data[[i]]), ref = object$ref_level)
-  }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
-  new_data
+  new_data <- new_data %>%
+    dplyr::mutate_at(names(object$objects), as.factor) %>%
+    dplyr::mutate_at(names(object$objects), stats::relevel, ref = object$ref_level) %>%
+    confirm_table_format()
 }
 
 print.step_relevel <-

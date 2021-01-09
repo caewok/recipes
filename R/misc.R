@@ -583,13 +583,17 @@ check_nominal_type <- function(x, lvl) {
   lvl <- lvl[names(lvl) %in% all_act_cols]
 
   # Figure out what we expect new data to be:
-  fac_ref_cols <- purrr::map_lgl(lvl, function(x) isTRUE(x$factor))
+  fac_ref_cols <- purrr::map_lgl(lvl, function(lst) isTRUE(lst$factor))
   fac_ref_cols <- names(lvl)[fac_ref_cols]
 
   if (length(fac_ref_cols) > 0) {
 
     # Which are actual factors?
-    fac_act_cols <- x %>% dplyr::summarize_all(is.factor) %>% collect %>% unlist
+    fac_act_cols <- x %>%
+      dplyr::summarize_at(fac_ref_cols, is.factor) %>%
+      collect() %>%
+      unlist()
+
     fac_act_cols <- names(fac_act_cols)[fac_act_cols]
 
     # There may be some original factors that do not
