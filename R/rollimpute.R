@@ -117,8 +117,13 @@ step_rollimpute_new <-
 #' @export
 prep.step_rollimpute <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
-  dbl_check <- vapply(training[, col_names], is.double, logical(1))
+  check_type(training %>% dplyr::select(!!!col_names))
+
+  dbl_check <- training %>%
+    dplyr::summarize_at(col_names, is.double) %>%
+    collect() %>%
+    unlist()
+
   if (any(!dbl_check))
     rlang::abort("All columns must be double precision for rolling imputation")
 
@@ -163,12 +168,16 @@ impute_rolling <- function(inds, x, statfun) {
 
 #' @export
 bake.step_rollimpute <- function(object, new_data, ...) {
+  # should probably use data.table::roll for dtplyr or maybe coalesce or case_when
+  # for now, just transform to tibble
+  if(is_dtplyr_table(new_data)) new_data <- as_tibble(new_data)
+
   n <- nrow(new_data)
   missing_ind <- lapply(new_data[, object$columns],
                         function(x) which(is.na(x)))
   has_missing <- map_lgl(missing_ind, function(x) length(x) > 0)
   missing_ind <- missing_ind[has_missing]
-  roll_ind <- lapply(missing_ind, get_rolling_ind, n = n, k = object$window)
+  roll_ind <- lapply(missing_ind, recipes:::get_rolling_ind, n = n, k = object$window)
 
   for(i in seq(along.with = roll_ind)) {
     imp_var <- names(roll_ind)[i]
