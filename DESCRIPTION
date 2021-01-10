@@ -33,7 +33,8 @@ Imports:
     tidyselect (>= 1.1.0),
     timeDate,
     utils,
-    withr
+    withr,
+    data.table
 Suggests: 
     covr,
     ddalpha,

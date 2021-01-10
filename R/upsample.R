@@ -148,11 +148,14 @@ prep.step_upsample <- function(x, training, info = NULL, ...) {
 
   if (length(col_name) != 1)
     rlang::abort("Please select a single factor variable.")
-  if (!is.factor(training[[col_name]]))
+  if (!(training %>% dplyr::summarize_at(col_name, is.factor) %>% collect %>% as.logical))
     rlang::abort(col_name, " should be a factor variable.")
 
+  obs_freq <- training %>%
+   dplyr_summarize_object(fn = table, cols = col_name)
+  obs_freq <- obs_freq[[col_name]]
 
-  obs_freq <- table(training[[col_name]])
+  obs_freq <- table(training %>% dplyr::pull(.data[[col_name]]))
   majority <- max(obs_freq)
 
   step_upsample_new(
@@ -171,35 +174,58 @@ prep.step_upsample <- function(x, training, info = NULL, ...) {
 
 
 supsamp <- function(x, num) {
-  n <- nrow(x)
-  if (nrow(x) == num)
+  n <- nrow(x %>% compute())
+  if (n == num) {
     out <- x
-  else
+  } else {
     # upsampling is done with replacement
-    out <- x[sample(1:n, max(num, n), replace = TRUE), ]
+    # dtplyr doesn't have slice_sample, which is what we should use
+    idx <- sample(1:n, max(num, n), replace = TRUE)
+
+    out <- x %>%
+      dplyr::slice(!!!idx) %>%
+      compute()
+  }
   out
 }
 
 #' @export
 bake.step_upsample <- function(object, new_data, ...) {
-  if (any(is.na(new_data[[object$column]])))
-    missing <- new_data[is.na(new_data[[object$column]]),]
-  else
-    missing <- NULL
-  split_up <- split(new_data, new_data[[object$column]])
+  any_nas <- new_data %>%
+    dplyr::summarize_at(object$column, anyNA) %>%
+    collect %>%
+    unlist()
+
+  missing <- NULL
+  if (any(any_nas)) {
+    missing <- new_data %>%
+      dplyr::filter(is.na(.data[[object$column]]))
+  }
+
+
+  # works b/c only a single column
+  lvls <- new_data %>%
+    dplyr::summarize_at(object$column, levels) %>%
+    collect() %>%
+    unlist()
+
+  split_up <- lapply(lvls, function(lvl, dat, col) {
+    lazy_filter <- parse_quos(sprintf('%s == "%s"', col, lvl), env = new.env())
+    dat %>% dplyr::filter(!!!lazy_filter)
+    }, dat = new_data, col = object$column) %>% setNames(lvls)
+
+  if(!is.null(missing))
+    split_up <- c(split_up, list(Missing = missing))
 
   # Upsample with seed for reproducibility
   with_seed(
     seed = object$seed,
     code = {
-      new_data <- map_dfr(split_up, supsamp, num = object$target)
-      if (!is.null(missing)) {
-        new_data <- bind_rows(new_data, supsamp(missing, object$target))
-      }
+      new_data.lst <- lapply(split_up, supsamp, num = object$target)
     }
   )
 
-  as_tibble(new_data)
+  do.call(bind_rows_dtplyr, new_data.lst)
 }
 
 

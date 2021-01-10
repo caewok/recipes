@@ -102,6 +102,30 @@ bind_cols_dtplyr <- function(...,
     compute()
 }
 
+#' Bind a dtplyr table with another table by row
+#' Uses full join to avoid errors when using bind_rows on dtplyr tables.
+#' Uses bind_rows otherwise
+#' @param ... two or more tables
+#' @param .name_repair unique, universal, check_unique, minimal
+#' ignored for dtplyr tables
+#' importFrom data.table rbindlist as.data.table
+bind_rows_dtplyr <- function(...,
+                             .name_repair = c("unique", "universal", "check_unique", "minimal")) {
+  dots <- rlang::list2(...)
+  dots <- rlang::squash_if(dots, vctrs::vec_is_list)
+  dots <- purrr::discard(dots, is.null)
+  is_dtplyr_table <- purrr::map_lgl(dots, is_dtplyr_table)
+
+  if(any(is_dtplyr_table)) {
+    dots[is_dtplyr_table] <- lapply(dots[is_dtplyr_table], data.table::as.data.table)
+  }
+
+  out <- data.table::rbindlist(dots)
+  if(is_dtplyr_table[[1]]) out <- lazy_dt(out)
+  out %>% confirm_table_format()
+}
+
+
 #' Drop the top list level, keeping everything under it
 #' Keep the names from the top level
 drop_top_list_level <- function(lst) {
@@ -146,4 +170,28 @@ complete_cases_dtplyr <- function(...) {
   }
 
   return(out)
+}
+
+#' Trick to summarize a function with an arbitrary return.
+#' For example, where the function returns an object of different sizes, like unique().
+#' Returns a named list by column names.
+dplyr_summarize_object <- function(dat, cols, fn, ...) {
+  list_fn <- function(x, fn, ...) list(fn(x, ...))
+
+  out <- dat %>%
+    dplyr::summarize_at(cols, list_fn, fn = fn, ...) %>%
+    collect()
+
+  lapply(out, function(lst) lst[[1]])
+}
+
+
+dplyr_table <- function(dat, cols, ...) {
+  nums <- dat %>%
+    dplyr::summarize_at(cols, ~ list(table(.))) %>%
+    collect()
+
+  labels <- dat %>%
+    dplyr::summarize_at(cols, ~ names(table(.)))
+
 }
