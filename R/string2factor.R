@@ -105,12 +105,13 @@ get_ord_lvls <- function(x)
 #' @export
 prep.step_string2factor <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  str_check <-
-    vapply(
-      training[, col_names],
-      function(x) is.character(x) | is.factor(x),
-      logical(1)
-    )
+
+  str_check_fn <- function(x) { is.character(x) | is.factor(x) }
+  str_check <- training %>%
+    dplyr::summarize_at(col_names, str_check_fn) %>%
+    collect() %>%
+    unlist()
+
   if (any(!str_check))
     rlang::abort(
       paste0(
@@ -120,7 +121,12 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
     )
 
   if (is.null(x$levels)) {
-    res <- lapply(training[, col_names], get_ord_lvls)
+    res <- training %>%
+      dplyr::summarize_at(col_names, ~ list(get_ord_lvls(.))) %>%
+      collect() %>%
+      as.list()
+    res <- lapply(res, function(lst) lst[[1]])
+
   } else
     res <- x$levels
 
@@ -149,22 +155,22 @@ bake.step_string2factor <- function(object, new_data, ...) {
   col_names <- names(object$ordered)
 
   if (is.list(object$levels)) {
-    new_data[, col_names] <-
-      map2_df(new_data[, col_names],
-              object$levels,
-              make_factor,
-              ord = object$ordered[1])
+    env = new.env()
+    assign("lvls", object$levels, envir = env)
+    assign("ord", object$ordered[1], envir = env)
+    lazy_mutate <- parse_quos(sprintf('make_factor(%s, lvl = lvls[["%s"]], ord = ord)',
+                                      col_names, col_names), env = env) %>% setNames(col_names)
+    new_data <- new_data %>%
+      dplyr::mutate(!!!lazy_mutate)
+
   } else {
-    new_data[, col_names] <-
-      map_df(new_data[, col_names],
-             make_factor,
-             lvl = object$levels,
-             ord = object$ordered[1])
+    new_data <- new_data %>%
+      dplyr::mutate_at(col_names, make_factor,
+                       lvl = object$levels,
+                       ord = object$ordered[1])
   }
 
-  if (!is_tibble(new_data))
-    new_data <- as_tibble(new_data)
-  new_data
+  new_data %>% confirm_table_format()
 }
 
 print.step_string2factor <-
