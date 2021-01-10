@@ -1,7 +1,7 @@
 #' Assign missing categories to "unknown"
 #'
 #' `step_unknown` creates a *specification* of a recipe
-#'  step that will assign a missing value in a factor level to"unknown".
+#'  step that will assign a missing value in a factor level to "unknown".
 #'
 #' @inheritParams step_center
 #' @inherit step_center return
@@ -106,7 +106,12 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
     )
 
   # Get existing levels and their factor type (i.e. ordered)
-  objects <- lapply(training[, col_names], get_existing_values)
+  objects <- training %>%
+    dplyr::summarize_at(col_names, ~ list(recipes:::get_existing_values(.))) %>%
+    collect() %>%
+    as.list()
+  objects <- lapply(objects, function(lst) lst[[1]])
+
   # Check to make sure that there are not duplicate levels
   level_check <-
     map_lgl(objects, function(x, y) y %in% x, y = x$new_level)
@@ -131,30 +136,67 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unknown <- function(object, new_data, ...) {
-  for (i in names(object$objects)) {
-    new_data[[i]] <-
-      ifelse(is.na(new_data[[i]]), object$new_level, as.character(new_data[[i]]))
+  cols <- names(object$objects)
 
-    new_levels <- c(object$object[[i]], object$new_level)
+  existing_levels <- new_data %>%
+    dplyr::summarize_at(cols, ~ list(na.omit(unique(.)))) %>%
+    collect() %>%
+    as.list()
+  existing_levels <- lapply(existing_levels, function(lst) lst[[1]])
 
-    if (!all(new_data[[i]] %in% new_levels)) {
-      warn_new_levels(
-        new_data[[i]],
-        new_levels,
+  new_levels <- vector("list", length = length(cols)) %>% setNames(cols)
+  for(col in cols) {
+    new_levels[[col]] <- c(object$object[[col]], object$new_level)
+    if(!all(existing_levels[[col]] %in% new_levels[[col]])) {
+      recipes:::warn_new_levels(
+        existing_levels[[col]],
+        new_levels[[col]],
         paste0("\nNew levels will be coerced to `NA` by `step_unknown()`.",
                "\nConsider using `step_novel()` before `step_unknown()`.")
       )
     }
+  }
 
-    new_data[[i]] <-
-      factor(new_data[[i]],
-             levels = new_levels,
-             ordered = attributes(object$object[[i]])$is_ordered)
-  }
-  if (!is_tibble(new_data)) {
-    new_data <- as_tibble(new_data)
-  }
-  new_data
+  env <- new.env()
+  is_ordered <- lapply(object$object[cols], is.ordered)
+  assign("is_ordered", is_ordered, envir = env)
+  assign("new_levels", new_levels, envir = env)
+  assign("new_lvl", object$new_level, envir = env)
+  lazy_mutate <- parse_quos(sprintf('factor(%s, levels = new_levels[["%s"]], ordered = is_ordered[["%s"]])',
+                                    cols, cols, cols), env = env) %>% setNames(cols)
+  lazy_ifelse <- parse_quos(sprintf('as.character(ifelse(is.na(%s), new_lvl, %s))',
+                                    cols, cols), env = env) %>% setNames(cols)
+
+  new_data %>%
+    dplyr::mutate(!!!lazy_ifelse) %>%
+    dplyr::mutate(!!!lazy_mutate) %>%
+    recipes:::confirm_table_format()
+
+
+  # for (i in names(object$objects)) {
+  #   new_data[[i]] <-
+  #     ifelse(is.na(new_data[[i]]), object$new_level, as.character(new_data[[i]]))
+  #
+  #   new_levels <- c(object$object[[i]], object$new_level)
+  #
+  #   if (!all(new_data[[i]] %in% new_levels)) {
+  #     warn_new_levels(
+  #       new_data[[i]],
+  #       new_levels,
+  #       paste0("\nNew levels will be coerced to `NA` by `step_unknown()`.",
+  #              "\nConsider using `step_novel()` before `step_unknown()`.")
+  #     )
+  #   }
+  #
+  #   new_data[[i]] <-
+  #     factor(new_data[[i]],
+  #            levels = new_levels,
+  #            ordered = attributes(object$object[[i]])$is_ordered)
+  # }
+  # if (!is_tibble(new_data)) {
+  #   new_data <- as_tibble(new_data)
+  # }
+  # new_data
 }
 
 print.step_unknown <-
