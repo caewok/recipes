@@ -78,9 +78,12 @@ step_unorder_new <-
 #' @export
 prep.step_unorder <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  order_check <- vapply(training[, col_names],
-                        is.ordered,
-                        logical(1L))
+
+  order_check <- training %>%
+    dplyr::summarize_at(col_names, is.ordered) %>%
+    collect() %>%
+    unlist()
+
   if(all(!order_check)) {
     rlang::abort("`step_unorder` required ordered factors.")
   } else {
@@ -110,11 +113,9 @@ prep.step_unorder <- function(x, training, info = NULL, ...) {
 
 #' @export
 bake.step_unorder <- function(object, new_data, ...) {
-  for (i in seq_along(object$columns))
-    new_data[, object$columns[i]] <-
-      factor(as.character(getElement(new_data, object$columns[i])),
-             levels = levels(getElement(new_data, object$columns[i])))
-  as_tibble(new_data)
+  new_data %>%
+    dplyr::mutate_at(object$columns, ~ factor(as.character(.), levels = levels(.))) %>%
+    confirm_table_format()
 }
 
 
