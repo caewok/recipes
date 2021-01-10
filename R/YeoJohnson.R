@@ -110,16 +110,16 @@ step_YeoJohnson_new <-
 #' @export
 prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
-  values <- vapply(
-    training[, col_names],
-    estimate_yj,
-    c(lambda = 0),
-    limits = x$limits,
-    num_unique = x$num_unique,
-    na_rm = x$na_rm
-  )
+  values <- training %>%
+    dplyr::summarize_at(col_names, estimate_yj,
+                        limits = x$limits,
+                        num_unique = x$num_unique,
+                        na_rm = x$na_rm) %>%
+    collect() %>%
+    unlist()
+
   values <- values[!is.na(values)]
   step_YeoJohnson_new(
     terms = x$terms,
@@ -137,13 +137,15 @@ prep.step_YeoJohnson <- function(x, training, info = NULL, ...) {
 #' @export
 bake.step_YeoJohnson <- function(object, new_data, ...) {
   if (length(object$lambdas) == 0)
-    return(as_tibble(new_data))
+    return(confirm_table_format(new_data))
+
   param <- names(object$lambdas)
-  for (i in seq_along(object$lambdas))
-    new_data[, param[i]] <-
-    yj_transform(getElement(new_data, param[i]),
-             lambda = object$lambdas[param[i]])
-  as_tibble(new_data)
+  for (i in seq_along(object$lambdas)) {
+    new_data <- new_data %>%
+      dplyr::mutate_at(param[i], yj_transform, lambda = object$lambdas[param[i]]) %>%
+      compute()
+  }
+  confirm_table_format(new_data)
 }
 
 print.step_YeoJohnson <-
