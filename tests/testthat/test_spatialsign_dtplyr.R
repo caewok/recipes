@@ -1,13 +1,14 @@
 library(testthat)
 library(recipes)
 library(modeldata)
+library(dtplyr)
 data(biomass)
+biomass_dt <- lazy_dt(biomass)
 
-context("Spatial sign transformation")
-
+context("dtplyr: Spatial sign transformation")
 
 rec <- recipe(HHV ~ carbon + hydrogen + oxygen + nitrogen + sulfur,
-              data = biomass)
+              data = biomass_dt)
 
 test_that('spatial sign', {
   sp_sign <- rec %>%
@@ -15,9 +16,9 @@ test_that('spatial sign', {
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)
 
-  sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
+  sp_sign_trained <- prep(sp_sign, training = biomass_dt, verbose = FALSE)
 
-  sp_sign_pred <- bake(sp_sign_trained, new_data = biomass)
+  sp_sign_pred <- bake(sp_sign_trained, new_data = biomass_dt)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
 
   x <- as.matrix(scale(biomass[, 3:4], center = TRUE, scale = TRUE))
@@ -30,13 +31,14 @@ test_that('Missing values', {
   sp_sign <- rec %>%
     step_spatialsign(carbon, hydrogen)
 
-  sp_sign_trained <- prep(sp_sign, training = biomass, verbose = FALSE)
+  sp_sign_trained <- prep(sp_sign, training = biomass_dt, verbose = FALSE)
 
   with_na <- head(biomass)
   with_na$carbon[1] <- NA
   with_na$hydrogen[2] <- NA
+  with_na_dt <- lazy_dt(with_na)
 
-  sp_sign_pred <- bake(sp_sign_trained, new_data = with_na)
+  sp_sign_pred <- bake(sp_sign_trained, new_data = with_na_dt)
   sp_sign_pred <- as.matrix(sp_sign_pred)[, c("carbon", "hydrogen")]
 
   x <- as.matrix(with_na[, 3:4])
@@ -52,7 +54,7 @@ test_that('printing', {
     step_scale(carbon, hydrogen) %>%
     step_spatialsign(carbon, hydrogen)
   expect_output(print(sp_sign))
-  expect_output(prep(sp_sign, training = biomass, verbose = TRUE))
+  expect_output(prep(sp_sign, training = biomass_dt, verbose = TRUE))
 })
 
 

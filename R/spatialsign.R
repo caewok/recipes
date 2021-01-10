@@ -102,7 +102,7 @@ step_spatialsign_new <-
 prep.step_spatialsign <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  check_type(training[, col_names])
+  check_type(training %>% dplyr::select(!!!col_names))
 
   step_spatialsign_new(
     terms = x$terms,
@@ -121,10 +121,15 @@ bake.step_spatialsign <- function(object, new_data, ...) {
   ss <- function(x, na_rm) {
     x / sqrt(sum(x ^ 2, na.rm = na_rm))
   }
-  res <- t(apply(as.matrix(new_data[, col_names]), 1, ss, na_rm = object$na_rm))
-  res <- tibble::as_tibble(res)
-  new_data[, col_names] <- res
-  tibble::as_tibble(new_data)
+
+  res <- t(apply(new_data %>% dplyr::select(!!!col_names) %>% collect() %>% as.matrix,
+                 1, ss, na_rm = object$na_rm))
+
+  new_data %>%
+    dplyr::select(-one_of(col_names)) %>%
+    bind_cols_dtplyr(as_tibble(res)) %>%
+    confirm_table_format()
+
 }
 
 print.step_spatialsign <-
