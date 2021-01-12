@@ -124,13 +124,7 @@ new_values_func <- function(x,
 prep.check_new_values <- function(x, training, info = NULL, ...) {
   col_names <- eval_select_recipes(x$terms, training, info)
 
-  values <- training %>%
-    dplyr::summarize_at(col_names, ~list(unique(.))) %>%
-    collect() %>%
-    as.list
-
-  values <- lapply(values, function(lst) lst[[1]])
-
+  values <- training %>% dplyr_summarize_object(cols = col_names, fn = unique)
   check_new_values_new(
     terms   = x$terms,
     role    = x$role,

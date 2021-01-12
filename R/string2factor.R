@@ -121,11 +121,7 @@ prep.step_string2factor <- function(x, training, info = NULL, ...) {
     )
 
   if (is.null(x$levels)) {
-    res <- training %>%
-      dplyr::summarize_at(col_names, ~ list(get_ord_lvls(.))) %>%
-      collect() %>%
-      as.list()
-    res <- lapply(res, function(lst) lst[[1]])
+    res <- training %>% dplyr_summarize_object(cols = col_names, fn = get_ord_lvls)
 
   } else
     res <- x$levels

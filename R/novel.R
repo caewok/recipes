@@ -128,11 +128,7 @@ prep.step_novel <- function(x, training, info = NULL, ...) {
     )
 
   # Get existing levels and their factor type (i.e. ordered)
-  objects <- training %>%
-    dplyr::summarize_at(col_names, ~ list(get_existing_values(.))) %>%
-    collect() %>%
-    as.list()
-  objects <- lapply(objects, function(lst) lst[[1]])
+  objects <- training %>% dplyr_summarize_object(cols = col_names, fn = get_existing_values)
 
   # Check to make sure that there are not duplicate levels
   level_check <-
