@@ -106,11 +106,7 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
     )
 
   # Get existing levels and their factor type (i.e. ordered)
-  objects <- training %>%
-    dplyr::summarize_at(col_names, ~ list(recipes:::get_existing_values(.))) %>%
-    collect() %>%
-    as.list()
-  objects <- lapply(objects, function(lst) lst[[1]])
+  objects <- training %>% dplyr_summarize_object(cols = col_names, fn = get_existing_values)
 
   # Check to make sure that there are not duplicate levels
   level_check <-
@@ -138,11 +134,7 @@ prep.step_unknown <- function(x, training, info = NULL, ...) {
 bake.step_unknown <- function(object, new_data, ...) {
   cols <- names(object$objects)
 
-  existing_levels <- new_data %>%
-    dplyr::summarize_at(cols, ~ list(na.omit(unique(.)))) %>%
-    collect() %>%
-    as.list()
-  existing_levels <- lapply(existing_levels, function(lst) lst[[1]])
+  existing_levels <- new_data %>% dplyr_summarize_object(cols = cols, fn = . %>% unique %>% na.omit)
 
   new_levels <- vector("list", length = length(cols)) %>% setNames(cols)
   for(col in cols) {
