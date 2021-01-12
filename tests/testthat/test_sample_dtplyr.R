@@ -61,10 +61,10 @@ test_that('basic usage', {
   smaller_iris <-
     iris_rec %>%
     step_sample() %>%
-    prep(training = iris2_dt %>% slice(1:120) %>% compute())
+    prep(training = iris2_dt %>% compute() %>% slice(1:120))
 
   expect_equal(juice(smaller_iris) %>% nrow(), 120)
-  expect_equal(bake(smaller_iris, iris2_dt %>% slice(121:150) %>% compute) %>% nrow(), 30)
+  expect_equal(bake(smaller_iris, iris2_dt %>% compute() %>% slice(121:150)) %>% nrow(), 30)
 
   boot_sample <-
     iris_rec %>%

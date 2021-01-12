@@ -63,7 +63,7 @@ test_that("check_new_values breaks with new values", {
 
   expect_error(
     recipe(x1_dt) %>% check_new_values(a) %>%
-      prep() %>% bake(x2_dt %>% dplyr::slice(1:4)),
+      prep() %>% bake(x2_dt %>% compute() %>% dplyr::slice(1:4)),
     "a contains the new value(s): d", fixed = TRUE
   )
 
@@ -82,7 +82,7 @@ test_that("check_new_values ignores NA by default", {
 
   expect_error(
     recipe(x1_dt) %>% check_new_values(a) %>%
-      prep() %>% bake(x2_dt %>% dplyr::slice(-4)),
+      prep() %>% bake(x2_dt %>% compute() %>% dplyr::slice(-4)),
     NA
   )
 
@@ -101,7 +101,7 @@ test_that("check_new_values not ignoring NA argument", {
 
   expect_error(
     recipe(x1_dt) %>% check_new_values(a, ignore_NA = FALSE) %>%
-      prep() %>% bake(x2_dt %>% dplyr::slice(-4)),
+      prep() %>% bake(x2_dt %>% compute() %>% dplyr::slice(-4)),
     "a contains the new value(s): NA", fixed = TRUE
   )
 

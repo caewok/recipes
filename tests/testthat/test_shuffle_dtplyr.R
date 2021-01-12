@@ -75,6 +75,6 @@ test_that('bake a single row', {
     step_shuffle(everything())
 
   rec4 <- prep(rec4, training = dat_dt, verbose = FALSE)
-  expect_warning(dat4 <- bake(rec4, dat_dt %>% dplyr::slice(1), everything()))
+  expect_warning(dat4 <- bake(rec4, dat_dt %>% compute() %>% dplyr::slice(1), everything()))
   expect_equal(dat4, tibble(dat[1,]))
 })

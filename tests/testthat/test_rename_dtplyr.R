@@ -8,7 +8,7 @@ library(dtplyr)
 context("dtplyr: dplyr rename steps")
 
 # ------------------------------------------------------------------------------
-iris_dt <- lazy_dt(iris)
+iris_dt <- lazy_dt(iris) %>% compute()
 iris_rec <- recipe( ~ ., data = iris_dt)
 
 # ------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ test_that('basic usage', {
     iris_rec %>%
     step_rename_at(contains("Length"), fn = ~ tolower(.))
 
-  prepped <- prep(rec, training = iris_dt %>% slice(1:75) %>% compute())
+  prepped <- prep(rec, training = iris_dt %>% compute() %>% slice(1:75))
 
   dplyr_train <-
     iris %>%
