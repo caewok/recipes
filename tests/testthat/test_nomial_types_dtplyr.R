@@ -33,13 +33,14 @@ test_that('factors all the way down', {
     okc_all_fac %>%
     slice(501:1000)
 
-  tr_dt <- lazy_dt(tr)
-  te_dt <- lazy_dt(te)
+  tr_dt <- lazy_dt(tr) %>% compute()
+  te_dt <- lazy_dt(te) %>% compute()
 
   rec <-
     recipe(Class ~ ., data = tr_dt) %>%
     prep(training = tr_dt)
 
+  check_nominal_type(te_dt, rec$orig_lvls)
   expect_silent(check_nominal_type(te_dt, rec$orig_lvls))
 })
 
@@ -54,8 +55,8 @@ test_that('factors all the way down with skipping', {
     slice(501:1000) %>%
     select(-Class)
 
-  tr_dt <- lazy_dt(tr)
-  te_dt <- lazy_dt(te)
+  tr_dt <- lazy_dt(tr) %>% compute()
+  te_dt <- lazy_dt(te) %>% compute()
 
   rec <-
     recipe(Class ~ ., data = tr_dt) %>%
@@ -74,8 +75,8 @@ test_that('mixed nominal data', {
     okc_fac %>%
     slice(501:1000)
 
-  tr_dt <- lazy_dt(tr)
-  te_dt <- lazy_dt(te)
+  tr_dt <- lazy_dt(tr) %>% compute()
+  te_dt <- lazy_dt(te) %>% compute()
 
   rec <-
     recipe(Class ~ ., data = tr_dt) %>%
@@ -94,8 +95,8 @@ test_that('mixed nominal data with skipping', {
     slice(501:1000) %>%
     select(-Class)
 
-  tr_dt <- lazy_dt(tr)
-  te_dt <- lazy_dt(te)
+  tr_dt <- lazy_dt(tr) %>% compute()
+  te_dt <- lazy_dt(te) %>% compute()
 
   rec <-
     recipe(Class ~ ., data = tr_dt) %>%
@@ -115,8 +116,8 @@ test_that('no factors', {
     okc_chr %>%
     slice(501:1000)
 
-  tr_dt <- lazy_dt(tr)
-  te_dt <- lazy_dt(te)
+  tr_dt <- lazy_dt(tr) %>% compute()
+  te_dt <- lazy_dt(te) %>% compute()
 
   rec <-
     recipe(Class ~ ., data = tr_dt) %>%
@@ -156,8 +157,8 @@ test_that('missing factors', {
     okc_chr %>%
     slice(501:1000)
 
-  tr_dt <- lazy_dt(tr)
-  te_dt <- lazy_dt(te)
+  tr_dt <- lazy_dt(tr) %>% compute()
+  te_dt <- lazy_dt(te) %>% compute()
 
   rec <-
     recipe(Class ~ ., data = tr_dt) %>%
@@ -175,8 +176,8 @@ test_that('missing factors with skipping', {
     slice(501:1000) %>%
     select(-Class)
 
-  tr_dt <- lazy_dt(tr)
-  te_dt <- lazy_dt(te)
+  tr_dt <- lazy_dt(tr) %>% compute()
+  te_dt <- lazy_dt(te) %>% compute()
 
   rec <-
     recipe(Class ~ ., data = tr_dt) %>%
