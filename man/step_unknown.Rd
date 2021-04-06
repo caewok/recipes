@@ -59,7 +59,7 @@ levels that is used for the new value)
 }
 \description{
 \code{step_unknown} creates a \emph{specification} of a recipe
-step that will assign a missing value in a factor level to"unknown".
+step that will assign a missing value in a factor level to "unknown".
 }
 \details{
 The selected variables are adjusted to have a new
