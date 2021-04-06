@@ -680,7 +680,7 @@ bake.recipe <- function(object, new_data, ..., composition = "tibble") {
     new_data <- base::as.data.frame(new_data)
   } else if (composition == "tibble") {
     new_data <- as_tibble(new_data)
-  } else if(composition == "dtplyr") {
+  } else if(!is_dtplyr_table(new_data) && composition == "dtplyr") {
     new_data <- lazy_dt(new_data)
   }
 
